@@ -1,2 +1,3 @@
-# wars
-My implementation of Wars
+# Wars
+
+My implementation of Wars.
