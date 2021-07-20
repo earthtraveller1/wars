@@ -4,6 +4,12 @@ project("Wars")
 
 include_directories("include")
 
+if (MSVC)
+    add_compile_options("/W4")
+else()
+    add_compile_options("-Wall")
+endif()
+
 add_executable("wars")
 add_library("glad")
 
