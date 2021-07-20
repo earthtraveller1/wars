@@ -1,7 +1,7 @@
 #include <iostream>
-
 #include <glad/glad.h>
 #include "Window.hpp"
+#include <graphics/basic-utils.hpp>
 
 int main() {
     std::cout << "[INFO]: Hello!" << std::endl;
@@ -10,7 +10,7 @@ int main() {
     
     window.show();
     while (window.isOpen()) {
-        glClear(GL_COLOR_BUFFER_BIT);
+        bgu::clear();
         
         window.update();
     }
