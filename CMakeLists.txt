@@ -23,8 +23,9 @@ else()
     add_compile_options("-Wall")
 endif()
 
-add_executable("wars")
 add_library("glad")
+add_library("graphics")
+add_executable("wars")
 
 add_subdirectory("src")
 add_subdirectory("include")
