@@ -34,7 +34,9 @@ add_subdirectory("src")
 add_subdirectory("include")
 
 if (WIN32)
-    target_link_libraries("wars" "glad" "${GLFW_LIBRARY}" "opengl32")
+    target_link_libraries("graphics" "glad" "${GLFW_LIBRARY}" "opengl32")
 else()
-    target_link_libraries("wars" "glad" "${GLFW_LIBRARY}" "OpenGL" "dl")
+    target_link_libraries("graphics" "glad" "${GLFW_LIBRARY}" "OpenGL" "dl")
 endif()
+
+target_link_libraries("wars" "graphics")
