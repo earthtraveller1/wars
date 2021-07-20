@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <glad/glad.h>
 
 #include "Window.hpp"
 
@@ -29,6 +30,10 @@ void Window::create(bool fullscreen, std::string_view title) {
         throw std::runtime_error("[FATAL ERROR]: Failed to create GLFW window.");
     }
     glfwMakeContextCurrent(window);
+    
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        throw std::runtime_error("[FATAL ERROR]: Failed to load OpenGL.");
+    }
 }
 
 Window::Window(): Window(0.5, "GLFW Window", false) {
