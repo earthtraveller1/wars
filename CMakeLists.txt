@@ -13,6 +13,7 @@ if (USE_STATIC_LIBS AND NOT MSVC)
 endif()
 
 find_package("GLFW")
+find_package("OpenGL" REQUIRED)
 
 include_directories("include" "${GLFW_INCLUDE_DIR}")
 
@@ -28,4 +29,8 @@ add_library("glad")
 add_subdirectory("src")
 add_subdirectory("include")
 
-target_link_libraries("wars" "glad" "${GLFW_LIBRARY}")
+if (WIN32)
+    target_link_libraries("wars" "glad" "${GLFW_LIBRARY}" "opengl32")
+else()
+    target_link_libraries("wars" "glad" "${GLFW_LIBRARY}" "OpenGL")
+endif()
