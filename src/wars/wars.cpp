@@ -6,7 +6,7 @@
 int main() {
     std::cout << "[INFO]: Hello!" << std::endl;
     
-    Window window(1.0, "", true);
+    Window window(0.6, "", false);
     
     window.show();
     while (window.isOpen()) {
