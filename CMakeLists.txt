@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD 17)
 option(BUILD_SHARED_LIBS "Whether or not to build shared libraries." OFF)
 option(USE_STATIC_LIBS "Wether or not to prefer static libraries over shared ones." OFF)
 
+configure_file("config.in.h" "config.h")
+
 if (USE_STATIC_LIBS AND NOT MSVC)
     add_link_options("-static")
 endif()
@@ -15,7 +17,7 @@ endif()
 find_package("GLFW")
 find_package("OpenGL" REQUIRED)
 
-include_directories("include" "${GLFW_INCLUDE_DIR}")
+include_directories("include" "${CMAKE_BINARY_DIR}" "${GLFW_INCLUDE_DIR}")
 
 if (MSVC)
     add_compile_options("/W4")
