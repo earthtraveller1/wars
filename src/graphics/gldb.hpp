@@ -14,10 +14,10 @@
     #define glCallN(x) x()
     #define glCallRN(x) x()
 #else
-    #define glCall(x, ...) glCallImpl(x, __VA_ARGS__)
-    #define glCallR(x, ...) glCallRImpl(x, __VA_ARGS__)
-    #define glCallN(x) glCallImpl(x)
-    #define glCallRN(x) glCallRImpl(x)
+    #define glCall(x, ...) gldb::glCallImpl(x, __VA_ARGS__)
+    #define glCallR(x, ...) gldb::glCallRImpl(x, __VA_ARGS__)
+    #define glCallN(x) gldb::glCallImpl(x)
+    #define glCallRN(x) gldb::glCallRImpl(x)
 #endif
 
 namespace gldb {
