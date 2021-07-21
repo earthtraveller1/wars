@@ -5,4 +5,5 @@ target_sources(
     "gldb.cpp"
     "gldb.hpp"
     "Shader.hpp"
+    "ShaderManager.hpp"
 )
