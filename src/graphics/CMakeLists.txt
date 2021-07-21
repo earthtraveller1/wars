@@ -4,4 +4,5 @@ target_sources(
     "basic-utils.cpp"
     "gldb.cpp"
     "gldb.hpp"
+    "Shader.hpp"
 )
