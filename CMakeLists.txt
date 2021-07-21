@@ -28,6 +28,7 @@ endif()
 
 add_library("glad" "deps/GLAD/src/glad.c")
 add_library("graphics")
+add_library("utils")
 add_executable("wars")
 
 add_subdirectory("src")
