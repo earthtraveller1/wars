@@ -1,6 +1,8 @@
 #ifndef D0C2FD95_F1CF_46DB_ACFB_EC73D871C43A
 #define D0C2FD95_F1CF_46DB_ACFB_EC73D871C43A
 
+#include <string_view>
+
 // The shader class, which represents a OpenGL Shader.
 
 namespace graphics {
