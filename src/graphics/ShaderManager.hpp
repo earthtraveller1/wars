@@ -5,7 +5,7 @@
 
 // This is a special type of singleton class that just manages shaders, destroys them when you don't need them anymore.
 
-namespace Graphics {
+namespace graphics {
     class ShaderManager {
     private:
         // Vector of Shaders
