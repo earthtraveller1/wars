@@ -1,4 +1,4 @@
-#include "Shader.hpp"
+#include <graphics/Shader.hpp>
 
 #include <string>
 #include <fstream>
@@ -8,8 +8,8 @@
 
 #include <utils/file-utils.hpp>
 
-#include "ShaderManager.hpp"
-#include "gldb.hpp"
+#include <graphics/ShaderManager.hpp>
+#include <graphics/gldb.hpp>
 
 using graphics::Shader;
 

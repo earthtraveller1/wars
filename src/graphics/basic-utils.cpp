@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include "gldb.hpp"
+#include <graphics/gldb.hpp>
 
 #include <graphics/basic-utils.hpp>
 

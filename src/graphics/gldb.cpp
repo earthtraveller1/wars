@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "gldb.hpp"
+#include <graphics/gldb.hpp>
 
 static void debug_break() {
     return;

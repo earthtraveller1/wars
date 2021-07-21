@@ -1,7 +1,7 @@
 #include <glad/glad.h>
-#include "gldb.hpp"
+#include <graphics/gldb.hpp>
 
-#include "ShaderManager.hpp"
+#include <graphics/ShaderManager.hpp>s
 
 using graphics::ShaderManager;
 
