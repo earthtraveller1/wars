@@ -9,10 +9,18 @@ option(BUILD_SHARED_LIBS "Whether or not to build shared libraries." OFF)
 option(USE_STATIC_LIBS "Wether or not to prefer static libraries over shared ones." OFF)
 option(ENABLE_OPENGL_DEBUGGING "When true, makes the resulting program check each OpenGL call for errors." OFF)
 
+if (UNIX)
+    option(SET_RPATH_TO_CWD "Set the RPATH to the current working directory." OFF)
+endif()
+
 configure_file("config.in" "config.h")
 
 if (USE_STATIC_LIBS AND NOT MSVC)
     add_link_options("-static")
+endif()
+
+if (UNIX AND SET_RPATH_TO_CWD)
+    add_link_options("-Wl,rpath=.")
 endif()
 
 find_package("GLFW")
