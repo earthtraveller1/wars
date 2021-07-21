@@ -5,6 +5,8 @@
 
 using graphics::ShaderManager;
 
+static bool firstShader = true;
+
 ShaderManager& ShaderManager::getInstance() {
     static ShaderManager instance;
     return instance;
@@ -12,6 +14,12 @@ ShaderManager& ShaderManager::getInstance() {
 
 unsigned int ShaderManager::add(unsigned int shader) {
     shaders.push_back(shader);
+    if (!firstShader) {
+        latestIndex++;
+        firstShader = false;
+    }
+    
+    return latestIndex;
 }
 
 void ShaderManager::remove(unsigned int index) {
