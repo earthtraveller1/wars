@@ -25,7 +25,7 @@ namespace graphics {
         Shader(std::string_view path);
         
         // Constructs a Shader object from a vertex source and a fragment source
-        Shader(std::string_view vertexPath, std::string_view fragmentPath);
+        Shader(std::string_view vertexPath, std::string_view fragmentPath, std::string_view name);
         
         // Use the program
         void use();
