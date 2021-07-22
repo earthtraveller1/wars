@@ -30,8 +30,8 @@ namespace graphics {
         // Default Constructor
         Sprite();
         
-        // Construct a Sprite from a vector of vertices and indices
-        Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
+        // Construct a Sprite from a vector of vertices and indices, and a material
+        Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& material);
         
         // Copy constructor
         Sprite(Sprite& src);

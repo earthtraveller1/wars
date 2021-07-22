@@ -30,7 +30,8 @@ Sprite::Sprite(): vao(0), vbo(0), ebo(0), numOfIndices(0), material() {
     
 }
 
-Sprite::Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices): numOfIndices(indices.size()) {
+Sprite::Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& pMaterial): 
+numOfIndices(indices.size()), material(pMaterial) {
     glCall(glGenVertexArrays, 1, &vao);
     glCall(glBindVertexArray, vao);
     
@@ -50,7 +51,7 @@ Sprite::Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices):
     glCall(glBindVertexArray, 0);
 }
 
-Sprite::Sprite(Sprite& src): numOfIndices(src.numOfIndices) {
+Sprite::Sprite(Sprite& src): numOfIndices(src.numOfIndices), material(src.material) {
     glCall(glGenVertexArrays, 1, &vao);
     glCall(glBindVertexArray, vao);
     
