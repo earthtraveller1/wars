@@ -11,6 +11,8 @@
 #include <graphics/ShaderManager.hpp>
 #include <graphics/gldb.hpp>
 
+#include <glm/gtc/type_ptr.hpp>
+
 using graphics::Shader;
 
 static bool startsWith(std::string_view a, std::string_view b) {
@@ -156,6 +158,10 @@ void Shader::use() {
 
 void Shader::setUniform(std::string_view name, int value) {
     glCall(glUniform1i, glCallR(glGetUniformLocation, program, name.data()), value);
+}
+
+void Shader::setUniform(std::string_view name, glm::mat4 value) {
+    glCall(glUniformMatrix4fv, glCallR(glGetUniformLocation, program, name.data()), 1, GL_FALSE, glm::value_ptr(value));
 }
 
 void Shader::destroy() {

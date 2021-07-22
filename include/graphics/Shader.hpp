@@ -2,6 +2,7 @@
 #define D0C2FD95_F1CF_46DB_ACFB_EC73D871C43A
 
 #include <string_view>
+#include <glm/mat4x4.hpp>
 
 // The shader class, which represents a OpenGL Shader.
 
@@ -32,6 +33,7 @@ namespace graphics {
         
         // Utility functions for setting uniforms
         void setUniform(std::string_view name, int value);
+        void setUniform(std::string_view name, glm::mat4 value);
         
         // Destroys the shader
         void destroy();
