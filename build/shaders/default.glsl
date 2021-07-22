@@ -1,5 +1,6 @@
 //@ vertex
 #version 330 core
+
 layout (location = 0) in vec2 aPos;
 layout (location = 1) in vec2 aUV;
 
@@ -12,6 +13,7 @@ void main() {
 
 //@ fragment
 #version 330 core
+
 out vec4 colour;
 
 in vec2 uv;
