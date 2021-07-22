@@ -16,6 +16,8 @@ static void setWindowHints() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
     glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+    
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 }
 
 void Window::create(bool fullscreen, std::string_view title) {
@@ -35,18 +37,6 @@ void Window::create(bool fullscreen, std::string_view title) {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         throw std::runtime_error("[FATAL ERROR]: Failed to load OpenGL.");
     }
-    
-    glfwSetWindowUserPointer(window, reinterpret_cast<void*>(this));
-    
-    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
-}
-
-void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
-    glCall(glViewport, 0, 0, width, height);
-    
-    Window* winclass = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
-    winclass->width = width;
-    winclass->height = height;
 }
 
 Window::Window(): Window(0.5, "GLFW Window", false) {
