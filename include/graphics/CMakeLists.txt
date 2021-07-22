@@ -3,6 +3,9 @@ target_sources(
     
     "basic-utils.hpp"
     "gldb.hpp"
+    "Material.hpp"
     "Shader.hpp"
     "ShaderManager.hpp"
+    "Sprite.hpp"
+    "Vertex.hpp"
 )
