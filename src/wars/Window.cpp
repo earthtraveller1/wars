@@ -37,6 +37,9 @@ void Window::create(bool fullscreen, std::string_view title) {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         throw std::runtime_error("[FATAL ERROR]: Failed to load OpenGL.");
     }
+    
+    const GLFWvidmode* videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    glfwSetWindowPos(window, (videoMode->width - width) / 2, (videoMode->height - height) / 2);
 }
 
 Window::Window(): Window(0.5, "GLFW Window", false) {
