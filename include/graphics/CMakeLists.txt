@@ -6,6 +6,6 @@ target_sources(
     "Material.hpp"
     "Shader.hpp"
     "ShaderManager.hpp"
-    "Sprite.hpp"
+    "Mesh.hpp"
     "Vertex.hpp"
 )

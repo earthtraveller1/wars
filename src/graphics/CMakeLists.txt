@@ -6,5 +6,5 @@ target_sources(
     "Material.cpp"
     "Shader.cpp"
     "ShaderManager.cpp"
-    "Sprite.cpp"
+    "Mesh.cpp"
 )

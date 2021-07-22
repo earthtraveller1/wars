@@ -6,8 +6,8 @@
 #include <graphics/Material.hpp>
 
 namespace graphics {
-    // A Class that represents a sprite. Really basic for now, since I don't have much special needs
-    class Sprite {
+    // A Class that represents a Mesh. Really basic for now, since I don't have much special needs
+    class Mesh {
     private:
         // Graphics Card object handles
         unsigned int vao;
@@ -17,42 +17,39 @@ namespace graphics {
         // The number of indices
         unsigned int numOfIndices;
         
-        // Material
-        Material material;
-        
         // Move ownership from another object
-        void moveFrom(Sprite& src);
+        void moveFrom(Mesh& src);
         
-        // Destroy the sprite
+        // Destroy the Mesh
         void destroy();
         
     public:
         // Default Constructor
-        Sprite();
+        Mesh();
         
-        // Construct a Sprite from a vector of vertices and indices, and a material
-        Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& material);
+        // Construct a Mesh from a vector of vertices and indices
+        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices);
         
         // Copy constructor
-        Sprite(Sprite& src);
+        Mesh(Mesh& src);
         
         // Copy assignment operator
-        Sprite& operator=(Sprite& rhs);
+        Mesh& operator=(Mesh& rhs);
         
         // Move constructor
-        Sprite(Sprite&& src);
+        Mesh(Mesh&& src);
         
         // Move assignment operator
-        Sprite& operator=(Sprite&& rhs);
+        Mesh& operator=(Mesh&& rhs);
         
-        // Render the sprite
+        // Render the Mesh
         void render();
         
         // Swap two sprites
-        static void swap(Sprite& a, Sprite& b);
+        static void swap(Mesh& a, Mesh& b);
         
         // Destructor
-        ~Sprite();
+        ~Mesh();
     };
 }
 

@@ -1,17 +1,15 @@
 #include <glad/glad.h>
 #include <graphics/gldb.hpp>
 
-#include <graphics/Sprite.hpp>
+#include <graphics/Mesh.hpp>
 
-using graphics::Sprite;
+using graphics::Mesh;
 
-void Sprite::moveFrom(Sprite& src) {
+void Mesh::moveFrom(Mesh& src) {
     vao = src.vao;
     vbo = src.vbo;
     ebo = src.ebo;
     numOfIndices = src.numOfIndices;
-    
-    material = std::move(src.material);
     
     // Remove the previous values, because ownership has been moved
     src.vao = 0;
@@ -20,18 +18,17 @@ void Sprite::moveFrom(Sprite& src) {
     src.numOfIndices = 0;
 }
 
-void Sprite::destroy() {
+void Mesh::destroy() {
     glCall(glDeleteVertexArrays, 1, &vao);
     glCall(glDeleteBuffers, 1, &vbo);
     glCall(glDeleteBuffers, 1, &ebo);
 }
 
-Sprite::Sprite(): vao(0), vbo(0), ebo(0), numOfIndices(0), material() {
+Mesh::Mesh(): vao(0), vbo(0), ebo(0), numOfIndices(0) {
     
 }
 
-Sprite::Sprite(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& pMaterial): 
-numOfIndices(indices.size()), material(pMaterial) {
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices): numOfIndices(indices.size()) {
     glCall(glGenVertexArrays, 1, &vao);
     glCall(glBindVertexArray, vao);
     
@@ -51,7 +48,7 @@ numOfIndices(indices.size()), material(pMaterial) {
     glCall(glBindVertexArray, 0);
 }
 
-Sprite::Sprite(Sprite& src): numOfIndices(src.numOfIndices), material(src.material) {
+Mesh::Mesh(Mesh& src): numOfIndices(src.numOfIndices) {
     glCall(glGenVertexArrays, 1, &vao);
     glCall(glBindVertexArray, vao);
     
@@ -90,40 +87,36 @@ Sprite::Sprite(Sprite& src): numOfIndices(src.numOfIndices), material(src.materi
     glCall(glBindVertexArray, 0);
 }
 
-Sprite& Sprite::operator=(Sprite& rhs) {
-    Sprite newSprite(rhs);
+Mesh& Mesh::operator=(Mesh& rhs) {
+    Mesh newSprite(rhs);
     swap(*this, newSprite);
     return *this;
 }
 
-Sprite::Sprite(Sprite&& src) {
+Mesh::Mesh(Mesh&& src) {
     moveFrom(src);
 }
 
-Sprite& Sprite::operator=(Sprite&& rhs) {
+Mesh& Mesh::operator=(Mesh&& rhs) {
     destroy();
     moveFrom(rhs);
     return *this;
 }
 
-void Sprite::render() {
-    material.use();
-    
+void Mesh::render() {
     glCall(glBindVertexArray, vao);
     glCall(glDrawElements, GL_TRIANGLES, numOfIndices, GL_UNSIGNED_INT, nullptr);
     glCall(glBindVertexArray, 0);
 }
 
-void Sprite::swap(Sprite& a, Sprite& b) {
+void Mesh::swap(Mesh& a, Mesh& b) {
     std::swap(a.vao, b.vao);
     std::swap(a.vbo, b.vbo);
     std::swap(a.ebo, b.ebo);
     
     std::swap(a.numOfIndices, b.numOfIndices);
-    
-    std::swap(a.material, b.material);
 }
 
-Sprite::~Sprite() {
+Mesh::~Mesh() {
     destroy();
 }
