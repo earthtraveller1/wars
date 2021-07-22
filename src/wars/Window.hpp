@@ -12,6 +12,9 @@ private:
     
     // Create the window from a set of properties
     void create(bool fullscreen, std::string_view title);
+    
+    // The callback that is called when the window is resized
+    static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 public:
     // Default Constructor
     Window();
