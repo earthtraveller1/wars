@@ -47,18 +47,19 @@ int main() {
     
     glm::mat4 model(1.0f);
     
+    float f_windowWidth = static_cast<float>(WINDOW_WIDTH);
+    float f_windowHeight = static_cast<float>(WINDOW_HEIGHT);
+    glm::mat4 projection = glm::ortho(-f_windowWidth, f_windowWidth, -f_windowHeight, f_windowHeight, -1.0f, 1.0f);
+    
+    material.use();
+    material.setUniform("projection", projection);
+    
     window.show();
     while (window.isOpen()) {
         bgu::clear();
         
-        float windowWidth = static_cast<float>(window.getWidth());
-        float windowHeight = static_cast<float>(window.getHeight());
-        glm::mat4 projection = glm::ortho(-windowWidth, windowWidth, -windowHeight, windowHeight, -1.0f, 1.0f);
-        
         material.use();
-        
         material.setUniform("model", model);
-        material.setUniform("projection", projection);
         
         mesh.render();
         
