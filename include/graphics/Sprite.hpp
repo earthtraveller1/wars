@@ -14,6 +14,9 @@ namespace graphics {
         unsigned int vbo;
         unsigned int ebo;
         
+        // The number of indices
+        unsigned int numOfIndices;
+        
         // Material
         Material material;
         
