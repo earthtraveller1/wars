@@ -19,6 +19,12 @@ namespace graphics {
         
         // Use the material
         void use();
+        
+        // Set a uniform
+        template<typename T>
+        void setUniform(std::string_view name, T value) {
+            shader.setUniform(name, value);
+        }
     };
 }
 
