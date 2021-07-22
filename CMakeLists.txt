@@ -49,3 +49,4 @@ else()
 endif()
 
 target_link_libraries("wars" "graphics")
+target_link_libraries("graphics" "utils")

@@ -3,6 +3,7 @@ target_sources(
     
     "basic-utils.cpp"
     "gldb.cpp"
+    "Material.cpp"
     "Shader.cpp"
     "ShaderManager.cpp"
     "Sprite.cpp"

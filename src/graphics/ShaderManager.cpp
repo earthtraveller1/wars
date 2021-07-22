@@ -7,6 +7,10 @@ using graphics::ShaderManager;
 
 static bool firstShader = true;
 
+ShaderManager::ShaderManager() {
+    
+}
+
 ShaderManager& ShaderManager::getInstance() {
     static ShaderManager instance;
     return instance;
