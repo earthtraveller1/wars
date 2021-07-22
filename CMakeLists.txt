@@ -26,7 +26,7 @@ endif()
 find_package("GLFW")
 find_package("OpenGL" REQUIRED)
 
-include_directories("include" "${CMAKE_BINARY_DIR}" "${GLFW_INCLUDE_DIR}" "deps/GLAD/include")
+include_directories("include" "${CMAKE_BINARY_DIR}" "${GLFW_INCLUDE_DIR}" "deps/GLAD/include" "deps/GLM")
 
 if (MSVC)
     add_compile_options("/W4")
