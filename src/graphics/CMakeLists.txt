@@ -6,5 +6,6 @@ target_sources(
     "Material.cpp"
     "Shader.cpp"
     "ShaderManager.cpp"
+    "TextureAtlasManager.cpp"
     "Mesh.cpp"
 )
