@@ -26,7 +26,7 @@ namespace graphics {
         // Some RAII stuff
         TextureAtlas(TextureAtlas& src);
         TextureAtlas(TextureAtlas&& src);
-        TextureAtlas& operator=(TextureAtlas rhs);
+        TextureAtlas& operator=(TextureAtlas& rhs);
         TextureAtlas& operator=(TextureAtlas&& rhs);
         
         // Bind the texture atlas
