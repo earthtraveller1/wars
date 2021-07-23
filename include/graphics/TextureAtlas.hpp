@@ -10,6 +10,9 @@ namespace graphics {
         // The handle to the real texture object
         int texture;
         
+        // The index of the texture atlas
+        unsigned int index;
+        
     public:
         // Default Constructor
         TextureAtlas();
