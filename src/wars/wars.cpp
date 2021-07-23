@@ -17,7 +17,7 @@ const int WINDOW_HEIGHT = 540;
 int main() {
     std::cout << "[INFO]: Hello!" << std::endl;
     
-    Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "", false);
+    Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "@#Wars", false);
     
     Mesh mesh(
         {
