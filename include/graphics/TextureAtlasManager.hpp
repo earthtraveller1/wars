@@ -16,6 +16,9 @@ namespace graphics {
         // The Vector of texture atlases
         std::vector<unsigned int> atlases;
         
+        // Latest index
+        unsigned int latestIndex = 0;
+        
         // The Constructors are private because this is a singleton class
         TextureAtlasManager();
         TextureAtlasManager(TextureAtlasManager& src);
