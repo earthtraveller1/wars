@@ -16,6 +16,15 @@ namespace graphics {
         
         // Constructor from a file path
         Texture(std::string_view imagePath);
+        
+        // Bind the texture
+        void bind();
+        
+        // Unbind any texture that are currently bound
+        static void unbind();
+        
+        // Destroy the texture
+        void destroy();
     };
 }
 
