@@ -26,7 +26,7 @@ endif()
 find_package("GLFW")
 find_package("OpenGL" REQUIRED)
 
-include_directories("include" "${CMAKE_BINARY_DIR}" "${GLFW_INCLUDE_DIR}" "deps/GLAD/include" "deps/GLM")
+include_directories("include" "${CMAKE_BINARY_DIR}" "${GLFW_INCLUDE_DIR}" "deps/GLAD/include" "deps/GLM" "deps/STB_Image")
 
 if (MSVC)
     add_compile_options("/W4")
@@ -36,6 +36,7 @@ endif()
 
 add_library("glad" "deps/GLAD/src/glad.c")
 add_library("graphics")
+add_library("stb-image")
 add_library("utils")
 add_executable("wars")
 
