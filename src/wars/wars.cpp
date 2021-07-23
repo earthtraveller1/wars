@@ -6,10 +6,12 @@
 #include <graphics/Material.hpp>
 #include <graphics/Shader.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <graphics/TextureAtlas.hpp>
 
 using graphics::Mesh;
 using graphics::Material;
 using graphics::Shader;
+using graphics::TextureAtlas;
 
 const int WINDOW_WIDTH = 960;
 const int WINDOW_HEIGHT = 540;
@@ -27,7 +29,7 @@ int main() {
             },
             {
                 { 400.0, -400.0 },
-                { 10.0, 0.0 }
+                { 1.0, 0.0 }
             },
             {
                 { -400.0, -400.0 },
@@ -45,6 +47,8 @@ int main() {
     
     Material material(Shader("shaders/default.glsl"));
     
+    TextureAtlas texture("textures/test.png");
+    
     glm::mat4 model(1.0f);
     
     float f_windowWidth = static_cast<float>(WINDOW_WIDTH);
@@ -53,6 +57,7 @@ int main() {
     
     material.use();
     material.setUniform("projection", projection);
+    material.setUniform("myTexture", 0);
     
     window.show();
     while (window.isOpen()) {
@@ -61,7 +66,11 @@ int main() {
         material.use();
         material.setUniform("model", model);
         
+        texture.bind();
+        
         mesh.render();
+        
+        texture.unbind();
         
         window.update();
     }
