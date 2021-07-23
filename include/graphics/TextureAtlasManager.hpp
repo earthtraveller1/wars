@@ -2,10 +2,7 @@
 #define BD11F907_3386_4067_82FF_5F46ED6D8E54
 
 namespace std {
-    template<typename T>
-    class allocator;
-    
-    template<typename T, typename Allocator = std::allocator<T>>
+    template<typename _Tp, typename _Alloc>
     class vector;
 }
 
@@ -36,7 +33,7 @@ namespace graphics {
         
         // Destroys all the remaining atlases that hasn't been destroyed
         ~TextureAtlasManager();
-    }
+    };
 }
 
 #endif /* BD11F907_3386_4067_82FF_5F46ED6D8E54 */
