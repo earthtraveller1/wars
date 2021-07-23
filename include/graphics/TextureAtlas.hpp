@@ -10,8 +10,11 @@ namespace graphics {
         // The handle to the real texture object
         int texture;
         
-        // The index of the texture atlas
-        unsigned int index;
+        // Move ownership over from another object
+        void moveFrom(TextureAtlas& src);
+        
+        // Destroy this object
+        void destroy();
         
     public:
         // Default Constructor
@@ -19,6 +22,12 @@ namespace graphics {
         
         // Constructor from a file path
         TextureAtlas(std::string_view imagePath);
+        
+        // Some RAII stuff
+        TextureAtlas(TextureAtlas& src);
+        TextureAtlas(TextureAtlas&& src);
+        TextureAtlas& operator=(TextureAtlas rhs);
+        TextureAtlas& operator=(TextureAtlas&& rhs);
         
         // Bind the texture atlas
         void bind();
