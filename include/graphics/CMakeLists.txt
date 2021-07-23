@@ -4,8 +4,9 @@ target_sources(
     "basic-utils.hpp"
     "gldb.hpp"
     "Material.hpp"
+    "Mesh.hpp"
     "Shader.hpp"
     "ShaderManager.hpp"
-    "Mesh.hpp"
+    "TextureAtlas.hpp"
     "Vertex.hpp"
 )
