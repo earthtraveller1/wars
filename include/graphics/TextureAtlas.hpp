@@ -36,7 +36,7 @@ namespace graphics {
         static void unbind();
         
         // Destroy the texture atlas
-        void destroy();
+        ~TextureAtlas();
     };
 }
 
