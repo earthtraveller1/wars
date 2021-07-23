@@ -5,25 +5,25 @@
 
 namespace graphics {
     // A Class which represents a texture. Very basic for now, with basic raii
-    class Texture {
+    class TextureAtlas {
     private:
         // The handle to the real texture object
         int texture;
         
     public:
         // Default Constructor
-        Texture();
+        TextureAtlas();
         
         // Constructor from a file path
-        Texture(std::string_view imagePath);
+        TextureAtlas(std::string_view imagePath);
         
-        // Bind the texture
+        // Bind the texture atlas
         void bind();
         
-        // Unbind any texture that are currently bound
+        // Unbind any texture atlases that are currently bound
         static void unbind();
         
-        // Destroy the texture
+        // Destroy the texture atlas
         void destroy();
     };
 }
