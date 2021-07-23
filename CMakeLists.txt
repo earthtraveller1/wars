@@ -50,4 +50,4 @@ else()
 endif()
 
 target_link_libraries("wars" "graphics")
-target_link_libraries("graphics" "utils")
+target_link_libraries("graphics" "utils" "stb-image")
