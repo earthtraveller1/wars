@@ -8,7 +8,7 @@ namespace graphics {
     class TextureAtlas {
     private:
         // The handle to the real texture object
-        int texture;
+        unsigned int texture;
         
         // Move ownership over from another object
         void moveFrom(TextureAtlas& src);

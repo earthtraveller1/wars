@@ -13,7 +13,7 @@ void TextureAtlas::moveFrom(TextureAtlas& src) {
 }
 
 void TextureAtlas::destroy() {
-    glCall(glDeleteTextures, 1, texture);
+    glCall(glDeleteTextures, 1, &texture);
 }
 
 TextureAtlas::TextureAtlas(): TextureAtlas("texture-atlas.png") {
@@ -66,7 +66,7 @@ TextureAtlas::TextureAtlas(TextureAtlas& src) {
     glCall(glBindTexture, GL_TEXTURE_2D, texture);
     
     glCall(glTexImage2D, GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, GL_UNSIGNED_BYTE, nullptr);
-    glCall(glCopyImageSubData, src.texture, GL_TEXTURE_2D, 0, 0, 0, 0, texture, GL_TEXTURE_2D, 0, 0, 0, width, height, 0);
+    glCall(glCopyImageSubData, src.texture, GL_TEXTURE_2D, 0, 0, 0, 0, texture, GL_TEXTURE_2D, 0, 0, 0, 0, width, height, 0);
     
     glCall(glBindTexture, GL_TEXTURE_2D, 0);
 }
