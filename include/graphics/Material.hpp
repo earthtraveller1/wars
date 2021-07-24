@@ -2,20 +2,21 @@
 #define A2307F2D_7981_4658_A5F3_C2244BB71B37
 
 #include <graphics/Shader.hpp>
+#include <graphics/TextureAtlas.hpp>
 
 namespace graphics {
     // A Class that represents a specific material
     class Material {
     private:
         // The shader
-        Shader shader;
+        Shader& shader;
+        
+        // The target texture atlas
+        TextureAtlas& textureAtlas;
         
     public:
-        // Default Constructor
-        Material();
-        
         // Constructor specifying shader
-        Material(Shader shader);
+        Material(Shader& shader, TextureAtlas& textureAtlas);
         
         // Use the material
         void use();
