@@ -8,7 +8,6 @@
 
 #include <utils/file-utils.hpp>
 
-#include <graphics/ShaderManager.hpp>
 #include <graphics/gldb.hpp>
 
 #include <glm/gtc/type_ptr.hpp>
@@ -116,6 +115,16 @@ static unsigned int createProgram(unsigned int vertex, unsigned int fragment, st
     return program;
 }
 
+void Shader::destroy() {
+    glCall(glDeleteProgram, program);
+}
+
+void Shader::moveFrom(Shader& src) {
+    program = src.program;
+    
+    src.program = 0;
+}
+
 Shader::Shader(): Shader("shaders/default.glsl") {
     
 }
@@ -130,9 +139,6 @@ Shader::Shader(std::string_view path) {
     // Delete the shaders, we don't need them anymore since that they are linked to the program
     glCall(glDeleteShader, vertex);
     glCall(glDeleteShader, fragment);
-    
-    graphics::ShaderManager& shaderManager = graphics::ShaderManager::getInstance();
-    index = shaderManager.add(program);
 }
 
 Shader::Shader(std::string_view vertexPath, std::string_view fragmentPath, std::string_view name) {
@@ -147,9 +153,32 @@ Shader::Shader(std::string_view vertexPath, std::string_view fragmentPath, std::
     // Delete the shaders, we don't need them anymore since that they are linked to the program
     glCall(glDeleteShader, vertex);
     glCall(glDeleteShader, fragment);
+}
+
+Shader::Shader(Shader& src) {
+    int binaryLength;
+    glCall(glGetProgramiv, src.program, GL_PROGRAM_BINARY_LENGTH, &binaryLength);
+    unsigned char* binary = new unsigned char[binaryLength];
     
-    graphics::ShaderManager& shaderManager = graphics::ShaderManager::getInstance();
-    index = shaderManager.add(program);
+    int binaryFormat;
+    glCall(glGetProgramBinary, src.program, binaryLength, &binaryLength, &binaryFormat, binary);
+    
+    program = glCallRN(glCreateProgram);
+    glCall(glProgramBinary, program, binaryFormat, binary, binaryLength);
+}
+
+Shader& Shader::operator=(Shader& rhs) {
+    Shader copy(rhs);
+    std::swap(*this, copy);
+}
+
+Shader::Shader(Shader&& src) {
+    moveFrom(src);
+}
+
+Shader& Shader::operator=(Shader&& rhs) {
+    destroy();
+    moveFrom(rhs);
 }
 
 void Shader::use() {
@@ -164,9 +193,6 @@ void Shader::setUniform(std::string_view name, glm::mat4 value) {
     glCall(glUniformMatrix4fv, glCallR(glGetUniformLocation, program, name.data()), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-void Shader::destroy() {
-    graphics::ShaderManager& shaderManager = graphics::ShaderManager::getInstance();
-    shaderManager.remove(index);
-    
-    glCall(glDeleteProgram, program);
+Shader::~Shader() {
+    destroy();
 }

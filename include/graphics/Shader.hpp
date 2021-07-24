@@ -12,11 +12,11 @@ namespace graphics {
         // The handle to the shader program
         unsigned int program;
         
-        // The index of the shader
-        unsigned int index;
+        // Destroys the shader
+        void destroy();
         
-        // Friend class ShaderManager
-        friend class ShaderManager;
+        // Move from another shader
+        void moveFrom(Shader& src);
         
     public:
         // The default constructor
@@ -28,6 +28,14 @@ namespace graphics {
         // Constructs a Shader object from a vertex source and a fragment source
         Shader(std::string_view vertexPath, std::string_view fragmentPath, std::string_view name);
         
+        // Copy constructor and assignment operator
+        Shader(Shader& src);
+        Shader& operator=(Shader& rhs);
+        
+        // Move constructor and assignment operator
+        Shader(Shader&& src);
+        Shader& operator=(Shader&& rhs);
+        
         // Use the program
         void use();
         
@@ -35,8 +43,8 @@ namespace graphics {
         void setUniform(std::string_view name, int value);
         void setUniform(std::string_view name, glm::mat4 value);
         
-        // Destroys the shader
-        void destroy();
+        // Destroy the object
+        ~Shader();
     };
 }
 
