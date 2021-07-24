@@ -4,6 +4,7 @@ target_sources(
     "basic-utils.cpp"
     "gldb.cpp"
     "Material.cpp"
+    "ProjectionMatrix.cpp"
     "Mesh.cpp"
     "Shader.cpp"
     "TextureAtlas.cpp"

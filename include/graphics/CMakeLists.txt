@@ -5,6 +5,7 @@ target_sources(
     "gldb.hpp"
     "Material.hpp"
     "Mesh.hpp"
+    "ProjectionMatrix.hpp"
     "Shader.hpp"
     "TextureAtlas.hpp"
     "Vertex.hpp"
