@@ -25,4 +25,8 @@ uniform sampler2D myTexture;
 
 void main() {
     colour = texture(myTexture, uv);
+    
+    if (colour.w < 0.1) {
+        discard;
+    }
 }
