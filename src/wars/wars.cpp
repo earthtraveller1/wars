@@ -8,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <graphics/TextureAtlas.hpp>
 #include <graphics/gldb.hpp>
+#include <graphics/ProjectionMatrix.hpp>
 
 using graphics::Mesh;
 using graphics::Material;
@@ -46,19 +47,16 @@ int main() {
         }
     );
     
-    Material material(Shader("shaders/default.glsl"));
-    
     TextureAtlas texture("textures/test.png");
+    Shader v_default("shaders/default.glsl");
     
     glm::mat4 model(1.0f);
     
     float f_windowWidth = static_cast<float>(WINDOW_WIDTH);
     float f_windowHeight = static_cast<float>(WINDOW_HEIGHT);
-    glm::mat4 projection = glm::ortho(-f_windowWidth, f_windowWidth, -f_windowHeight, f_windowHeight, -1.0f, 1.0f);
+    graphics::projectionMatrix = glm::ortho(-f_windowWidth, f_windowWidth, -f_windowHeight, f_windowHeight, -1.0f, 1.0f);
     
-    material.use();
-    material.setUniform("projection", projection);
-    material.setUniform("myTexture", 0);
+    Material material(v_default, texture);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);

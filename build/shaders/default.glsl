@@ -21,10 +21,10 @@ out vec4 colour;
 
 in vec2 uv;
 
-uniform sampler2D myTexture;
+uniform sampler2D textureAtlas;
 
 void main() {
-    colour = texture(myTexture, uv);
+    colour = texture(textureAtlas, uv);
     
     if (colour.w < 0.1) {
         discard;
