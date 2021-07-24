@@ -160,7 +160,7 @@ Shader::Shader(Shader& src) {
     glCall(glGetProgramiv, src.program, GL_PROGRAM_BINARY_LENGTH, &binaryLength);
     unsigned char* binary = new unsigned char[binaryLength];
     
-    int binaryFormat;
+    unsigned int binaryFormat;
     glCall(glGetProgramBinary, src.program, binaryLength, &binaryLength, &binaryFormat, binary);
     
     program = glCallRN(glCreateProgram);
@@ -170,6 +170,7 @@ Shader::Shader(Shader& src) {
 Shader& Shader::operator=(Shader& rhs) {
     Shader copy(rhs);
     std::swap(*this, copy);
+    return *this;
 }
 
 Shader::Shader(Shader&& src) {
@@ -179,6 +180,7 @@ Shader::Shader(Shader&& src) {
 Shader& Shader::operator=(Shader&& rhs) {
     destroy();
     moveFrom(rhs);
+    return *this;
 }
 
 void Shader::use() {
