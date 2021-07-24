@@ -7,6 +7,7 @@
 #include <graphics/Shader.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <graphics/TextureAtlas.hpp>
+#include <graphics/gldb.hpp>
 
 using graphics::Mesh;
 using graphics::Material;
@@ -58,6 +59,9 @@ int main() {
     material.use();
     material.setUniform("projection", projection);
     material.setUniform("myTexture", 0);
+    
+    // Set the background color
+    glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
     
     window.show();
     while (window.isOpen()) {
