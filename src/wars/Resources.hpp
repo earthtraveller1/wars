@@ -10,19 +10,19 @@ namespace graphics {
 
 namespace Resources {
     namespace Meshes {
-        Mesh* square;
+        graphics::Mesh* square;
     }
     
     namespace Shaders {
-        Shader* test;
+        graphics::Shader* test;
     }
     
     namespace TextureAtlases {
-        TextureAtlas* test;
+        graphics::TextureAtlas* test;
     }
     
     namespace Materials {
-        Material* test;
+        graphics::Material* test;
     }
 }
 
