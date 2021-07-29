@@ -7,6 +7,7 @@ target_sources(
     "Mesh.hpp"
     "ProjectionMatrix.hpp"
     "Shader.hpp"
+    "Sprite.hpp"
     "TextureAtlas.hpp"
     "Vertex.hpp"
 )
