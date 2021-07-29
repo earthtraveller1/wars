@@ -13,17 +13,29 @@ namespace Resources {
         graphics::Mesh* square;
     }
     
+    // Prepare the Meshes
+    void prepareMeshes();
+    
     namespace Shaders {
         graphics::Shader* test;
     }
+    
+    // Prepare the Shaders
+    void prepareShaders();
     
     namespace TextureAtlases {
         graphics::TextureAtlas* test;
     }
     
+    // Prepare the Texture atlases
+    void prepareTextureAtlases();
+    
     namespace Materials {
         graphics::Material* test;
     }
+    
+    // Prepare the Materials
+    void prepareMaterials();
 }
 
 #endif /* E7988B6C_E6C4_4EDD_9DAC_7C0AAB9EDC8A */
