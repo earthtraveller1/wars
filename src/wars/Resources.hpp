@@ -17,7 +17,7 @@ namespace Resources {
     void prepareMeshes();
     
     namespace Shaders {
-        graphics::Shader* test;
+        graphics::Shader* defaultShader;
     }
     
     // Prepare the Shaders
