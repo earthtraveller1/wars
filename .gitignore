@@ -46,3 +46,6 @@ config.h
 
 # Keep source files
 !/src/*
+
+# The libraries that have binaries in them
+/deps/GLFW/*
