@@ -8,3 +8,5 @@ target_sources(
     "Resources.hpp"
     "Window.hpp"
 )
+
+add_subdirectory("Resources")
