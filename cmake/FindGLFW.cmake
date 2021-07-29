@@ -1,7 +1,7 @@
 find_path(
     GLFW_INCLUDE_DIR
     NAMES "GLFW/glfw3.h"
-    PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/include"
+    PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/include"
 )
 
 if (MSVC)
@@ -9,15 +9,15 @@ if (MSVC)
         find_library(
             GLFW_LIBRARY
             NAMES "glfw3.lib"
-            PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/lib" "${CMAKE_SOURCE_DIR}/libs/GLFW/bin"
-                  "${CMAKE_SOURCE_DIR}/libs/GLFW/src" "${CMAKE_SOURCE_DIR}/libs/GLFW/build/src"
+            PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/lib" "${CMAKE_SOURCE_DIR}/deps/GLFW/bin"
+                  "${CMAKE_SOURCE_DIR}/deps/GLFW/src" "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src"
         )
     else()
         find_library(
             GLFW_LIBRARY
             NAMES "glfw3dll.lib" "glfw3.lib"
-            PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/lib" "${CMAKE_SOURCE_DIR}/libs/GLFW/bin"
-                  "${CMAKE_SOURCE_DIR}/libs/GLFW/src" "${CMAKE_SOURCE_DIR}/libs/GLFW/build/src"
+            PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/lib" "${CMAKE_SOURCE_DIR}/deps/GLFW/bin"
+                  "${CMAKE_SOURCE_DIR}/deps/GLFW/src" "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src"
         )
     endif()
 else()
@@ -26,15 +26,15 @@ else()
             find_library(
                 GLFW_LIBRARY
                 NAMES "libglfw3.a"
-                PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/lib" "${CMAKE_SOURCE_DIR}/libs/GLFW/bin"
-                      "${CMAKE_SOURCE_DIR}/libs/GLFW/src" "${CMAKE_SOURCE_DIR}/libs/GLFW/build/src"
+                PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/lib" "${CMAKE_SOURCE_DIR}/deps/GLFW/bin"
+                      "${CMAKE_SOURCE_DIR}/deps/GLFW/src" "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src"
             )
         else()
             find_library(
                 GLFW_LIBRARY
                 NAMES "libglfw3dll.a" "libglfw3.a"
-                PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/lib" "${CMAKE_SOURCE_DIR}/libs/GLFW/bin"
-                      "${CMAKE_SOURCE_DIR}/libs/GLFW/src" "${CMAKE_SOURCE_DIR}/libs/GLFW/build/src"
+                PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/lib" "${CMAKE_SOURCE_DIR}/deps/GLFW/bin"
+                      "${CMAKE_SOURCE_DIR}/deps/GLFW/src" "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src"
             )
         endif()
     else()
@@ -42,15 +42,15 @@ else()
             find_library(
                 GLFW_LIBRARY
                 NAMES "libglfw3.a"
-                PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/lib" "${CMAKE_SOURCE_DIR}/libs/GLFW/bin"
-                      "${CMAKE_SOURCE_DIR}/libs/GLFW/src" "${CMAKE_SOURCE_DIR}/libs/GLFW/build/src"
+                PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/lib" "${CMAKE_SOURCE_DIR}/deps/GLFW/bin"
+                      "${CMAKE_SOURCE_DIR}/deps/GLFW/src" "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src"
             )
         else()
             find_library(
                 GLFW_LIBRARY
                 NAMES "libglfw.so.3" "libglfw3.a"
-                PATHS "${CMAKE_SOURCE_DIR}/libs/GLFW/lib" "${CMAKE_SOURCE_DIR}/libs/GLFW/bin"
-                      "${CMAKE_SOURCE_DIR}/libs/GLFW/src" "${CMAKE_SOURCE_DIR}/libs/GLFW/build/src"
+                PATHS "${CMAKE_SOURCE_DIR}/deps/GLFW/lib" "${CMAKE_SOURCE_DIR}/deps/GLFW/bin"
+                      "${CMAKE_SOURCE_DIR}/deps/GLFW/src" "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src"
             )
         endif()
     endif()
