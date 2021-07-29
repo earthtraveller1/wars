@@ -31,7 +31,7 @@ namespace graphics {
         void move(int x, int y);
         
         // Turn the sprite
-        void turn(double degrees);
+        void turn(float degrees);
     };
 }
 
