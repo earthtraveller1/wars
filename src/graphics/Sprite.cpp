@@ -6,7 +6,7 @@
 using graphics::Sprite;
 
 Sprite::Sprite(Mesh& p_mesh, Material& p_material): mesh(p_mesh), material(p_material) {
-    
+    modelMatrix = glm::mat4(1.0f);
 }
 
 void Sprite::draw() {
