@@ -6,6 +6,7 @@
 #include <graphics/Shader.hpp>
 #include <graphics/Material.hpp>
 #include <graphics/Mesh.hpp>
+#include <graphics/Sprite.hpp>
 
 namespace wars {
     // The class that represents the entire application
@@ -25,6 +26,9 @@ namespace wars {
         
         // Materials
         graphics::Material* testMaterial;
+        
+        // The Sprite
+        graphics::Sprite* sprite;
     public:
         // Constructor
         Application();

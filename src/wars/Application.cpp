@@ -18,6 +18,7 @@ using graphics::Mesh;
 using graphics::Material;
 using graphics::Shader;
 using graphics::TextureAtlas;
+using graphics::Sprite;
 
 const int WINDOW_WIDTH = 960;
 const int WINDOW_HEIGHT = 540;
@@ -59,6 +60,8 @@ Application::Application() {
     defaultShader = new Shader("shaders/default.glsl");
     testMaterial = new Material(*defaultShader, *testTexture);
     
+    sprite = new Sprite(*squareMesh, *testMaterial);
+    
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
 }
@@ -67,10 +70,7 @@ void Application::mainLoop() {
     while (window->isOpen()) {
         glCall(glClear, GL_COLOR_BUFFER_BIT);
         
-        testMaterial->use();
-        testMaterial->setUniform("model", glm::mat4(1.0f));
-        
-        squareMesh->render();
+        sprite->draw();
         
         window->update();
     }
@@ -81,5 +81,6 @@ Application::~Application() {
     delete testMaterial;
     delete testTexture;
     delete defaultShader;
+    delete sprite;
     delete window;
 }
