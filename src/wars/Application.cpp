@@ -27,10 +27,10 @@ const int WINDOW_HEIGHT = 540;
 
 void Application::handleInput() {
     if (Input::isKeyDown(GLFW_KEY_W)) {
-        testSprite->move(5, 0);
+        
     }
     if (Input::isKeyDown(GLFW_KEY_S)) {
-        testSprite->move(-5, 0);
+        
     }
 }
 
@@ -52,11 +52,7 @@ Application::Application() {
     Resources::prepareTextureAtlases();
     Resources::prepareMaterials();
     
-    testSprite = new Sprite(*Resources::Meshes::test, *Resources::Materials::test);
     player = new Sprite(*Resources::Meshes::player, *Resources::Materials::atlas1);
-    
-    // Move the other thing aside
-    testSprite->move(400, 0);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -68,7 +64,6 @@ void Application::mainLoop() {
         glCall(glClear, GL_COLOR_BUFFER_BIT);
         handleInput();
         
-        testSprite->draw();
         player->draw();
         
         window->update();
@@ -80,6 +75,5 @@ Application::~Application() {
     delete Resources::Materials::test;
     delete Resources::TextureAtlases::test;
     delete Resources::Shaders::defaultShader;
-    delete testSprite;
     delete window;
 }

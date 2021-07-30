@@ -14,7 +14,6 @@ namespace wars {
     private:
         Window* window;
         
-        graphics::Sprite* testSprite;
         graphics::Sprite* player;
         
         void handleInput();
