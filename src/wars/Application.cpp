@@ -43,7 +43,9 @@ Application::Application() {
     
     float f_windowWidth = static_cast<float>(WINDOW_WIDTH);
     float f_windowHeight = static_cast<float>(WINDOW_HEIGHT);
-    graphics::projectionMatrix = glm::ortho(-f_windowWidth, f_windowWidth, -f_windowHeight, f_windowHeight, -1.0f, 1.0f);
+    graphics::projectionMatrix = glm::ortho(
+        -f_windowWidth / 2, f_windowWidth / 2, -f_windowHeight / 2, f_windowHeight / 2, -1.0f, 1.0f
+    );
     
     Resources::prepareMeshes();
     Resources::prepareShaders();
