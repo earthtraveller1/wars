@@ -8,6 +8,7 @@ target_sources(
     "Application.hpp"
     "Input.hpp"
     "Resources.hpp"
+    "Time.hpp"
     "Window.hpp"
 )
 
