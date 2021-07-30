@@ -12,18 +12,16 @@ namespace wars {
     // The class that represents the entire application
     class Application {
     private:
-        // The Window
         Window* window;
         
         graphics::Sprite* testSprite;
+        
+        void handleInput();
     public:
-        // Constructor
         Application();
         
-        // Main Loop
         void mainLoop();
         
-        // Destructor
         ~Application();
     };
 }
