@@ -26,13 +26,20 @@ const int WINDOW_WIDTH = 960;
 const int WINDOW_HEIGHT = 540;
 
 void Application::handleInput() {
-    
+    if (Input::isKeyDown(GLFW_KEY_W)) {
+        testSprite->move(5, 0);
+    }
+    if (Input::isKeyDown(GLFW_KEY_S)) {
+        testSprite->move(-5, 0);
+    }
 }
 
 Application::Application() {
     std::cout << "[INFO]: Hello!" << std::endl;
     
     window = new Window(WINDOW_WIDTH, WINDOW_HEIGHT, "@#Wars", false);
+    
+    Input::setWindow(*window);
     
     float f_windowWidth = static_cast<float>(WINDOW_WIDTH);
     float f_windowHeight = static_cast<float>(WINDOW_HEIGHT);
@@ -53,6 +60,7 @@ void Application::mainLoop() {
     window->show();
     while (window->isOpen()) {
         glCall(glClear, GL_COLOR_BUFFER_BIT);
+        handleInput();
         
         testSprite->draw();
         
