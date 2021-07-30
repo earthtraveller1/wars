@@ -11,6 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Resources.hpp"
 #include "Input.hpp"
+#include "Time.hpp"
 
 #include "Application.hpp"
 
@@ -27,10 +28,10 @@ const int WINDOW_HEIGHT = 540;
 
 void Application::handleInput() {
     if (Input::isKeyDown(GLFW_KEY_W)) {
-        
+        player->move(40 * Time.deltaTime, 0);
     }
     if (Input::isKeyDown(GLFW_KEY_S)) {
-        
+        player->move(-40 * Time.deltaTime, 0);
     }
 }
 
@@ -61,12 +62,17 @@ Application::Application() {
 void Application::mainLoop() {
     window->show();
     while (window->isOpen()) {
+        double startTime = glfwGetTime();
+        
         glCall(glClear, GL_COLOR_BUFFER_BIT);
         handleInput();
         
         player->draw();
         
         window->update();
+        
+        double endTime = glfwGetTime();
+        Time.deltaTime = endTime - startTime;
     }
 }
 
