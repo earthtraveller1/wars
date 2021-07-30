@@ -15,20 +15,7 @@ namespace wars {
         // The Window
         Window* window;
         
-        // Texture Atlases
-        graphics::TextureAtlas* testTexture;
-        
-        // Shaders
-        graphics::Shader* defaultShader;
-        
-        // Meshes
-        graphics::Mesh* squareMesh;
-        
-        // Materials
-        graphics::Material* testMaterial;
-        
-        // The Sprite
-        graphics::Sprite* sprite;
+        graphics::Sprite* testSprite;
     public:
         // Constructor
         Application();

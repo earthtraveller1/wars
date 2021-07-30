@@ -9,6 +9,7 @@
 #include <graphics/gldb.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Resources.hpp"
 
 #include "Application.hpp"
 
@@ -32,35 +33,12 @@ Application::Application() {
     float f_windowHeight = static_cast<float>(WINDOW_HEIGHT);
     graphics::projectionMatrix = glm::ortho(-f_windowWidth, f_windowWidth, -f_windowHeight, f_windowHeight, -1.0f, 1.0f);
     
-    squareMesh = new Mesh(
-        {
-            {
-                { 100.0, 100.0 },
-                { 1.0, 1.0 }
-            },
-            {
-                { 100.0, -100.0 },
-                { 1.0, 0.0 }
-            },
-            {
-                { -100.0, -100.0 },
-                { 0.0, 0.0 }
-            },
-            {
-                { -100.0, 100.0 },
-                { 0.0, 1.0 }
-            }
-        },
-        {
-            0, 1, 2, 0, 3, 2
-        }
-    );
+    Resources::prepareMeshes();
+    Resources::prepareShaders();
+    Resources::prepareTextureAtlases();
+    Resources::prepareMaterials();
     
-    testTexture = new TextureAtlas("textures/test.png");
-    defaultShader = new Shader("shaders/default.glsl");
-    testMaterial = new Material(*defaultShader, *testTexture);
-    
-    sprite = new Sprite(*squareMesh, *testMaterial);
+    testSprite = new Sprite(*Resources::Meshes::test, *Resources::Materials::test);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -70,17 +48,17 @@ void Application::mainLoop() {
     while (window->isOpen()) {
         glCall(glClear, GL_COLOR_BUFFER_BIT);
         
-        sprite->draw();
+        testSprite->draw();
         
         window->update();
     }
 }
 
 Application::~Application() {
-    delete squareMesh;
-    delete testMaterial;
-    delete testTexture;
-    delete defaultShader;
-    delete sprite;
+    delete Resources::Meshes::test;
+    delete Resources::Materials::test;
+    delete Resources::TextureAtlases::test;
+    delete Resources::Shaders::defaultShader;
+    delete testSprite;
     delete window;
 }
