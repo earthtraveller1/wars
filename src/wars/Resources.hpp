@@ -10,7 +10,6 @@ namespace graphics {
 
 namespace Resources {
     namespace Meshes {
-        extern graphics::Mesh* test;
         extern graphics::Mesh* player;
     }
     
@@ -25,7 +24,6 @@ namespace Resources {
     void prepareShaders();
     
     namespace TextureAtlases {
-        extern graphics::TextureAtlas* test;
         extern graphics::TextureAtlas* atlas1;
     }
     
@@ -33,7 +31,6 @@ namespace Resources {
     void prepareTextureAtlases();
     
     namespace Materials {
-        extern graphics::Material* test;
         extern graphics::Material* atlas1;
     }
     

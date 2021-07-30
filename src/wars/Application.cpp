@@ -71,9 +71,9 @@ void Application::mainLoop() {
 }
 
 Application::~Application() {
-    delete Resources::Meshes::test;
-    delete Resources::Materials::test;
-    delete Resources::TextureAtlases::test;
+    delete Resources::Meshes::player;
+    delete Resources::Materials::atlas1;
+    delete Resources::TextureAtlases::atlas1;
     delete Resources::Shaders::defaultShader;
     delete window;
 }

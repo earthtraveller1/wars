@@ -5,34 +5,9 @@
 using namespace Resources::Meshes;
 using graphics::Mesh;
 
-Mesh* Resources::Meshes::test = nullptr;
 Mesh* Resources::Meshes::player = nullptr;
 
 void Resources::prepareMeshes() {
-    test = new Mesh(
-        {
-            {
-                { 100.0, 100.0 },
-                { 1.0, 1.0 }
-            },
-            {
-                { 100.0, -100.0 },
-                { 1.0, 0.0 }
-            },
-            {
-                { -100.0, -100.0 },
-                { 0.0, 0.0 }
-            },
-            {
-                { -100.0, 100.0 },
-                { 0.0, 1.0 }
-            }
-        },
-        {
-            0, 1, 2, 0, 3, 2
-        }
-    );
-    
     player = new Mesh(
         {
             {
