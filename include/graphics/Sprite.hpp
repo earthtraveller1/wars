@@ -28,7 +28,7 @@ namespace graphics {
         void draw();
         
         // Move the sprite
-        void move(int x, int y);
+        void move(float x, float y);
         
         // Turn the sprite
         void turn(float degrees);

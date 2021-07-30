@@ -15,7 +15,7 @@ void Sprite::draw() {
     mesh.render();
 }
 
-void Sprite::move(int x, int y) {
+void Sprite::move(float x, float y) {
     modelMatrix = glm::translate(modelMatrix, glm::vec3(static_cast<float>(x), static_cast<float>(y), 0.0f));
 }
 
