@@ -10,28 +10,28 @@ namespace graphics {
 
 namespace Resources {
     namespace Meshes {
-        graphics::Mesh* test;
+        extern graphics::Mesh* test;
     }
     
     // Prepare the Meshes
     void prepareMeshes();
     
     namespace Shaders {
-        graphics::Shader* defaultShader;
+        extern graphics::Shader* defaultShader;
     }
     
     // Prepare the Shaders
     void prepareShaders();
     
     namespace TextureAtlases {
-        graphics::TextureAtlas* test;
+        extern graphics::TextureAtlas* test;
     }
     
     // Prepare the Texture atlases
     void prepareTextureAtlases();
     
     namespace Materials {
-        graphics::Material* test;
+        extern graphics::Material* test;
     }
     
     // Prepare the Materials

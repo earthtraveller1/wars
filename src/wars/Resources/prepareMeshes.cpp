@@ -5,6 +5,8 @@
 using namespace Resources::Meshes;
 using graphics::Mesh;
 
+Mesh* Resources::Meshes::test = nullptr;
+
 void Resources::prepareMeshes() {
     test = new Mesh(
         {
