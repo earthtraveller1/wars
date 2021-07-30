@@ -51,6 +51,10 @@ Application::Application() {
     Resources::prepareMaterials();
     
     testSprite = new Sprite(*Resources::Meshes::test, *Resources::Materials::test);
+    player = new Sprite(*Resources::Meshes::player, *Resources::Materials::atlas1);
+    
+    // Move the other thing aside
+    testSprite->move(400, 0);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -63,6 +67,7 @@ void Application::mainLoop() {
         handleInput();
         
         testSprite->draw();
+        player->draw();
         
         window->update();
     }

@@ -11,6 +11,7 @@ namespace graphics {
 namespace Resources {
     namespace Meshes {
         extern graphics::Mesh* test;
+        extern graphics::Mesh* player;
     }
     
     // Prepare the Meshes
@@ -25,6 +26,7 @@ namespace Resources {
     
     namespace TextureAtlases {
         extern graphics::TextureAtlas* test;
+        extern graphics::TextureAtlas* atlas1;
     }
     
     // Prepare the Texture atlases
@@ -32,6 +34,7 @@ namespace Resources {
     
     namespace Materials {
         extern graphics::Material* test;
+        extern graphics::Material* atlas1;
     }
     
     // Prepare the Materials
