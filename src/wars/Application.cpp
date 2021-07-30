@@ -10,6 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Resources.hpp"
+#include "Input.hpp"
 
 #include "Application.hpp"
 
@@ -23,6 +24,10 @@ using graphics::Sprite;
 
 const int WINDOW_WIDTH = 960;
 const int WINDOW_HEIGHT = 540;
+
+void Application::handleInput() {
+    
+}
 
 Application::Application() {
     std::cout << "[INFO]: Hello!" << std::endl;
@@ -45,6 +50,7 @@ Application::Application() {
 }
 
 void Application::mainLoop() {
+    window->show();
     while (window->isOpen()) {
         glCall(glClear, GL_COLOR_BUFFER_BIT);
         
