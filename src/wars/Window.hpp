@@ -13,6 +13,9 @@ private:
     // Create the window from a set of properties
     void create(bool fullscreen, std::string_view title);
 public:
+    // Make the input namespace a friend (it needs to access the private members)
+    friend class Input;
+    
     // Default Constructor
     Window();
     
