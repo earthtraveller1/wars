@@ -21,8 +21,6 @@ TextureAtlas::TextureAtlas(): TextureAtlas("texture-atlas.png") {
 }
 
 TextureAtlas::TextureAtlas(std::string_view imagePath) {
-    stbi_set_flip_vertically_on_load(true);
-    
     int width, height, nrChannels;
     unsigned char* data = stbi_load(imagePath.data(), &width, &height, &nrChannels, 0);
     
