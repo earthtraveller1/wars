@@ -49,3 +49,10 @@ config.h
 
 # The libraries that have binaries in them
 /deps/GLFW/*
+
+# Exclude the build directory
+/build/*
+
+# Don't exclude the resource folders though
+!/build/shaders
+!/build/textures
