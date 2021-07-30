@@ -10,7 +10,7 @@ namespace graphics {
 
 namespace Resources {
     namespace Meshes {
-        graphics::Mesh* square;
+        graphics::Mesh* test;
     }
     
     // Prepare the Meshes
