@@ -15,7 +15,7 @@ private:
     std::vector<graphics::Sprite> sprites;
     
     // The scene that is currently active
-    static Scene* active = nullptr;
+    static Scene* active;
 public:
     // Default Constructor, initializes an empty vector
     Scene() = default;
