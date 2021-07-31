@@ -21,7 +21,8 @@ public:
     Scene() = default;
     
     // Construct from a vector of sprites
-    Scene(const std::vector<graphics::Sprite>& sprites);
+    Scene(std::vector<graphics::Sprite>& sprites);
+    Scene(std::vector<graphics::Sprite>&& sprites);
     
     // Render the scene
     void render();
