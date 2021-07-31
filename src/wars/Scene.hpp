@@ -32,6 +32,6 @@ public:
     
     // Render the active scene
     static void renderActive();
-}
+};
 
 #endif /* AE31E619_96C8_4000_8724_D323B6A6BDB4 */
