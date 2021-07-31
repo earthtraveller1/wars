@@ -12,7 +12,7 @@ namespace graphics {
 
 class Scene {
 private:
-    std::vector<graphics::Sprite> sprites;
+    std::vector<graphics::Sprite&> sprites;
     
     // The scene that is currently active
     static Scene* active;
@@ -21,8 +21,8 @@ public:
     Scene() = default;
     
     // Construct from a vector of sprites
-    Scene(std::vector<graphics::Sprite>& sprites);
-    Scene(std::vector<graphics::Sprite>&& sprites);
+    Scene(std::vector<graphics::Sprite&>& sprites);
+    Scene(std::vector<graphics::Sprite&>&& sprites);
     
     // Render the scene
     void render();
