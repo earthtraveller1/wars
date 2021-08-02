@@ -7,6 +7,10 @@ using graphics::Sprite;
 
 Scene* Scene::active = nullptr;
 
+Scene::Scene() {
+    
+}
+
 void Scene::setActive(Scene& newActive) {
     active = &newActive;
 }
