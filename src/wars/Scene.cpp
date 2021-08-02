@@ -5,6 +5,8 @@
 
 using graphics::Sprite;
 
+Scene* Scene::active = nullptr;
+
 void Scene::setActive(Scene& newActive) {
     active = &newActive;
 }
