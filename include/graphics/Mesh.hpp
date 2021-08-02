@@ -3,7 +3,6 @@
 
 #include <graphics/Vertex.hpp>
 #include <vector>
-#include <graphics/Material.hpp>
 
 namespace graphics {
     // A Class that represents a Mesh. Really basic for now, since I don't have much special needs

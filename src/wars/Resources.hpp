@@ -3,7 +3,6 @@
 
 namespace graphics {
     class Mesh;
-    class Material;
     class TextureAtlas;
     class Shader;
 }
@@ -29,13 +28,6 @@ namespace Resources {
     
     // Prepare the Texture atlases
     void prepareTextureAtlases();
-    
-    namespace Materials {
-        extern graphics::Material* atlas1;
-    }
-    
-    // Prepare the Materials
-    void prepareMaterials();
 }
 
 #endif /* E7988B6C_E6C4_4EDD_9DAC_7C0AAB9EDC8A */

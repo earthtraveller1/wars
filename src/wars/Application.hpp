@@ -4,7 +4,6 @@
 #include "Window.hpp"
 #include <graphics/TextureAtlas.hpp>
 #include <graphics/Shader.hpp>
-#include <graphics/Material.hpp>
 #include <graphics/Mesh.hpp>
 #include <graphics/Sprite.hpp>
 

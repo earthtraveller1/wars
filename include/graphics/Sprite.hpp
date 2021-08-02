@@ -6,7 +6,7 @@
 namespace graphics {
     class Mesh;
     
-    class Material;
+    class Shader;
     
     // A Class to represent a sprite. Basic for now, add more features later on.
     class Sprite {
@@ -14,18 +14,15 @@ namespace graphics {
         // The Mesh of the sprite (typically a rectangle)
         Mesh& mesh;
         
-        // The Material of the sprite
-        Material& material;
-        
         // The model matrix
         glm::mat4 modelMatrix;
         
     public:
         // Constructor
-        Sprite(Mesh& mesh, Material& material);
+        Sprite(Mesh& mesh);
         
         // Draw the sprite
-        void draw();
+        void draw(Shader& shader);
         
         // Move the sprite
         void move(float x, float y);

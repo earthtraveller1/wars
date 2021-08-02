@@ -1,17 +1,16 @@
 #include <graphics/Sprite.hpp>
-#include <graphics/Material.hpp>
 #include <graphics/Mesh.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <graphics/Shader.hpp>
 
 using graphics::Sprite;
 
-Sprite::Sprite(Mesh& p_mesh, Material& p_material): mesh(p_mesh), material(p_material) {
+Sprite::Sprite(Mesh& p_mesh): mesh(p_mesh) {
     modelMatrix = glm::mat4(1.0f);
 }
 
-void Sprite::draw() {
-    material.use();
-    material.setUniform("model", modelMatrix);
+void Sprite::draw(Shader& shader) {
+    shader.setUniform("model", modelMatrix);
     mesh.render();
 }
 

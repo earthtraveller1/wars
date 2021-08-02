@@ -3,7 +3,6 @@ target_sources(
     
     "basic-utils.cpp"
     "gldb.cpp"
-    "Material.cpp"
     "Mesh.cpp"
     "ProjectionMatrix.cpp"
     "Shader.cpp"
