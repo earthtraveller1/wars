@@ -24,15 +24,6 @@ using graphics::Sprite;
 const int WINDOW_WIDTH = 960;
 const int WINDOW_HEIGHT = 540;
 
-void Application::handleInput() {
-    if (Input::isKeyDown(GLFW_KEY_W)) {
-        player->move(100 * Time.deltaTime, 0);
-    }
-    if (Input::isKeyDown(GLFW_KEY_S)) {
-        player->move(-100 * Time.deltaTime, 0);
-    }
-}
-
 Application::Application() {
     std::cout << "[INFO]: Hello!" << std::endl;
     
@@ -50,7 +41,8 @@ Application::Application() {
     Resources::prepareShaders();
     Resources::prepareTextureAtlases();
     
-    player = new Sprite(*Resources::Meshes::player);
+    scene1 = new Scene1();
+    Scene::setActive(*scene1);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -60,7 +52,6 @@ void Application::mainLoop() {
     window->show();
     while (window->isOpen()) {
         double startTime = glfwGetTime();
-        handleInput();
         
         glCall(glClear, GL_COLOR_BUFFER_BIT);
         
@@ -71,7 +62,8 @@ void Application::mainLoop() {
         glCall(glActiveTexture, GL_TEXTURE0);
         Resources::TextureAtlases::atlas1->bind();
         
-        player->draw(*Resources::Shaders::defaultShader);
+        Scene::renderActive();
+        Scene::updateActive();
         
         window->update();
         

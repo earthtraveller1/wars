@@ -6,6 +6,7 @@
 #include <graphics/Shader.hpp>
 #include <graphics/Mesh.hpp>
 #include <graphics/Sprite.hpp>
+#include "Scenes/Scene1.hpp"
 
 namespace wars {
     // The class that represents the entire application
@@ -13,9 +14,7 @@ namespace wars {
     private:
         Window* window;
         
-        graphics::Sprite* player;
-        
-        void handleInput();
+        Scene1* scene1;
     public:
         Application();
         
