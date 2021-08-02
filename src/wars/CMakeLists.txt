@@ -15,3 +15,4 @@ target_sources(
 )
 
 add_subdirectory("Resources")
+add_subdirectory("Scenes")
