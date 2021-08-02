@@ -5,6 +5,7 @@ target_sources(
     "Input.cpp"
     "wars.cpp"
     "Window.cpp"
+    "Scene.cpp"
     
     "Application.hpp"
     "Input.hpp"
