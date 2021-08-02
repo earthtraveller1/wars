@@ -42,7 +42,7 @@ Application::Application() {
     Resources::prepareTextureAtlases();
     
     scene1 = new Scene1();
-    Scene::setActive(*scene1);
+    Scene::setActive(scene1);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);

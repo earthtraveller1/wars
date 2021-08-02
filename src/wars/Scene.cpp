@@ -11,8 +11,8 @@ Scene::Scene() {
     
 }
 
-void Scene::setActive(Scene& newActive) {
-    active = &newActive;
+void Scene::setActive(Scene* newActive) {
+    active = newActive;
 }
 
 void Scene::renderActive() {

@@ -25,7 +25,7 @@ public:
     virtual void update() = 0;
     
     // Set the active scene
-    static void setActive(Scene& newActive);
+    static void setActive(Scene* newActive);
     
     // Render the active scene
     static void renderActive();
