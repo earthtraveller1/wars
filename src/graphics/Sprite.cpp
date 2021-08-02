@@ -15,7 +15,7 @@ void Sprite::draw(Shader& shader) {
 }
 
 void Sprite::move(float x, float y) {
-    modelMatrix = glm::translate(modelMatrix, glm::vec3(static_cast<float>(x), static_cast<float>(y), 0.0f));
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(x, y, 0.0f));
 }
 
 void Sprite::turn(float degree) {
