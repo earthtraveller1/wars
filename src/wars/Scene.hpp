@@ -22,7 +22,7 @@ public:
     virtual void render() = 0;
     
     // Update the scene
-    virtual void update() = 0;
+    virtual void update(double deltaTime) = 0;
     
     // Set the active scene
     static void setActive(Scene* newActive);
@@ -31,7 +31,7 @@ public:
     static void renderActive();
     
     // Update the active scene
-    static void updateActive();
+    static void updateActive(double deltaTime);
 };
 
 #endif /* AE31E619_96C8_4000_8724_D323B6A6BDB4 */

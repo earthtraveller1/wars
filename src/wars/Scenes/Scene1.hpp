@@ -17,7 +17,7 @@ public:
     
     virtual void render() override;
     
-    virtual void update() override;
+    virtual void update(double deltaTime) override;
 };
 
 #endif /* A1363910_B5D1_4AAF_8CE0_4451C7FCD08F */

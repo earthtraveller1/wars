@@ -19,6 +19,6 @@ void Scene::renderActive() {
     active->render();
 }
 
-void Scene::updateActive() {
-    active->update();
+void Scene::updateActive(double deltaTime) {
+    active->update(deltaTime);
 }
