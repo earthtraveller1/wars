@@ -20,5 +20,5 @@ void Scene::renderActive() {
 }
 
 void Scene::updateActive() {
-    active->render();
+    active->update();
 }
