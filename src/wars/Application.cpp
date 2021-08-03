@@ -63,7 +63,6 @@ void Application::mainLoop() {
         Resources::TextureAtlases::atlas1->bind();
         
         Scene::renderActive();
-        std::cout << "Time.deltaTime = " << Time.deltaTime << std::endl;
         Scene::updateActive(Time.deltaTime);
         
         window->update();
