@@ -6,6 +6,8 @@ using graphics::Shader;
 using graphics::TextureAtlas;
 
 Shader* Resources::Shaders::defaultShader = nullptr;
+
+TextureAtlas* Resources::TextureAtlases::atlas0 = nullptr;
 TextureAtlas* Resources::TextureAtlases::atlas1 = nullptr;
 
 void Resources::prepareShaders() {
