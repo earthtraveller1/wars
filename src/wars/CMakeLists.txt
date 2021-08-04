@@ -17,3 +17,4 @@ target_sources(
 
 add_subdirectory("Resources")
 add_subdirectory("Scenes")
+add_subdirectory("sprite-types")
