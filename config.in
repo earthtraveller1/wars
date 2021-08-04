@@ -1,1 +1,2 @@
 #cmakedefine ENABLE_OPENGL_DEBUGGING
+#cmakedefine BUILD_SHARED_LIBS
