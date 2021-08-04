@@ -25,10 +25,10 @@ namespace graphics {
         void draw(Shader& shader);
         
         // Move the sprite
-        void move(float x, float y);
+        virtual void move(float x, float y);
         
         // Turn the sprite
-        void turn(float degrees);
+        virtual void turn(float degrees);
     };
 }
 
