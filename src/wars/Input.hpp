@@ -20,7 +20,7 @@ public:
     static int getMouseY();
     
     // Get the cursor position
-    glm::vec2 getMousePos();
+    static glm::vec2 getMousePos();
     
     // check whether the mouse is clicked or not
     static bool isMouseButtonDown(int button);
