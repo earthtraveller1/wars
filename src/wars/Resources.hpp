@@ -9,6 +9,11 @@ namespace graphics {
 
 namespace Resources {
     namespace Meshes {
+        // Main screen stuff
+        extern graphics::Mesh* scene0Background;
+        extern graphics::Mesh* playButton;
+        extern graphics::Mesh* otherButton;
+        
         extern graphics::Mesh* player;
     }
     
@@ -23,6 +28,7 @@ namespace Resources {
     void prepareShaders();
     
     namespace TextureAtlases {
+        extern graphics::TextureAtlas* atlas0;
         extern graphics::TextureAtlas* atlas1;
     }
     

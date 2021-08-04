@@ -13,5 +13,6 @@ void Resources::prepareShaders() {
 }
 
 void Resources::prepareTextureAtlases() {
+    TextureAtlases::atlas0 = new TextureAtlas("textures/texture-atlas-0.png");
     TextureAtlases::atlas1 = new TextureAtlas("textures/texture-atlas-1.png");
 }
