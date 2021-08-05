@@ -7,6 +7,7 @@
 #include <graphics/Mesh.hpp>
 #include <graphics/Sprite.hpp>
 #include "Scenes/Scene1.hpp"
+#include "Scenes/Scene0.hpp"
 
 namespace wars {
     // The class that represents the entire application
@@ -14,6 +15,7 @@ namespace wars {
     private:
         Window* window;
         
+        Scene0* scene0;
         Scene1* scene1;
     public:
         Application();

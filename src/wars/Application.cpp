@@ -11,6 +11,7 @@
 #include "Resources.hpp"
 #include "Input.hpp"
 #include "Time.hpp"
+#include "Scenes/Scene0.hpp"
 
 #include "Application.hpp"
 
@@ -41,8 +42,10 @@ Application::Application() {
     Resources::prepareShaders();
     Resources::prepareTextureAtlases();
     
+    scene0 = new Scene0();
     scene1 = new Scene1();
-    Scene::setActive(scene1);
+    
+    Scene::setActive(scene0);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);
@@ -60,7 +63,6 @@ void Application::mainLoop() {
         Resources::Shaders::defaultShader->setUniform("textureAtlas", 0);
         
         glCall(glActiveTexture, GL_TEXTURE0);
-        Resources::TextureAtlases::atlas1->bind();
         
         Scene::renderActive();
         Scene::updateActive(Time.deltaTime);
