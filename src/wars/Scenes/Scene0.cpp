@@ -2,6 +2,7 @@
 #include <graphics/TextureAtlas.hpp>
 #include <glad/glad.h>
 #include <graphics/gldb.hpp>
+#include "../Scenes.hpp"
 
 #include "Scene0.hpp"
 
@@ -20,5 +21,7 @@ void Scene0::render() {
 }
 
 void Scene0::update(double deltaTime) {
-    
+    if (playButton.isClicked()) {
+        Scene::setActive(reinterpret_cast<Scene*>(Scenes::scene1));
+    }
 }
