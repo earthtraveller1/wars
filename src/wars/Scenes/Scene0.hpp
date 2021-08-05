@@ -6,11 +6,11 @@
 
 class Scene0: public Scene {
 private:
-    //Button playButton;
-    //Button otherButton;
-    
     // The background
     graphics::Sprite background;
+    
+    Button playButton;
+    Button otherButton;
     
 public:
     Scene0();
