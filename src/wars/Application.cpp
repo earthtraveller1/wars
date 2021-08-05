@@ -13,6 +13,7 @@
 #include "Time.hpp"
 #include "Scenes/Scene0.hpp"
 #include "Scenes/Scene1.hpp"
+#include "Scenes.hpp"
 
 #include "Application.hpp"
 
@@ -43,10 +44,10 @@ Application::Application() {
     Resources::prepareShaders();
     Resources::prepareTextureAtlases();
     
-    scene0 = new Scene0();
-    scene1 = new Scene1();
+    Scenes::scene0 = new Scene0();
+    Scenes::scene1 = new Scene1();
     
-    Scene::setActive(scene0);
+    Scene::setActive(Scenes::scene0);
     
     // Set the background color
     glCall(glClearColor, 0.0f, 1.0f, 0.0f, 1.0f);

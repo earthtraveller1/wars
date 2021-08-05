@@ -3,14 +3,16 @@ target_sources(
     
     "Application.cpp"
     "Input.cpp"
+    "Scene.cpp"
+    "Scenes.cpp"
     "wars.cpp"
     "Window.cpp"
-    "Scene.cpp"
     
     "Application.hpp"
     "Input.hpp"
     "Resources.hpp"
     "Scene.hpp"
+    "Scenes.hpp"
     "Time.hpp"
     "Window.hpp"
 )

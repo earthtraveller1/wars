@@ -3,17 +3,11 @@
 
 class Window;
 
-class Scene0;
-class Scene1;
-
 namespace wars {
     // The class that represents the entire application
     class Application {
     private:
         Window* window;
-        
-        Scene0* scene0;
-        Scene1* scene1;
     public:
         Application();
         
