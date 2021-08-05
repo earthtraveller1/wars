@@ -6,6 +6,7 @@
 #include "../Input.hpp"
 #include "../Time.hpp"
 #include <iostream>
+#include <graphics/TextureAtlas.hpp>
 
 #include "Scene1.hpp"
 
@@ -14,6 +15,7 @@ Scene1::Scene1(): player(*Resources::Meshes::player) {
 }
 
 void Scene1::render() {
+    Resources::TextureAtlases::atlas1->bind();
     player.draw(*Resources::Shaders::defaultShader);
 }
 
