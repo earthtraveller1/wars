@@ -12,6 +12,7 @@
 #include "Input.hpp"
 #include "Time.hpp"
 #include "Scenes/Scene0.hpp"
+#include "Scenes/Scene1.hpp"
 
 #include "Application.hpp"
 
