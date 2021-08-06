@@ -8,6 +8,18 @@ namespace wars {
     class Application {
     private:
         Window* window;
+        
+        // Prepare the window
+        void initWindow();
+        
+        // Prepare the resources
+        void initResources();
+        
+        // Prepare the scenes so that they can be rendered
+        void initScenes();
+        
+        // Set the background color
+        void initBackgroundColor();
     public:
         Application();
         
