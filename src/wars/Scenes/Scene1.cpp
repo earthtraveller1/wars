@@ -7,6 +7,7 @@
 #include "../Time.hpp"
 #include <iostream>
 #include <graphics/TextureAtlas.hpp>
+#include "../Scenes.hpp"
 
 #include "Scene1.hpp"
 
@@ -25,5 +26,9 @@ void Scene1::update(double deltaTime) {
     }
     if (Input::isKeyDown(GLFW_KEY_S)) {
         player.move(-100 * deltaTime, 0);
+    }
+    
+    if (Input::isKeyDown(GLFW_KEY_ESCAPE)) {
+        Scene::setActive(reinterpret_cast<Scene*>(Scenes::scene0));
     }
 }
