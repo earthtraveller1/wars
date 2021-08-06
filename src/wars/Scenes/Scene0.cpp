@@ -7,8 +7,8 @@
 #include "Scene0.hpp"
 
 Scene0::Scene0(): background(*Resources::Meshes::scene0Background),
-                  playButton(*Resources::Meshes::playButton),
-                  otherButton(*Resources::Meshes::otherButton) {
+                  playButton(*Resources::Meshes::playButton, {78, -78, 37, -37}),
+                  otherButton(*Resources::Meshes::otherButton, {102, -102, 37, -37}) {
     playButton.move(-334.0f, 115.0f);
     otherButton.move(-310.0f, 15.0f);
 }
