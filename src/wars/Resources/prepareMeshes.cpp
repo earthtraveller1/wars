@@ -9,6 +9,7 @@ Mesh* Resources::Meshes::scene0Background = nullptr;
 Mesh* Resources::Meshes::playButton = nullptr;
 Mesh* Resources::Meshes::otherButton = nullptr;
 
+Mesh* Resources::Meshes::gameBackground = nullptr;
 Mesh* Resources::Meshes::player = nullptr;
 
 void Resources::prepareMeshes() {
@@ -29,6 +30,32 @@ void Resources::prepareMeshes() {
             {
                 { -480.0f, 270.0f },
                 { 0.0f, 0.0f }
+            }
+        },
+        {
+            0, 1, 2, 0, 3, 2
+        }
+    );
+    
+    
+    
+    gameBackground = new Mesh(
+        {
+            {
+                { 480.0f, 270.0f },
+                { 0.960f, 0.131f }
+            },
+            {
+                { 480.0f, -270.0f },
+                { 0.960f, 0.671f }
+            },
+            {
+                { -480.0f, -270.0f },
+                { 0.0f, 0.671f }
+            },
+            {
+                { -480.0f, 270.0f },
+                { 0.0f, 0.131f }
             }
         },
         {
@@ -93,19 +120,19 @@ void Resources::prepareMeshes() {
     player = new Mesh(
         {
             {
-                { 58.0, 65.5 },
-                { 0.116, 0.0 }
+                { 57.5, 64.0 },
+                { 0.115, 0.0 }
             },
             {
-                { 58.0, -65.5 },
-                { 0.116, 0.131 }
+                { 57.5, -64.0 },
+                { 0.115, 0.130 }
             },
             {
-                { -58.0, -65.5 },
-                { 0.0, 0.131 }
+                { -57.5, -64.0 },
+                { 0.0, 0.130 }
             },
             {
-                { -58.0, 65.5 },
+                { -57.5, 64.0 },
                 { 0.0, 0.0 }
             }
         },

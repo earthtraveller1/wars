@@ -10,6 +10,7 @@ namespace graphics {
 class Scene1: public Scene {
 public:
     graphics::Sprite player;
+    graphics::Sprite background;
     
 public:
     // Default Constructor

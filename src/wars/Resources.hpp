@@ -14,6 +14,8 @@ namespace Resources {
         extern graphics::Mesh* playButton;
         extern graphics::Mesh* otherButton;
         
+        // Playing area
+        extern graphics::Mesh* gameBackground;
         extern graphics::Mesh* player;
     }
     
