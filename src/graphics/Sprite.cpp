@@ -7,7 +7,7 @@ using graphics::Sprite;
 
 Sprite::Sprite(Mesh& p_mesh): mesh(p_mesh) {
     modelMatrix = glm::mat4(1.0f);
-    dir = Direction::LEFT;
+    dir = Direction::RIGHT;
 }
 
 void Sprite::draw(Shader& shader) {
