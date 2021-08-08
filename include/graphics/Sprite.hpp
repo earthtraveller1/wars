@@ -21,6 +21,9 @@ namespace graphics {
         // The model matrix
         glm::mat4 modelMatrix;
         
+        // The direction that the sprite is facing
+        Direction dir;
+        
     public:
         // Constructor
         Sprite(Mesh& mesh);
