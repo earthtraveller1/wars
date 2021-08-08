@@ -8,6 +8,10 @@ namespace graphics {
     
     class Shader;
     
+    enum class Direction {
+        LEFT, RIGHT
+    };
+    
     // A Class to represent a sprite. Basic for now, add more features later on.
     class Sprite {
     private:
@@ -29,6 +33,9 @@ namespace graphics {
         
         // Turn the sprite
         virtual void turn(float degrees);
+        
+        // Set the direction that the sprite is facing
+        virtual void setDirection(Direction dir);
     };
 }
 
