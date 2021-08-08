@@ -23,10 +23,12 @@ void Scene1::render() {
 
 void Scene1::update(double deltaTime) {
     if (Input::isKeyDown(GLFW_KEY_W)) {
+        player.setDirection(graphics::Direction::RIGHT);
         player.move(100 * deltaTime, 0);
     }
     if (Input::isKeyDown(GLFW_KEY_S)) {
-        player.move(-100 * deltaTime, 0);
+        player.setDirection(graphics::Direction::LEFT);
+        player.move(100 * deltaTime, 0);
     }
     
     if (Input::isKeyDown(GLFW_KEY_ESCAPE)) {
