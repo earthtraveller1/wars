@@ -12,7 +12,7 @@
 #include "Scene1.hpp"
 
 Scene1::Scene1(): player(*Resources::Meshes::player), background(*Resources::Meshes::gameBackground) {
-    player.move(0.0f, -93.0f);
+    player.move(-110.0f, -93.0f);
 }
 
 void Scene1::render() {
