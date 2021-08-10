@@ -2,6 +2,7 @@ target_sources(
     "wars" PRIVATE
     
     "Application.cpp"
+    "CollisionBox.cpp"
     "Input.cpp"
     "Scene.cpp"
     "Scenes.cpp"
@@ -9,6 +10,7 @@ target_sources(
     "Window.cpp"
     
     "Application.hpp"
+    "CollisionBox.hpp"
     "Input.hpp"
     "Resources.hpp"
     "Scene.hpp"
