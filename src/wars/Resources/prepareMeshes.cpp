@@ -11,6 +11,7 @@ Mesh* Resources::Meshes::otherButton = nullptr;
 
 Mesh* Resources::Meshes::gameBackground = nullptr;
 Mesh* Resources::Meshes::player = nullptr;
+Mesh* Resources::Meshes::zombie = nullptr;
 
 void Resources::prepareMeshes() {
     scene0Background = new Mesh(
@@ -134,6 +135,32 @@ void Resources::prepareMeshes() {
             {
                 { -23.5, 64.0 },
                 { 0.0, 0.0 }
+            }
+        },
+        {
+            0, 1, 2, 0, 3, 2
+        }
+    );
+    
+    
+    
+    zombie = new Mesh(
+        {
+            {
+                { 91.5, 64.0 },
+                { 0.188, 0.0 }
+            },
+            {
+                { 91.5, -64.0 },
+                { 0.188, 0.131 }
+            },
+            {
+                { -23.5, -64.0 },
+                { 0.116, 0.131 }
+            },
+            {
+                { -23.5, 64.0 },
+                { 0.116, 0.0 }
             }
         },
         {
