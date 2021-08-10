@@ -11,14 +11,19 @@
 
 #include "Scene1.hpp"
 
-Scene1::Scene1(): player(*Resources::Meshes::player), background(*Resources::Meshes::gameBackground) {
+Scene1::Scene1(): 
+player(*Resources::Meshes::player),
+zombie1(*Resources::Meshes::zombie),
+background(*Resources::Meshes::gameBackground) {
     player.move(-110.0f, -93.0f);
+    zombie1.move(200.0, -93.0);
 }
 
 void Scene1::render() {
     Resources::TextureAtlases::atlas1->bind();
     background.draw(*Resources::Shaders::defaultShader);
     player.draw(*Resources::Shaders::defaultShader);
+    zombie1.draw(*Resources::Shaders::defaultShader);
 }
 
 void Scene1::update(double deltaTime) {

@@ -10,6 +10,8 @@ namespace graphics {
 class Scene1: public Scene {
 public:
     graphics::Sprite player;
+    graphics::Sprite zombie1;
+    
     graphics::Sprite background;
     
 public:
