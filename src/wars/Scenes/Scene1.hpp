@@ -2,15 +2,21 @@
 #define A1363910_B5D1_4AAF_8CE0_4451C7FCD08F
 
 #include "../Scene.hpp"
+#include "../CollisionBox.hpp"
 
 namespace graphics {
     class Sprite;
 }
 
+class CollisionBox;
+
 class Scene1: public Scene {
 public:
     graphics::Sprite player;
     graphics::Sprite zombie1;
+    
+    CollisionBox playerCBox;
+    CollisionBox zombie1CBox;
     
     graphics::Sprite background;
     
