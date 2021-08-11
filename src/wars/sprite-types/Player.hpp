@@ -5,6 +5,7 @@
 #include "../CollisionBox.hpp"
 
 class Player: public graphics::Sprite, public CollisionBox {
+public:
     Player();
     
     virtual void move(double x, double y);
