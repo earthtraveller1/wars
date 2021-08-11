@@ -15,7 +15,7 @@ public:
     bool collided(const CollisionBox& target) const;
     
     // Move the collision box
-    void move(double x, double y);
+    virtual void move(double x, double y);
 };
 
 #endif /* D62F609B_508A_4C92_8E89_A10337AF1D71 */
