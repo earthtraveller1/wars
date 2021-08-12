@@ -41,8 +41,8 @@ void Scene1::update(double deltaTime) {
     }
     
     if (player.collided(zombie1)) {
-        std::cout << "No" << std::endl;
-    } else {
         std::cout << "YES!" << std::endl;
+    } else {
+        std::cout << "No!" << std::endl;
     }
 }
