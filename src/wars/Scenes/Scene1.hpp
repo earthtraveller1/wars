@@ -16,7 +16,10 @@ class CollisionBox;
 class Scene1: public Scene {
 public:
     Player player;
+    
     Zombie zombie1;
+    Zombie zombie2;
+    Zombie zombie3;
     
     graphics::Sprite background;
     

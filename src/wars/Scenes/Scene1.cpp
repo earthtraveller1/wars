@@ -16,14 +16,25 @@ Scene1::Scene1():
     background(*Resources::Meshes::gameBackground)
 {
     player.move(-110.0f, -93.0f);
-    zombie1.move(200.0, -93.0);
+    
+    zombie1.move(150.0, -93.0);
+    zombie2.move(250.0, -93.0);
+    zombie3.move(350.0, -93.0);
+    
+    zombie1.setDirection(graphics::Direction::LEFT);
+    zombie2.setDirection(graphics::Direction::LEFT);
+    zombie3.setDirection(graphics::Direction::LEFT);
 }
 
 void Scene1::render() {
     Resources::TextureAtlases::atlas1->bind();
     background.draw(*Resources::Shaders::defaultShader);
+    
     player.draw(*Resources::Shaders::defaultShader);
+    
     zombie1.draw(*Resources::Shaders::defaultShader);
+    zombie2.draw(*Resources::Shaders::defaultShader);
+    zombie3.draw(*Resources::Shaders::defaultShader);
 }
 
 void Scene1::update(double deltaTime) {
