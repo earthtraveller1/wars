@@ -39,10 +39,4 @@ void Scene1::update(double deltaTime) {
     if (Input::isKeyDown(GLFW_KEY_ESCAPE)) {
         Scene::setActive(reinterpret_cast<Scene*>(Scenes::scene0));
     }
-    
-    if (player.collided(zombie1)) {
-        std::cout << "YES!" << std::endl;
-    } else {
-        std::cout << "No!" << std::endl;
-    }
 }
