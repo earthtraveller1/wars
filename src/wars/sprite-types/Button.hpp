@@ -23,7 +23,7 @@ public:
     bool isClicked();
     
     // Move the button around
-    virtual void move(float x, float y) override;
+    virtual void move(double x, double y) override;
 };
 
 #endif /* EBDCA3D9_0B00_42FB_86A8_97C1AA0D640E */

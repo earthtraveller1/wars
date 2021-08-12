@@ -24,7 +24,7 @@ bool Button::isClicked() {
     );
 }
 
-void Button::move(float x, float y) {
+void Button::move(double x, double y) {
     Sprite::move(x, y);
     
     // Move the clickbox also
