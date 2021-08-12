@@ -4,6 +4,9 @@
 #include "../Scene.hpp"
 #include "../CollisionBox.hpp"
 
+#include "../sprite-types/Player.hpp"
+#include "../sprite-types/Zombie.hpp"
+
 namespace graphics {
     class Sprite;
 }
@@ -12,11 +15,8 @@ class CollisionBox;
 
 class Scene1: public Scene {
 public:
-    graphics::Sprite player;
-    graphics::Sprite zombie1;
-    
-    CollisionBox playerCBox;
-    CollisionBox zombie1CBox;
+    Player player;
+    Zombie zombie1;
     
     graphics::Sprite background;
     
