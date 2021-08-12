@@ -20,7 +20,8 @@ namespace graphics {
         
         // The model matrix
         glm::mat4 modelMatrix;
-        
+    
+    protected:
         // The direction that the sprite is facing
         Direction dir;
         
