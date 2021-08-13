@@ -12,6 +12,6 @@ public:
     Bullet();
     
     virtual void move(double x, double y);
-}
+};
 
 #endif /* CB07792D_8AAF_4B66_B9AB_739DDBFFDEA7 */
