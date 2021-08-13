@@ -4,7 +4,7 @@
 
 #include "Bullet.hpp"
 
-Bullet::Bullet(): Sprite(*Resources::Meshes::bullet), CollisionBox(20.0, -20.0, 6.0, -6.0) {
+Bullet::Bullet(): Sprite(*Resources::Meshes::bullet), CollisionBox(10.0, -10.0, 3.0, -3.0) {
     
 }
 
