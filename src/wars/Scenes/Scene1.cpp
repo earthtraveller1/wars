@@ -12,9 +12,7 @@
 
 #include "Scene1.hpp"
 
-Scene1::Scene1():
-    background(*Resources::Meshes::gameBackground)
-{
+Scene1::Scene1(): background(*Resources::Meshes::gameBackground) {
     player.move(-110.0f, -93.0f);
     
     zombie1.move(150.0, -93.0);
