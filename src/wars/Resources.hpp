@@ -18,6 +18,7 @@ namespace Resources {
         extern graphics::Mesh* gameBackground;
         extern graphics::Mesh* player;
         extern graphics::Mesh* zombie;
+        extern graphics::Mesh* bullet;
     }
     
     // Prepare the Meshes
