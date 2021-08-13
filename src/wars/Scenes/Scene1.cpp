@@ -1,6 +1,4 @@
 #include "../Resources.hpp"
-#include <graphics/Mesh.hpp>
-#include <graphics/Sprite.hpp>
 #include <graphics/Shader.hpp>
 #include <GLFW/glfw3.h>
 #include "../Input.hpp"
@@ -9,6 +7,7 @@
 #include <graphics/TextureAtlas.hpp>
 #include "../Scenes.hpp"
 #include "../CollisionBox.hpp"
+#include "../Scene.hpp"
 
 #include "Scene1.hpp"
 
@@ -28,6 +27,8 @@ void Scene1::render() {
     Resources::TextureAtlases::atlas1->bind();
     background.draw(*Resources::Shaders::defaultShader);
     
+    bullet.draw(*Resources::Shaders::defaultShader);
+
     player.draw(*Resources::Shaders::defaultShader);
     
     zombie1.draw(*Resources::Shaders::defaultShader);
