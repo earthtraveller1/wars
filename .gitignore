@@ -1,0 +1,26 @@
+# Executables
+*.exe
+*.app
+wars
+
+# Object files
+*.o
+
+# CMake clutters
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/
+
+# Ninja Clutter
+.ninja_deps
+.ninja_log
+build.ninja
+rules.ninja
+
+# Visual Studio Code configuration files
+.vscode/tasks.json
+.vscode/launch.json
+
+# Don't ignore sources
+!/src/*
+!/include/*
