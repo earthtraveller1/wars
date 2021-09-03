@@ -1,3 +1,3 @@
-# @#Wars
+# Wars
 
-An implementation of @#Wars.
+An implementation of Wars.
