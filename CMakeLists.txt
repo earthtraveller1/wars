@@ -12,5 +12,7 @@ endif()
 
 add_executable("wars")
 
+target_include_directories("wars" PRIVATE "include")
+
 add_subdirectory("src")
 add_subdirectory("include")
