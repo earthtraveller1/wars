@@ -1,13 +1,15 @@
 #include <pch.hpp>
 #include <engine.hpp>
 
-int main() {
+int main()
+{
     wars::engine engine;
-    
-    while (true) {
+
+    while (true)
+    {
         engine.render();
         engine.update();
     }
-    
+
     return 0;
 }
