@@ -11,9 +11,6 @@ namespace wars
         event() = default;
         
         virtual ~event();
-        
-    private:
-        event_type type;
     };
 }
 
