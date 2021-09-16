@@ -5,14 +5,10 @@
 
 namespace wars
 {
-    enum class event_type;
-    
     class event
     {
     public:
         event() = default;
-        
-        virtual event_type get_type();
         
         virtual ~event();
         
