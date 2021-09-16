@@ -2,5 +2,6 @@
 #define F8917D79_2330_44DB_9D10_0877ADCD69CE
 
 #include <iostream>
+#include <stdint.h>
 
 #endif /* F8917D79_2330_44DB_9D10_0877ADCD69CE */
