@@ -1,6 +1,13 @@
-#include <iostream>
+#include <pch.hpp>
+#include <engine.hpp>
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    wars::engine engine;
+    
+    while (true) {
+        engine.render();
+        engine.update();
+    }
+    
     return 0;
 }
