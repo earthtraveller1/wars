@@ -6,7 +6,7 @@ namespace wars::engine::events
     class key_press_event
     {
     public:
-        key_press_event(int16_t key_code);
+        key_press_event(int16_t key_code): m_key_code(key_code) {};
         
         int16_t get_key_code() { return m_key_code; };
         
