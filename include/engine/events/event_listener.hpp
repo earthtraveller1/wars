@@ -10,7 +10,7 @@ namespace wars::engine::events
     class event_listener
     {
     public:
-        virtual bool invoke_key_press(key_press_event& event) { return false; }
+        virtual bool invoke_key_press(key_press_event& event) const { return false; }
     };
 }
 
