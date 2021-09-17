@@ -12,7 +12,7 @@ namespace wars::engine::events
         
     private:
         int16_t m_key_code;
-    }
+    };
 }
 
 #endif /* FA5917BB_90E7_477C_9490_F85BD08D225E */
