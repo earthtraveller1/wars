@@ -3,6 +3,7 @@
 
 #include <pch.hpp>
 #include <engine/events/key_press_event.hpp>
+#include <engine/events/event_listener.hpp>
 
 namespace wars::engine::events
 {
@@ -10,6 +11,17 @@ namespace wars::engine::events
     {
     public:
         event_dispatcher() = default;
+        
+        event_dispatcher(std::vector<event_listener>& listeners): m_listeners(listeners) {}
+        
+        void add_listener(event_listener& listener) { m_listeners.push_back(listener); }
+        
+        void dispatch_key_press();
+        
+        void dispatch_all();
+        
+    private:
+        std::vector<event_listener> m_listeners;
     };
 }
 
