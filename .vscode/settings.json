@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "CMakeLists.txt": "cmake",
+        "*.tcc": "cpp"
+    }
+}
