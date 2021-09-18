@@ -13,7 +13,7 @@ namespace wars::engine
     class window
     {
     public:
-        window();
+        static window& get_instance();
         
         void show() const;
         
@@ -24,6 +24,11 @@ namespace wars::engine
         ~window();
         
     private:
+        // constructors are made private
+        window();
+        window(window& src);
+        window(window&& src);
+        
         // The window handle
         GLFWwindow* m_window;
         
