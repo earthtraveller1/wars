@@ -2,6 +2,7 @@ target_sources(
     "wars" PRIVATE
     
     "Game.hpp"
+    "Input.hpp"
     "pch.hpp"
     "Window.hpp"
 )
