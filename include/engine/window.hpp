@@ -7,8 +7,8 @@ struct GLFWwindow;
 
 namespace wars::engine
 {
-    extern const uint8_t WINDOW_WIDTH = 960;
-    extern const uint8_t WINDOW_HEIGHT = 540;
+    extern const uint16_t WINDOW_WIDTH = 960;
+    extern const uint16_t WINDOW_HEIGHT = 540;
     
     class window
     {
