@@ -1,8 +1,13 @@
+#include <glad/glad.h>
 #include <Window.hpp>
 
 #include <stdexcept>
 
 using wars::Window;
+
+void* getOpenGLFunctionProcAddress(const char* name) {
+    return reinterpret_cast<void*>(glfwGetProcAddress(name));
+}
 
 Window::Window() 
 {
@@ -25,6 +30,10 @@ Window::Window()
     }
     
     glfwMakeContextCurrent(m_window);
+    
+    if (!gladLoadGLLoader(getOpenGLFunctionProcAddress)) {
+        throw std::runtime_error("Failed to load OpenGL.");
+    }
 }
 
 
