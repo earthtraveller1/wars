@@ -6,6 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_BUILD_RPATH "$ORIGIN:$ORIGIN/../lib")
 
+if (UNIX AND NOT APPLE)
+    set(CMAKE_EXECUTABLE_SUFFIX ".out")
+endif()
+
 if (MSVC)
     add_compile_options("/W4")
 else()
