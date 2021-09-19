@@ -10,3 +10,5 @@ target_sources(
 )
 
 target_precompile_headers("wars" PRIVATE "pch.hpp")
+
+add_subdirectory("scenes")
