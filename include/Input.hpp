@@ -46,10 +46,10 @@ namespace wars
         std::array<bool, GLFW_MOUSE_BUTTON_LAST> mouseButtons;
         
         // The mouse button callback
-        void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+        static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
         
         // The cursor position callback
-        void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
+        static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
     };
 }
 
