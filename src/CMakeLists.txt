@@ -4,6 +4,6 @@ target_sources(
     "Game.cpp"
     "GameOptions.cpp"
     "Input.cpp"
-    "Window.cpp"
     "main.cpp"
+    "Window.cpp"
 )
