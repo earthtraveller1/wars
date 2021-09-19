@@ -23,17 +23,17 @@ namespace wars
     public:
         explicit Input(Window& window);
         
-        bool isKeyDown(int32_t key);
+        bool isKeyDown(int32_t key) { return glfwGetKey(m_window.m_window, key) == GLFW_PRESS; }
         
-        bool isKeyUp(int32_t key);
+        bool isKeyUp(int32_t key) { return glfwGetKey(m_window.m_window, key) == GLFW_RELEASE; }
         
-        bool isMouseButtonDown(int32_t button);
+        bool isMouseButtonDown(int32_t button) { return mouseButtons[button]; }
         
-        uint32_t getMouseX();
+        uint32_t getMouseX() { return m_mousePos.x; }
         
-        uint32_t getMouseY();
+        uint32_t getMouseY() { return m_mousePos.y; }
         
-        MousePos getMousePos();
+        MousePos getMousePos() { return m_mousePos; }
         
     private:
         // The window object
