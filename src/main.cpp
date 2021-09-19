@@ -10,6 +10,7 @@ int main()
     try
     {
         wars::Game game;
+        game.mainLoop();
     }
     catch(const std::runtime_error& e)
     {
