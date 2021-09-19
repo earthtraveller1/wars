@@ -3,6 +3,12 @@
 *.app
 wars
 
+# Libraries
+*.lib
+*.a
+*.dll
+*.so
+
 # Object files
 *.o
 
