@@ -2,6 +2,7 @@
 #define BE8CDCB3_3B1D_47D9_B64F_14C5D72F0F63
 
 #include <Window.hpp>
+#include <Input.hpp>
 
 namespace wars
 {
@@ -16,6 +17,8 @@ namespace wars
         
     private:
         Window m_window;
+        
+        Input m_input;
     };
 }
 

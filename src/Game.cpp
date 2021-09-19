@@ -2,7 +2,7 @@
 
 using wars::Game;
 
-Game::Game()
+Game::Game(): m_input(m_window)
 {
     
 }
