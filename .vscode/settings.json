@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "CMakeLists.txt": "cmake",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "functional": "cpp",
+        "optional": "cpp",
+        "type_traits": "cpp",
+        "ostream": "cpp"
     }
 }
