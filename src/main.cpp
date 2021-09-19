@@ -1,23 +1,20 @@
 #include <pch.hpp>
 
 #include <glad/glad.h>
-#include <Window.hpp>
+#include <Game.hpp>
 
 using wars::Window;
 
 int main()
 {
-    Window window;
-    
-    window.show();
-    
-    glClearColor(0.0f, 1.0f, 0.0, 1.0f);
-    
-    while (window.isOpen()) 
+    try
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-        window.update();
+        wars::Game game;
+    }
+    catch(const std::runtime_error& e)
+    {
+        std::cerr << "[FATAL ERROR]: " << e.what() << '\n';
+        return -1;
     }
     
     return 0;
