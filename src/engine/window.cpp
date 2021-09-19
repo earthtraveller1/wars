@@ -6,6 +6,10 @@
 
 using namespace wars::engine;
 
+const uint16_t wars::engine::WINDOW_WIDTH = 960;
+const uint16_t wars::engine::WINDOW_HEIGHT = 540;
+
+
 window& window::get_instance()
 {
     static window win;
