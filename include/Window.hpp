@@ -8,6 +8,10 @@ namespace wars
     class Window
     {
     public:
+        // Make the input class a friend so that it can obtain the GLFW window
+        // handle.
+        friend class Input;
+        
         // Create a 960x540 window titled "@#Wars".
         Window();
         
