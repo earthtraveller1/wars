@@ -1,15 +1,8 @@
 #include <pch.hpp>
-#include <engine.hpp>
 
 int main()
 {
-    wars::engine engine;
-
-    while (true)
-    {
-        engine.render();
-        engine.update();
-    }
-
+    std::cout << "Hello!" << std::endl;
+    
     return 0;
 }
