@@ -1,8 +1,6 @@
 target_sources(
     "wars" PRIVATE
     
-    "engine.cpp"
+    "Window.cpp"
     "main.cpp"
 )
-
-add_subdirectory("engine")
