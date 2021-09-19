@@ -2,6 +2,7 @@ target_sources(
     "wars" PRIVATE
     
     "Game.hpp"
+    "GameOptions.hpp"
     "Input.hpp"
     "pch.hpp"
     "Window.hpp"
