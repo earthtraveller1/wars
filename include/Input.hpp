@@ -27,7 +27,7 @@ namespace wars
         
         bool isKeyUp(int32_t key) { return glfwGetKey(m_window.m_window, key) == GLFW_RELEASE; }
         
-        bool isMouseButtonDown(int32_t button) { return mouseButtons[button]; }
+        bool isMouseButtonDown(int32_t button) { return m_mouseButtons[button]; }
         
         uint32_t getMouseX() { return m_mousePos.x; }
         
@@ -43,7 +43,7 @@ namespace wars
         MousePos m_mousePos;
         
         // The state of all the mouse buttons
-        std::array<bool, GLFW_MOUSE_BUTTON_LAST> mouseButtons;
+        std::array<bool, GLFW_MOUSE_BUTTON_LAST> m_mouseButtons;
         
         // The mouse button callback
         static void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
