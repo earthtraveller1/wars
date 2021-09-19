@@ -1,8 +1,9 @@
 target_sources(
     "wars" PRIVATE
     
-    "Window.hpp"
+    "Game.hpp"
     "pch.hpp"
+    "Window.hpp"
 )
 
 target_precompile_headers("wars" PRIVATE "pch.hpp")
