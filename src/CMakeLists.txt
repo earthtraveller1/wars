@@ -7,3 +7,5 @@ target_sources(
     "main.cpp"
     "Window.cpp"
 )
+
+add_subdirectory("scenes")
