@@ -1,8 +1,19 @@
 #include <pch.hpp>
 
+#include <Window.hpp>
+
+using wars::Window;
+
 int main()
 {
-    std::cout << "Hello!" << std::endl;
+    Window window;
+    
+    window.show();
+    
+    while (window.isOpen()) 
+    {
+        window.update();
+    }
     
     return 0;
 }
