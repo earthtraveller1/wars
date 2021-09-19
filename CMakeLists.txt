@@ -22,5 +22,9 @@ target_include_directories("GLAD" PRIVATE "deps/GLAD/include")
 
 target_link_libraries("wars" "GLAD" "${GLFW_LIBRARY}")
 
+if (UNIX AND NOT APPLE)
+    target_link_libraries("wars" "dl")
+endif()
+
 add_subdirectory("src")
 add_subdirectory("include")
