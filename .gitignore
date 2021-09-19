@@ -1,7 +1,7 @@
 # Executables
 *.exe
 *.app
-wars
+*.out
 
 # Libraries
 *.lib
@@ -27,7 +27,3 @@ rules.ninja
 .vscode/tasks.json
 .vscode/launch.json
 .vscode/c_cpp_properties.json
-
-# Don't ignore sources
-!/src/*
-!/include/*
