@@ -5,6 +5,7 @@ target_sources(
     "GameOptions.cpp"
     "Input.cpp"
     "main.cpp"
+    "Scene.cpp"
     "Window.cpp"
 )
 
