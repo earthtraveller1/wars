@@ -1,10 +1,12 @@
 #include <Game.hpp>
+#include <scenes/TestScene.hpp>
 
 using wars::Game;
+using wars::scenes::TestScene;
 
 Game::Game(): m_input(m_window)
 {
-    
+    Scene::setActiveScene<TestScene>();
 }
 
 
@@ -18,6 +20,9 @@ void Game::mainLoop()
     
     while (m_window.isOpen())
     {
+        Scene::updateActiveScene();
+        Scene::renderActiveScene();
+        
         m_window.update();
     }
 }
@@ -27,5 +32,5 @@ void Game::mainLoop()
 
 Game::~Game()
 {
-    
+    Scene::removeActiveScene();
 }
