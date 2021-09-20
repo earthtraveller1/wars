@@ -14,7 +14,19 @@ namespace wars
         
         virtual ~Scene() {}
         
-        static void setActiveScene(Scene& scene) { active = &scene; }
+        template<typename T>
+        static void setActiveScene()
+        {
+            if (active != nullptr)
+            {
+                delete active;
+                active = nullptr;
+            }
+            
+            active = new T();
+        }
+        
+        static void removeActiveScene();
         
         static void updateActiveScene() { active->update(); }
         
