@@ -10,3 +10,4 @@ target_sources(
 )
 
 add_subdirectory("scenes")
+add_subdirectory("graphics")
