@@ -1,5 +1,7 @@
 # Wars
 
-A simple 2D game made with OpenGL and C++. 
+A simple 2D game made with OpenGL and C++. So far, it only creates a blank window, but I am planning to add more to it later on.
 
-_Note: This project is still early in development. Check back here later._
+## How to install
+
+Install instructions are found [here](INSTALL.md)
