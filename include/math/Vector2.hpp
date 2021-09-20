@@ -49,8 +49,10 @@ namespace wars::math
         
         // Vector-vector operations
         // ===============================================
-        Vector2<T> operator+(Vector2<T> b) { return { m_x + b.m_x, m_y + b.m_y }; }
-        Vector2<T> operator-(Vector2<T> b) { return { m_x - b.m_x, m_y - b.m_y }; }
+        Vector2<T> operator+(Vector2<T> b) 
+        { return { m_x + b.m_x, m_y + b.m_y }; }
+        Vector2<T> operator-(Vector2<T> b) 
+        { return { m_x - b.m_x, m_y - b.m_y }; }
         
         Vector2<T>& operator+=(Vector2<T> b) 
         {
@@ -87,6 +89,14 @@ namespace wars::math
         
         // Normalize this vector
         void normalize() { operator/=(length()); }
+        
+        
+        
+        
+        // Getters
+        // ================================================
+        T getX() { return m_x; }
+        T getY() { return m_y; }
         
     private:
         T m_x;
