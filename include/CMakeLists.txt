@@ -13,3 +13,4 @@ target_precompile_headers("wars" PRIVATE "pch.hpp")
 
 add_subdirectory("scenes")
 add_subdirectory("graphics")
+add_subdirectory("math")
