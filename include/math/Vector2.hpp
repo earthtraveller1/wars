@@ -6,6 +6,8 @@
 
 namespace wars::math
 {
+    // A class to represent a vector with 2 members. Currently supports all
+    // vector operations.
     template<typename T>
     class Vector2
     {

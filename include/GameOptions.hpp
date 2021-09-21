@@ -5,6 +5,8 @@
 
 namespace wars
 {
+    // Contains options specified by the user. These values can be accessed by
+    // every component of the game.
     namespace GameOptions
     {
         extern std::string assetLocation;

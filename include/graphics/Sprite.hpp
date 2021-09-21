@@ -3,6 +3,8 @@
 
 namespace wars::graphics
 {
+    // A class to represent a Sprite, which is a two dimensional object that
+    // can be rendered on to the screen with OpenGL. It is empty so far.
     class Sprite
     {
         

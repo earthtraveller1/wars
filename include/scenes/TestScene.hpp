@@ -5,6 +5,9 @@
 
 namespace wars::scenes
 {
+    // A Scene that was created merely for testing purposes. It will be removed
+    // once I am done testing the engine (though it's source files will stay in
+    // the repository).
     class TestScene: public Scene
     {
     public:

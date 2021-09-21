@@ -3,6 +3,8 @@
 
 namespace wars::math
 {
+    // A class to represent a 4 by 4 matrix. So far, doesn't support all 
+    // Matrix operations possible, but it's good enough for me for now.
     template<typename T>
     class Matrix4
     {

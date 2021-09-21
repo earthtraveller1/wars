@@ -5,6 +5,10 @@
 
 namespace wars
 {
+    // This class is fairly straightforward. It is simply a wrapper around
+    // GLFW's windowing system. That's because it has only one purpose: create
+    // a window and keep the rest of the game running until the user closes
+    // that window.
     class Window
     {
     public:

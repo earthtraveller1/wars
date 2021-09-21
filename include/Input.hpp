@@ -8,6 +8,7 @@
 
 namespace wars
 {
+    // A struct which represents mouse position.
     struct MousePos
     {
         double x;
@@ -18,6 +19,10 @@ namespace wars
     
     
     
+    // This class is meant to abstract Input handling away from the Window. It 
+    // is currently state driven, meaning that it works by setting states 
+    // within it's member fields and having other components query those 
+    // states to check for input.
     class Input
     {
     public:

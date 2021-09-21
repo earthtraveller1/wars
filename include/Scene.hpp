@@ -3,6 +3,10 @@
 
 namespace wars
 {
+    // This is an abstract class that represents the basics of a scene, as well
+    // as utility functions to handle the flow of scenes during the execution
+    // of the game. It also acts as an abstraction layer that abstracts the
+    // details of the Game class from the scenes.
     class Scene
     {
     public:

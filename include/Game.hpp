@@ -6,6 +6,8 @@
 
 namespace wars
 {
+    // This class represents the entire game. It was implemented so that RAII
+    // works correctly with not only individual objects, but the entire game.
     class Game
     {
     public:
