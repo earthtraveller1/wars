@@ -7,6 +7,8 @@ namespace wars::math
     class Matrix4
     {
     public:
+        friend class Math;
+        
         // Initializes an identity matrix.
         Matrix4(T value = 1)
         {
