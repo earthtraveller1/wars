@@ -7,5 +7,6 @@
 #include <iostream>
 #include <stdint.h>
 #include <vector>
+#include <cmath>
 
 #endif /* F8917D79_2330_44DB_9D10_0877ADCD69CE */

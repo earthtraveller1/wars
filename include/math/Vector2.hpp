@@ -2,7 +2,6 @@
 #define C80D0B7B_66A3_4425_A546_7A50085B2B3D
 
 #include <pch.hpp>
-#include <cmath>
 
 namespace wars::math
 {
