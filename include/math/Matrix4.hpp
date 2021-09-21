@@ -118,7 +118,7 @@ namespace wars::math
         // Returns the matrix in the format that OpenGL can work with
         T* data()
         {
-            return {
+            /*return {
                 m_matrix[0][0],
                 m_matrix[0][1],
                 m_matrix[0][2],
@@ -138,7 +138,9 @@ namespace wars::math
                 m_matrix[3][1],
                 m_matrix[3][2],
                 m_matrix[3][3],
-            };
+            };*/
+            
+            return reinterpret_cast<T*>(m_matrix);
         }
         
     private:
