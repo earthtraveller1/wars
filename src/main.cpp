@@ -8,6 +8,10 @@ using wars::Window;
 
 int main(int argc, char** argv)
 {
+    // Print out the system that it is running on.
+    std::cout << "[INFO]: Appears to be running on " << CMAKE_SYSTEM_NAME 
+              << " " << CMAKE_SYSTEM_VERSION << std::endl;
+    
     // Put the command line arguments into a vector so that it's easier to deal
     // with.
     std::vector<std::string> commandLineArguments(argc);

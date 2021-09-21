@@ -1,3 +1,4 @@
+#include <pch.hpp>
 #include <Game.hpp>
 #include <scenes/TestScene.hpp>
 
@@ -6,6 +7,11 @@ using wars::scenes::TestScene;
 
 Game::Game(): m_input(m_window)
 {
+    std::cout << "[INFO]: Using OpenGL " << glGetString(GL_VERSION) << "\n";
+    int maximumTextureSize = 0;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maximumTextureSize);
+    std::cout << "[INFO]: Maximum Texture size is " << maximumTextureSize << "\n";
+    
     Scene::setActiveScene<TestScene>();
 }
 
