@@ -4,6 +4,7 @@
 // This is a precompiled header, which contains many headers that are commonly
 // used. Precompiled headers are precompiled.
 
+#include <glad/glad.h>
 #include <iostream>
 #include <stdint.h>
 #include <vector>
