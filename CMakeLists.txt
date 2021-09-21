@@ -21,7 +21,9 @@ find_package("GLFW")
 add_executable("wars")
 add_library("GLAD" "deps/GLAD/src/glad.c")
 
-target_include_directories("wars" PRIVATE "deps/GLAD/include" "include" "${GLFW_INCLUDE_DIR}")
+target_include_directories(
+    "wars" PRIVATE "deps/GLAD/include" "include" "${GLFW_INCLUDE_DIR}" "${CMAKE_BUILD_DIR}/include"
+)
 target_include_directories("GLAD" PRIVATE "deps/GLAD/include")
 
 target_link_libraries("wars" "GLAD" "${GLFW_LIBRARY}")
