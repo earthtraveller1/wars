@@ -48,6 +48,43 @@ namespace wars
         {
             translate(t.getX(), t.getY(), t.getZ());
         }
+        
+        
+        
+        
+        // Returns a rotation matrix
+        template<typename T>
+        static math::Matrix4<T> rotate(T angle, T uX, T uY, T uZ)
+        {
+            return
+            {
+                {
+                    {
+                        cos(angle) + pow(uX, 2.0) * (1 - cos(angle)),
+                        uX * uY * (1 - cos(angle)) - uZ * sin(angle),
+                        uX * uZ * (1 - cos(angle)) + uY * sin(angle),
+                        0
+                    },
+                    {
+                        uY * uX * (1 - cos(angle)) + uZ * sin(angle),
+                        cos(angle) + pow(uY, 2.0) * (1 - cos(angle)),
+                        uY * uZ * (1 - cos(angle)) - uX * sin(angle),
+                        0
+                    },
+                    {
+                        uZ * uX * (1 - cos(angle)) - uY * cos(angle),
+                        uZ * uY * (1 - cos(angle)) + uX * sin(angle),
+                        cos(angle) + pow(uZ, 2.0) * (1 - cos(angle)),
+                    }
+                }
+            }
+        }
+        
+        template<typename T>
+        static math::Matrix4<T> rotate(T angle, math::Vector3<T> u)
+        {
+            rotate(angle, u.m_x, u.m_y, u.m_z);
+        }
     };
 }
 
