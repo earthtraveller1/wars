@@ -77,7 +77,7 @@ namespace wars
                         cos(angle) + pow(uZ, 2.0) * (1 - cos(angle)),
                     }
                 }
-            }
+            };
         }
         
         template<typename T>
