@@ -11,4 +11,8 @@
 #include <cmath>
 #include <cmake_config.h>
 
+#include <math/Matrix4.hpp>
+#include <math/Vector2.hpp>
+#include <Math.hpp>
+
 #endif /* F8917D79_2330_44DB_9D10_0877ADCD69CE */
