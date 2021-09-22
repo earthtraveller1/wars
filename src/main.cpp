@@ -26,6 +26,9 @@ int main(int argc, char** argv)
         if (*argument == "--asset-location")
         {
             wars::GameOptions::assetLocation = *(argument + 1);
+        } else if (*argument == "--enabled-opengl-debugging")
+        {
+            wars::GameOptions::enableOpenGLContextDebugging = true;
         } else
         {
             wars::GameOptions::assetLocation = *argument;

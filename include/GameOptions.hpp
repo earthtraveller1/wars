@@ -10,6 +10,7 @@ namespace wars
     namespace GameOptions
     {
         extern std::string assetLocation;
+        extern bool enableOpenGLContextDebugging;
     }
 }
 
