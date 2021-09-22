@@ -4,6 +4,7 @@ target_sources(
     "Game.hpp"
     "GameOptions.hpp"
     "Input.hpp"
+    "Math.hpp"
     "pch.hpp"
     "Scene.hpp"
     "Window.hpp"
