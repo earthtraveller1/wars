@@ -6,7 +6,7 @@
 
 using wars::Window;
 
-void* getOpenGLFunctionProcAddress(const char* name) {
+static void* getOpenGLFunctionProcAddress(const char* name) {
     return reinterpret_cast<void*>(glfwGetProcAddress(name));
 }
 
