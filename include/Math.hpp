@@ -85,6 +85,24 @@ namespace wars
         {
             rotate(angle, u.m_x, u.m_y, u.m_z);
         }
+        
+        
+        
+        
+        // Returns an orthographic projection matrix
+        template<typename T>
+        static math::Matrix4<T> ortho(T r, T l, T t, T b, T f, T n)
+        {
+            math::Matrix4<T> result;
+            result.m_matrix[0][0] = 2 / (r - l);
+            result.m_matrix[0][3] = -((r + l) / (r - l));
+            result.m_matrix[1][1] = 2 / (t - b);
+            result.m_matrix[1][3] = -((t + b) / (t - b));
+            result.m_matrix[2][2] = -2 / (f - n);
+            result.m_matrix[2][3] = -((f + n) / (f - n));
+            
+            return result;
+        }
     };
 }
 
