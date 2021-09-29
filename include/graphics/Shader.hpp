@@ -17,8 +17,8 @@ namespace wars::graphics
         // Default constructor
         Shader() = default;
         
-        // Constructor from a path to the file containing the shader
-        Shader(std::string_view path);
+        // Constructor from a string containing the source of the shader
+        Shader(std::string_view source);
         
         // The handle to the actual shader program
         unsigned int m_shader;
