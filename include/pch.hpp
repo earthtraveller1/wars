@@ -8,7 +8,9 @@
 #include <iostream>
 #include <stdint.h>
 #include <vector>
+
 #include <cmath>
+
 #include <cmake_config.h>
 
 #include <math/Matrix4.hpp>
