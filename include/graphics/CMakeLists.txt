@@ -1,6 +1,7 @@
 target_sources(
     "wars" PRIVATE
     
-    "Vertex.hpp"
+    "Shader.hpp"
     "Sprite.hpp"
+    "Vertex.hpp"
 )
