@@ -75,6 +75,8 @@ static ShaderSources splitShaderSource(std::string_view source)
                 case ShaderType::FRAGMENT:
                     result.fragment += line += "\n";
                     break;
+                case ShaderType::NONE:
+                    break;
             }
         }
     }
