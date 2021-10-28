@@ -7,8 +7,8 @@ namespace wars::graphics
 {
     struct Vertex
     {
-        math::Vector2<double> pos;
-        math::Vector2<double> uv;
+        math::Vector2<double> m_pos;
+        math::Vector2<double> m_uv;
     };
 }
 
