@@ -22,7 +22,7 @@ add_executable("wars")
 add_library("GLAD" "deps/GLAD/src/glad.c")
 
 target_include_directories(
-    "wars" PRIVATE "deps/GLAD/include" "include" "${GLFW_INCLUDE_DIR}" "${CMAKE_BUILD_DIR}/include"
+    "wars" PRIVATE "deps/GLAD/include" "include" "${GLFW_INCLUDE_DIR}" "${CMAKE_BINARY_DIR}/include"
 )
 target_include_directories("GLAD" PRIVATE "deps/GLAD/include")
 
