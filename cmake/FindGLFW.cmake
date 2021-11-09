@@ -15,6 +15,8 @@ if (WIN32)
                   "${CMAKE_SOURCE_DIR}/deps/GLFW/Release/src"
                   "${CMAKE_SOURCE_DIR}/deps/GLFW/build/Debug/src"
                   "${CMAKE_SOURCE_DIR}/deps/GLFW/build/Release/src"
+                  "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src/Debug"
+                  "${CMAKE_SOURCE_DIR}/deps/GLFW/build/src/Release"
             DOC "Path to GLFW's library."
         )
     else()
