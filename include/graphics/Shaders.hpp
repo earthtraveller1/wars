@@ -23,12 +23,17 @@ namespace wars::graphics
         // Get the textured shader's handle
         unsigned int getTexturedHandle() { return m_textured.m_shader; }
         
+        // Get a reference to the actual solid color shader's object
+        Shader& getSolidColorShader() { return m_solidColor; }
+        
+        // Get a reference to the actual textured shader's object
+        Shader& getTexturedShader() { return m_textured; }
+        
         // Use the solid color shader
         void useSolidColor() { glUseProgram(m_solidColor.m_shader); }
         
         // Use the textured shader
         void useTextured() { glUseProgram(m_solidColor.m_shader); }
-        
     private:
         // Default Constructor
         Shaders():
