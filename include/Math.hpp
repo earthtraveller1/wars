@@ -4,6 +4,8 @@
 #include <math/Matrix4.hpp>
 #include <math/Vector3.hpp>
 
+#include <cmath>
+
 namespace wars
 {
     // A class containing common Math utility functions that aren't provided by
@@ -102,6 +104,16 @@ namespace wars
             result.m_matrix[2][3] = -((f + n) / (f - n));
             
             return result;
+        }
+        
+        
+        
+        
+        // Converts degrees to radians
+        template<typename T>
+        static T radians(T degrees)
+        {
+            return degrees * (180 / M_PI);
         }
     };
 }
