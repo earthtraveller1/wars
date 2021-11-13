@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+#include <algorithm>
+
 #include <graphics/Vertex.hpp>
 #include <graphics/Sprite.hpp>
 
@@ -62,6 +64,9 @@ Sprite::Sprite(Sprite& src)
     glEnableVertexAttribArray(1);
     
     glBindVertexArray(0);
+    
+    m_direction = src.m_direction;
+    m_model = src.m_model;
 }
 
 
@@ -107,5 +112,60 @@ void Sprite::render()
 
 void Sprite::move(double x, double y)
 {
-    m_model = m_model * Math::translate(math::Vector3(x, y, 0.0));
+    m_model = m_model * Math::translate(math::Vector3(x, y));
+}
+
+
+
+
+void Sprite::move(math::Vector2<double> t)
+{
+    m_model = m_model * Math::translate(math::Vector3(t.getX(), t.getY()));
+}
+
+
+
+
+void Sprite::turn(double degrees)
+{
+    m_model = m_model * Math::rotate(Math::radians(degrees), math::Vector3(0.0, 0.0, 1.0));
+}
+
+
+
+
+void Sprite::setDir(SpriteDirection dir)
+{
+    if (m_direction != dir)
+    {
+        m_model = m_model * Math::rotate(Math::radians(180.0), math::Vector3(0.0, 1.0, 0.0));
+        m_direction = dir;
+    }
+}
+
+
+
+
+void Sprite::swap(Sprite& a, Sprite& b)
+{
+    std::swap(a.m_vao, b.m_vao);
+    std::swap(a.m_vbo, b.m_vbo);
+    std::swap(a.m_ebo, b.m_ebo);
+    std::swap(a.m_direction, b.m_direction);
+}
+
+
+
+
+Sprite::~Sprite()
+{
+    destroy();
+}
+
+
+
+
+void Sprite::moveFrom(Sprite& src)
+{
+    
 }
