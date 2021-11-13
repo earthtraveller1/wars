@@ -52,6 +52,9 @@ namespace wars::graphics
         // Set the direction of the sprite
         void setDir(SpriteDirection newDir);
         
+        // Swap two sprites
+        static void swap(Sprite& a, Sprite& b);
+        
         // Destroys the sprite
         ~Sprite();
         
@@ -66,6 +69,12 @@ namespace wars::graphics
         
         // Model matrix
         math::Matrix4<double> m_model;
+        
+        // Move ownership from another object
+        void moveFrom(Sprite& src);
+        
+        // Destroy the object
+        void destroy();
     };
 }
 

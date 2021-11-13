@@ -1,5 +1,8 @@
+#include <pch.hpp>
+
 #include <glad/glad.h>
 
+#include <graphics/Vertex.hpp>
 #include <graphics/Sprite.hpp>
 
 using wars::graphics::Sprite;
@@ -59,4 +62,50 @@ Sprite::Sprite(Sprite& src)
     glEnableVertexAttribArray(1);
     
     glBindVertexArray(0);
+}
+
+
+
+
+Sprite::Sprite(Sprite&& src)
+{
+    moveFrom(src);
+}
+
+
+
+
+Sprite& Sprite::operator=(Sprite& src)
+{
+    Sprite newSprite(src);
+    swap(*this, newSprite);
+    return *this;
+}
+
+
+
+
+Sprite& Sprite::operator=(Sprite&& src)
+{
+    destroy();
+    moveFrom(src);
+    return *this;
+}
+
+
+
+
+void Sprite::render()
+{
+    glBindVertexArray(m_vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(0);
+}
+
+
+
+
+void Sprite::move(double x, double y)
+{
+    m_model = m_model * Math::translate(math::Vector3(x, y, 0.0));
 }

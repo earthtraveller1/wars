@@ -10,7 +10,7 @@ namespace wars::math
     class Vector3
     {
     public:
-        Vector3(T x = 0, T y = 0): m_x(x), m_y(y) {}
+        Vector3(T x = 0, T y = 0, T z = 0): m_x(x), m_y(y) {}
         
         // Scalar operations
         // ===============================================
