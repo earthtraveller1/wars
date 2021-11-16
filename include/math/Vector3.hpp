@@ -10,7 +10,7 @@ namespace wars::math
     class Vector3
     {
     public:
-        Vector3(T x = 0, T y = 0, T z = 0): m_x(x), m_y(y) {}
+        Vector3(T x = 0, T y = 0, T z = 0): m_x(x), m_y(y), m_z(z) {}
         
         // Scalar operations
         // ===============================================
@@ -113,8 +113,8 @@ namespace wars::math
         void setX(T x) { m_x = x; }
         void setY(T y) { m_y = y; }
         void setZ(T z) { m_z = z; }
-        
-    private:
+
+        // The vector components
         T m_x;
         T m_y;
         T m_z;

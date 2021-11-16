@@ -105,8 +105,8 @@ namespace wars::math
         // Setters
         void setX(T x) { m_x = x; }
         void setY(T y) { m_y = y; }
-        
-    private:
+
+        // The actual members.
         T m_x;
         T m_y;
     };
