@@ -169,3 +169,11 @@ void Sprite::moveFrom(Sprite& src)
 {
     
 }
+
+
+
+
+void Sprite::destroy()
+{
+    
+}
