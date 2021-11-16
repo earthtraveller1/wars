@@ -4,7 +4,8 @@
 #include <math/Matrix4.hpp>
 #include <math/Vector3.hpp>
 
-#include <cmath>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 namespace wars
 {
@@ -43,12 +44,14 @@ namespace wars
             result.m_matrix[3][0] = x;
             result.m_matrix[3][1] = y;
             result.m_matrix[3][2] = z;
+            
+            return result;
         }
         
         template<typename T>
         static math::Matrix4<T> translate(math::Vector3<T> t)
         {
-            translate(t.getX(), t.getY(), t.getZ());
+            return translate(t.getX(), t.getY(), t.getZ());
         }
         
         
@@ -58,34 +61,35 @@ namespace wars
         template<typename T>
         static math::Matrix4<T> rotate(T angle, T uX, T uY, T uZ)
         {
-            return
-            {
-                {
-                    {
-                        cos(angle) + pow(uX, 2.0) * (1 - cos(angle)),
-                        uX * uY * (1 - cos(angle)) - uZ * sin(angle),
-                        uX * uZ * (1 - cos(angle)) + uY * sin(angle),
-                        0
-                    },
-                    {
-                        uY * uX * (1 - cos(angle)) + uZ * sin(angle),
-                        cos(angle) + pow(uY, 2.0) * (1 - cos(angle)),
-                        uY * uZ * (1 - cos(angle)) - uX * sin(angle),
-                        0
-                    },
-                    {
-                        uZ * uX * (1 - cos(angle)) - uY * cos(angle),
-                        uZ * uY * (1 - cos(angle)) + uX * sin(angle),
-                        cos(angle) + pow(uZ, 2.0) * (1 - cos(angle)),
-                    }
-                }
-            };
+            math::Matrix4<T> result;
+            
+            result.m_matrix[0][0] = cos(angle) + pow(uX, 2.0) * (1 - cos(angle));
+            result.m_matrix[1][0] = uX * uY * (1 - cos(angle)) - uZ * sin(angle);
+            result.m_matrix[2][0] = uX * uZ * (1 - cos(angle)) + uY * sin(angle);
+            result.m_matrix[3][0] = 0;
+            
+            result.m_matrix[0][0] = uY * uX * (1 - cos(angle)) + uZ * sin(angle);
+            result.m_matrix[1][0] = cos(angle) + pow(uY, 2.0) * (1 - cos(angle));
+            result.m_matrix[2][0] = uY * uZ * (1 - cos(angle)) - uX * sin(angle);
+            result.m_matrix[3][0] = 0;
+            
+            result.m_matrix[0][0] = uZ * uX * (1 - cos(angle)) - uY * cos(angle);
+            result.m_matrix[1][0] = uZ * uY * (1 - cos(angle)) + uX * sin(angle);
+            result.m_matrix[2][0] = cos(angle) + pow(uZ, 2.0) * (1 - cos(angle));
+            result.m_matrix[3][0] = 0;
+            
+            result.m_matrix[0][0] = 0;
+            result.m_matrix[1][0] = 0;
+            result.m_matrix[2][0] = 0;
+            result.m_matrix[3][0] = 1;
+
+            return result;
         }
         
         template<typename T>
         static math::Matrix4<T> rotate(T angle, math::Vector3<T> u)
         {
-            rotate(angle, u.m_x, u.m_y, u.m_z);
+            return rotate(angle, u.m_x, u.m_y, u.m_z);
         }
         
         
