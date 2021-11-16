@@ -20,9 +20,9 @@ if (UNIX AND NOT APPLE)
 endif()
 
 if (MSVC)
-    add_compile_options("/W4")
+    add_compile_options("/Wall")
 else()
-    add_compile_options("-Wall" "-pedantic")
+    add_compile_options("-Wall" "-Wextra" "-pedantic")
 endif()
 
 find_package("GLFW")
