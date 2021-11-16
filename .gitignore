@@ -11,6 +11,11 @@
 
 # Object files
 *.o
+*.obj
+
+# Precompiled headers
+*.pch
+*.gch
 
 # CMake clutters
 cmake_install.cmake
@@ -28,3 +33,15 @@ rules.ninja
 .vscode/tasks.json
 .vscode/launch.json
 .vscode/c_cpp_properties.json
+
+# Visual Studio clutters
+*.vcxproj.filters
+*.sln
+*.vcxproj
+*.pdb
+.vs/
+*.recipe
+
+# Logs
+*.log
+*.tlog
