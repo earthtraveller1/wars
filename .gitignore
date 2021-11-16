@@ -41,6 +41,8 @@ rules.ninja
 *.pdb
 .vs/
 *.recipe
+*.dir/
+x64/
 
 # Logs
 *.log
