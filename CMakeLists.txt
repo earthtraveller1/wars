@@ -35,7 +35,7 @@ target_include_directories(
 )
 target_include_directories("GLAD" PRIVATE "deps/GLAD/include")
 
-target_link_libraries("wars" "GLAD" "${GLFW_LIBRARY}")
+target_link_libraries("wars" "GLAD" "pthread" "${GLFW_LIBRARY}")
 
 if (UNIX AND NOT APPLE)
     target_link_libraries("wars" "dl")
