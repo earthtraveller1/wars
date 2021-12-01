@@ -167,7 +167,10 @@ Sprite::~Sprite()
 
 void Sprite::moveFrom(Sprite& src)
 {
-    
+    m_vao = src.m_vao;
+    m_vbo = src.m_vbo;
+    m_ebo = src.m_ebo;
+    m_direction = std::move(src.m_direction);
 }
 
 
@@ -175,5 +178,11 @@ void Sprite::moveFrom(Sprite& src)
 
 void Sprite::destroy()
 {
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
     
+    glDeleteBuffers(1, &m_vbo);
+    glDeleteBuffers(1, &m_ebo);
+    glDeleteVertexArrays(1, &m_vao);
 }
