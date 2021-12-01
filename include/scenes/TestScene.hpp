@@ -3,6 +3,9 @@
 
 #include <Scene.hpp>
 
+#include <graphics/Shaders.hpp>
+#include <graphics/Sprite.hpp>
+
 namespace wars::scenes
 {
     // A Scene that was created merely for testing purposes. It will be removed
@@ -18,6 +21,9 @@ namespace wars::scenes
         virtual void render() override;
         
         virtual ~TestScene();
+    private:
+        graphics::Shaders& m_shaders;
+        graphics::Sprite m_hello;
     };
 }
 
