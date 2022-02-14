@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "command": "cmake",
+            "type": "shell",
+            "args": [
+                "--build", "Build"
+            ],
+            "windows": {
+                "problemMatcher": "$msCompile"
+            },
+            "linux": {
+                "problemMatcher": "$gcc"
+            },
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": {
+                "isDefault": true,
+                "kind": "build"
+            }
+        }
+    ]
+}
