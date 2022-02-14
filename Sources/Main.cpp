@@ -1,7 +1,32 @@
-#include <iostream>
+#include <scp/Window.hpp>
+#include <scp/Scene.hpp>
 
-int main(int argc, char** argv)
+#include <scp/utils/time-utils.hpp>
+
+#include "MenuScene.hpp"
+
+using scp::Window;
+using scp::Scene;
+
+int main()
 {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Window& window = Window::getInstance(Window::SCREEN_SIZE_TIMES_66_PERCENT, Window::SCREEN_SIZE_TIMES_66_PERCENT, "Wars", false);
+    
+    Scene::setActive<MenuScene>();
+    
+    window.show();
+    
+    double lastTime = 0;
+    
+    while (window.isOpen())
+    {
+        double currentTime = scp::time_utils::getGLFWTime();
+        double deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+        
+        Scene::updateActive(deltaTime);
+        Scene::renderActive();
+        
+        window.update();
+    }
 }
