@@ -1,0 +1,3 @@
+[submodule "Dependencies/scp-game-framework"]
+	path = Dependencies/scp-game-framework
+	url = https://github.com/scp-studios/scp-game-framework.git
