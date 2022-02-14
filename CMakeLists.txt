@@ -15,4 +15,8 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options("-Weverything" "-fdiagnostics-absolute-paths")
 endif()
 
+# SCP Game Framework
+link_directories("Dependencies/scp-game-framework/lib")
+include_directories("Dependencies/scp-game-framework/include")
+
 add_subdirectory("Sources")
