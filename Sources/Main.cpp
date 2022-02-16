@@ -3,6 +3,8 @@
 
 #include <scp/utils/time-utils.hpp>
 
+#include <scp/graphics/opengl.hpp>
+
 #include "MenuScene.hpp"
 
 using scp::Window;
@@ -23,6 +25,8 @@ int main()
         double currentTime = scp::time_utils::getGLFWTime();
         double deltaTime = currentTime - lastTime;
         lastTime = currentTime;
+        
+        scp::graphics::opengl::clearColor();
         
         Scene::updateActive(deltaTime);
         Scene::renderActive();

@@ -12,4 +12,5 @@ target_link_libraries(
     
     "scp-game-framework-core"
     "scp-game-framework-utils"
+    "scp-game-framework-graphics"
 )
