@@ -12,7 +12,7 @@ using scp::Scene;
 
 int main()
 {
-    Window& window = Window::getInstance(Window::SCREEN_SIZE_TIMES_66_PERCENT, Window::SCREEN_SIZE_TIMES_66_PERCENT, "Wars", false);
+    Window& window = Window::getInstance(Window::SCREEN_SIZE_TIMES_66_PERCENT, Window::SCREEN_SIZE_TIMES_66_PERCENT, "Wars", false, scp::graphics::API::OpenGL, true);
     
     Scene::setActive<MenuScene>();
     
