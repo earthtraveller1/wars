@@ -17,6 +17,9 @@ endif()
 
 # SCP Game Framework
 link_directories("Dependencies/scp-game-framework/lib")
-include_directories("Dependencies/scp-game-framework/include")
+include_directories(
+    "Dependencies/scp-game-framework/include"
+    "Dependencies/scp-game-framework/deps/glad/include"
+)
 
 add_subdirectory("Sources")
