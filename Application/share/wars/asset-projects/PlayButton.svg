@@ -24,9 +24,9 @@
      inkscape:document-units="mm"
      showgrid="false"
      units="px"
-     inkscape:zoom="1.4538721"
-     inkscape:cx="430.91825"
-     inkscape:cy="497.63664"
+     inkscape:zoom="2.9077442"
+     inkscape:cx="130.51354"
+     inkscape:cy="58.292611"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="0"
@@ -40,22 +40,22 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#ffffff;fill-rule:evenodd;stroke-width:0.264583"
+       style="fill:#000000;fill-rule:evenodd;stroke-width:0.0943557"
        id="rect31"
-       width="152.83321"
-       height="72.031998"
-       x="30.174103"
-       y="99.0354" />
+       width="52.916668"
+       height="26.458334"
+       x="-3.5527137e-15"
+       y="-1.4210855e-14" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:47.8295px;line-height:1.25;font-family:sans-serif;fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:1.19574"
-       x="48.334862"
-       y="151.32556"
+       style="font-style:normal;font-weight:normal;font-size:17.9173px;line-height:1.25;font-family:sans-serif;fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:0.447935"
+       x="4.4841127"
+       y="19.296598"
        id="text2931"><tspan
          sodipodi:role="line"
          id="tspan2929"
-         style="stroke-width:1.19574;fill:#e6e6e6"
-         x="48.334862"
-         y="151.32556">PLAY</tspan></text>
+         style="fill:#e6e6e6;stroke-width:0.447935"
+         x="4.4841127"
+         y="19.296598">PLAY</tspan></text>
   </g>
 </svg>
