@@ -1,3 +1,5 @@
+use stb::image::*;
+
 // I will only add the types that I will be using
 enum OpenGLType {
     Float,
@@ -216,7 +218,7 @@ impl ShaderProgram {
             gl::AttachShader(handle, vertex);
             gl::AttachShader(handle, fragment);
             gl::LinkProgram(handle);
-            
+
             // We can delete the shaders once they're linked to the program.
             gl::DeleteShader(vertex);
             gl::DeleteShader(fragment);
@@ -248,16 +250,16 @@ impl ShaderProgram {
                 std::alloc::dealloc(error_log, error_log_layout);
             }
         }
-        
+
         return ShaderProgram { handle: handle };
     }
-    
+
     fn use_program(&self) {
         unsafe {
             gl::UseProgram(self.handle);
         }
     }
-    
+
     // I'll add the uniform functions when I need them.
 }
 
@@ -266,6 +268,102 @@ impl Drop for ShaderProgram {
         unsafe {
             gl::UseProgram(0);
             gl::DeleteProgram(self.handle);
+        }
+    }
+}
+
+struct Texture {
+    handle: u32,
+}
+
+impl Texture {
+    fn new(image_path: &str) -> Texture{
+        let mut handle: u32 = 0;
+
+        unsafe {
+            gl::GenTextures(1, &mut handle);
+            gl::BindTexture(gl::TEXTURE_2D, handle);
+
+            gl::TexParameteri(
+                gl::TEXTURE_2D,
+                gl::TEXTURE_MIN_FILTER,
+                gl::LINEAR.try_into().unwrap(),
+            );
+            gl::TexParameteri(
+                gl::TEXTURE_2D,
+                gl::TEXTURE_MAG_FILTER,
+                gl::LINEAR.try_into().unwrap(),
+            );
+
+            gl::TexParameteri(
+                gl::TEXTURE_2D,
+                gl::TEXTURE_WRAP_S,
+                gl::CLAMP_TO_EDGE.try_into().unwrap(),
+            );
+            gl::TexParameteri(
+                gl::TEXTURE_2D,
+                gl::TEXTURE_WRAP_T,
+                gl::CLAMP_TO_EDGE.try_into().unwrap(),
+            );
+        }
+
+        let mut image_file = std::fs::File::open(image_path).unwrap();
+        let (image_info, image_data) =
+            stbi_load_from_reader(&mut image_file, Channels::Default).unwrap();
+
+        let image_format = match image_info.components {
+            1 => gl::RED,
+            2 => gl::RG,
+            3 => gl::RGB,
+            4 => gl::RGBA,
+            _ => gl::RGB,
+        };
+
+        unsafe {
+            gl::TexImage2D(
+                gl::TEXTURE_2D,
+                0,
+                image_format.try_into().unwrap(),
+                image_info.width,
+                image_info.height,
+                0,
+                image_format,
+                gl::UNSIGNED_BYTE,
+                image_data.into_vec().as_ptr() as *const std::ffi::c_void,
+            );
+            gl::GenerateMipmap(gl::TEXTURE_2D);
+            
+            gl::BindTexture(gl::TEXTURE_2D, 0);
+        }
+        
+        return Texture { handle };
+    }
+    
+    fn bind(&self) {
+        unsafe {
+            gl::BindTexture(gl::TEXTURE_2D, self.handle);
+        }
+    }
+    
+    fn unbind() {
+        unsafe {
+            gl::BindTexture(gl::TEXTURE_2D, 0);
+        }
+    }
+    
+    fn set_active_texture(texture_unit: u32) {
+        unsafe {
+            gl::ActiveTexture(gl::TEXTURE0 + texture_unit)
+        }
+    }
+}
+
+impl Drop for Texture {
+    fn drop(&mut self) {
+        Texture::unbind();
+        
+        unsafe {
+            gl::DeleteTextures(1, &self.handle);
         }
     }
 }
