@@ -1,176 +1,271 @@
-extern crate glm;
-
-#[repr(C)]
-struct Vertex {
-    position: glm::Vec2,
-    uv: glm::Vec2,
-    color: glm::Vec4,
-    texture: i16,
+// I will only add the types that I will be using
+enum OpenGLType {
+    Float,
+    Short,
 }
 
-impl Clone for Vertex {
-    fn clone(&self) -> Self {
-        return Vertex {
-            position: self.position.clone(),
-            uv: self.uv.clone(),
-            color: self.color.clone(),
-            texture: self.texture,
-        };
+struct VertexArray {
+    handle: u32,
+}
+
+impl VertexArray {
+    fn new() -> VertexArray {
+        let mut handle = 0;
+
+        unsafe {
+            gl::GenVertexArrays(1, &mut handle);
+        }
+
+        return VertexArray { handle: handle };
+    }
+
+    fn bind(&self) {
+        unsafe {
+            gl::BindVertexArray(self.handle);
+        }
+    }
+
+    fn unbind() {
+        unsafe {
+            gl::BindVertexArray(0);
+        }
+    }
+
+    fn create_vertex_attribute(
+        &self,
+        index: u32,
+        size: u8,
+        attribute_type: OpenGLType,
+        stride: i32,
+        offset: usize,
+    ) {
+        unsafe {
+            self.bind();
+            gl::VertexAttribPointer(
+                index,
+                size.try_into().unwrap(),
+                match attribute_type {
+                    OpenGLType::Float => gl::FLOAT,
+                    OpenGLType::Short => gl::SHORT,
+                },
+                gl::FALSE,
+                stride,
+                offset as *const std::ffi::c_void,
+            );
+            gl::EnableVertexAttribArray(index);
+        }
     }
 }
 
-unsafe fn offsetof(host: *const std::ffi::c_void, b: *const std::ffi::c_void) -> usize {
-    (b as usize) - (host as usize)
+impl Drop for VertexArray {
+    fn drop(&mut self) {
+        unsafe {
+            gl::DeleteVertexArrays(1, &mut self.handle);
+        }
+    }
 }
 
-fn create_shader(source_path: &str, shader_type: u32) {
+enum BufferType {
+    Vertex,
+    Index,
+}
+
+// Once again, only included the ones that I will use.
+enum BufferUsage {
+    Static,
+    Dynamic,
+}
+
+struct Buffer {
+    handle: u32,
+    buffer_type: u32,
+}
+
+impl Buffer {
+    fn new<T>(data: Vec<T>, buffer_type: BufferType, buffer_usage: BufferUsage) -> Buffer {
+        let mut handle = 0;
+        let buffer_type = match buffer_type {
+            BufferType::Vertex => gl::ARRAY_BUFFER,
+            BufferType::Index => gl::ELEMENT_ARRAY_BUFFER,
+        };
+
+        unsafe {
+            gl::GenBuffers(1, &mut handle);
+            gl::BindBuffer(buffer_type, handle);
+            gl::BufferData(
+                buffer_type,
+                (data.len() * std::mem::size_of::<T>()).try_into().unwrap(),
+                data.as_ptr() as *const std::ffi::c_void,
+                match buffer_usage {
+                    BufferUsage::Static => gl::STATIC_DRAW,
+                    BufferUsage::Dynamic => gl::DYNAMIC_DRAW,
+                },
+            );
+
+            gl::BindBuffer(buffer_type, 0);
+        }
+
+        return Buffer {
+            handle,
+            buffer_type,
+        };
+    }
+
+    fn bind(&self) {
+        unsafe {
+            gl::BindBuffer(self.buffer_type, self.handle);
+        }
+    }
+
+    fn unbind(&self) {
+        unsafe {
+            gl::BindBuffer(self.buffer_type, 0);
+        }
+    }
+
+    fn set_sub_data<T>(&self, offset: isize, data: Vec<T>) {
+        self.bind();
+
+        unsafe {
+            gl::BufferSubData(
+                self.buffer_type,
+                offset,
+                (data.len() * std::mem::size_of::<T>()).try_into().unwrap(),
+                data.as_ptr() as *const std::ffi::c_void,
+            );
+        }
+
+        self.unbind();
+    }
+}
+
+impl Drop for Buffer {
+    fn drop(&mut self) {
+        self.unbind();
+
+        unsafe {
+            gl::DeleteBuffers(1, &self.handle);
+        }
+    }
+}
+
+fn create_shader(source_path: &str, shader_type: u32) -> u32 {
     let source = std::fs::read_to_string(source_path);
     let source = match source {
         Ok(source) => source,
         Err(e) => {
-            eprintln!("[ERROR]: Failed to load file {}: {}", source_path, e.to_string());
+            eprintln!(
+                "[ERROR]: Failed to load file {}: {}",
+                source_path,
+                e.to_string()
+            );
             "".to_string()
         }
     };
-    
-    let source = std::ffi::CStr::from_bytes_with_nul(source.as_bytes()).unwrap().as_ptr();
-    
+
+    let source = std::ffi::CStr::from_bytes_with_nul(source.as_bytes())
+        .unwrap()
+        .as_ptr();
+    let shader;
+
     unsafe {
-        let shader = gl::CreateShader(shader_type);
+        shader = gl::CreateShader(shader_type);
         gl::ShaderSource(shader, 1, &source, std::ptr::null());
         gl::CompileShader(shader);
-        
-        let mut success = 0;
-        
+    }
+
+    let mut success = 0;
+
+    unsafe {
         gl::GetShaderiv(shader, gl::COMPILE_STATUS, &mut success);
-        
-        if success != gl::TRUE.into() {
-            
+    }
+
+    if success != gl::TRUE.into() {
+        let error_log_layout = std::alloc::Layout::array::<i8>(512).unwrap();
+
+        unsafe {
+            let error_log: *mut i8 = std::alloc::alloc(error_log_layout) as *mut i8;
+            gl::GetShaderInfoLog(shader, 512, std::ptr::null::<i32>() as *mut i32, error_log);
+
+            eprintln!(
+                "[ERROR]: Failed to compile shader {}:\n{}\n\n",
+                source_path,
+                String::from_raw_parts(error_log as *mut u8, 512, 512)
+            );
+
+            std::alloc::dealloc(error_log as *mut u8, error_log_layout);
         }
     }
+
+    return shader;
 }
 
-struct Renderer {
-    vao: u32,
-    vbo: u32,
-    ebo: u32,
-
-    shader_program: u32,
-    vertex_iterator: u32,
-
-    vertices: Vec<Vertex>,
+struct ShaderProgram {
+    handle: u32,
 }
 
-impl Renderer {
-    pub fn new(max_quads: usize, vertex_shader_path: &str, fragment_shader_path: &str) {
-        let mut vao = 0;
+impl ShaderProgram {
+    fn new(vertex_source_path: &str, fragment_source_path: &str) -> ShaderProgram {
+        let vertex = create_shader(vertex_source_path, gl::VERTEX_SHADER);
+        let fragment = create_shader(fragment_source_path, gl::FRAGMENT_SHADER);
+
+        let mut handle = 0;
+
         unsafe {
-            gl::GenVertexArrays(1, &mut vao);
-            gl::BindVertexArray(vao);
+            handle = gl::CreateProgram();
+            gl::AttachShader(handle, vertex);
+            gl::AttachShader(handle, fragment);
+            gl::LinkProgram(handle);
+            
+            // We can delete the shaders once they're linked to the program.
+            gl::DeleteShader(vertex);
+            gl::DeleteShader(fragment);
         }
 
-        let default_vertex = Vertex {
-            position: glm::Vec2::new(0.0, 0.0),
-            uv: glm::Vec2::new(0.0, 0.0),
-            color: glm::Vec4::new(0.0, 0.0, 0.0, 0.0),
-            texture: -1,
-        };
+        let mut success = 0;
+
+        unsafe {
+            gl::GetProgramiv(handle, gl::LINK_STATUS, &mut success);
+        }
+
+        if success != gl::TRUE.into() {
+            let error_log_layout = std::alloc::Layout::array::<i8>(512).unwrap();
+
+            unsafe {
+                let error_log = std::alloc::alloc(error_log_layout);
+                gl::GetProgramInfoLog(
+                    handle,
+                    512,
+                    std::ptr::null::<i32>() as *mut i32,
+                    error_log as *mut i8,
+                );
+
+                eprintln!(
+                    "[ERROR]: Failed to link a shader program:\n{}\n\n",
+                    String::from_raw_parts(error_log, 512, 512)
+                );
+
+                std::alloc::dealloc(error_log, error_log_layout);
+            }
+        }
         
-        let dummy_vertex = default_vertex.clone();
-
-        let vertices = vec![default_vertex; max_quads * 4];
-
-        let mut vbo = 0;
+        return ShaderProgram { handle: handle };
+    }
+    
+    fn use_program(&self) {
         unsafe {
-            gl::GenBuffers(1, &mut vbo);
-            gl::BindBuffer(gl::ARRAY_BUFFER, vbo);
-            gl::BufferData(
-                gl::ARRAY_BUFFER,
-                (std::mem::size_of::<Vertex>() * 4 * max_quads)
-                    .try_into()
-                    .unwrap(),
-                std::ptr::null(),
-                gl::DYNAMIC_DRAW,
-            );
+            gl::UseProgram(self.handle);
         }
+    }
+    
+    // I'll add the uniform functions when I need them.
+}
 
-        let mut indices: Vec<u32> = Vec::with_capacity(max_quads * 6);
-
-        for i in 0..indices.len() {
-            indices.push(u32::try_from(i * 6).unwrap());
-            indices.push(u32::try_from(i * 6 + 1).unwrap());
-            indices.push(u32::try_from(i * 6 + 2).unwrap());
-            indices.push(u32::try_from(i * 6).unwrap());
-            indices.push(u32::try_from(i * 6 + 3).unwrap());
-            indices.push(u32::try_from(i * 6 + 2).unwrap());
-        }
-
-        let mut ebo = 0;
+impl Drop for ShaderProgram {
+    fn drop(&mut self) {
         unsafe {
-            gl::GenBuffers(1, &mut ebo);
-            gl::BindBuffer(gl::ELEMENT_ARRAY_BUFFER, ebo);
-            gl::BufferData(
-                gl::ELEMENT_ARRAY_BUFFER,
-                (indices.len() * std::mem::size_of::<u32>())
-                    .try_into()
-                    .unwrap(),
-                indices.as_ptr() as *mut std::ffi::c_void,
-                gl::STATIC_DRAW,
-            );
-        }
-
-        unsafe {
-            gl::VertexAttribPointer(
-                0,
-                2,
-                gl::FLOAT,
-                gl::FALSE,
-                std::mem::size_of::<Vertex>().try_into().unwrap(),
-                offsetof(
-                    &dummy_vertex as *const Vertex as *mut std::ffi::c_void,
-                    &dummy_vertex.position as *const glm::Vec2 as *mut std::ffi::c_void,
-                ) as *const std::ffi::c_void,
-            );
-            gl::EnableVertexAttribArray(0);
-            
-            gl::VertexAttribPointer(
-                1,
-                2,
-                gl::FLOAT,
-                gl::FALSE,
-                std::mem::size_of::<Vertex>().try_into().unwrap(),
-                offsetof(
-                    &dummy_vertex as *const Vertex as *mut std::ffi::c_void,
-                    &dummy_vertex.uv as *const glm::Vec2 as *mut std::ffi::c_void,
-                ) as *const std::ffi::c_void,
-            );
-            gl::EnableVertexAttribArray(1);
-            
-            gl::VertexAttribPointer(
-                2,
-                4,
-                gl::FLOAT,
-                gl::FALSE,
-                std::mem::size_of::<Vertex>().try_into().unwrap(),
-                offsetof(
-                    &dummy_vertex as *const Vertex as *mut std::ffi::c_void,
-                    &dummy_vertex.color as *const glm::Vec4 as *mut std::ffi::c_void,
-                ) as *const std::ffi::c_void,
-            );
-            gl::EnableVertexAttribArray(2);
-            
-            gl::VertexAttribPointer(
-                3,
-                1,
-                gl::SHORT,
-                gl::FALSE,
-                std::mem::size_of::<Vertex>().try_into().unwrap(),
-                offsetof(
-                    &dummy_vertex as *const Vertex as *mut std::ffi::c_void,
-                    &dummy_vertex.texture as *const i16 as *mut std::ffi::c_void,
-                ) as *const std::ffi::c_void,
-            );
-            gl::EnableVertexAttribArray(0);
+            gl::UseProgram(0);
+            gl::DeleteProgram(self.handle);
         }
     }
 }
