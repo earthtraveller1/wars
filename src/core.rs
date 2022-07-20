@@ -1,18 +1,21 @@
 use std::sync::mpsc::Receiver;
-
 use glfw::Context;
+use crate::scenes;
 
 pub struct Game {
     window: Window,
+    scene_manager: SceneManager
 }
 
 impl Game {
     pub fn new() -> Game {
         let mut window = Window::new(1280, 720, "Wars");
         
+        let scene_manager = SceneManager::new(Box::new(scenes::DummyScene {}));
+        
         window.show();
         
-        return Game { window };
+        return Game { window, scene_manager };
     }
     
     pub fn is_running(&self) -> bool {
@@ -20,6 +23,9 @@ impl Game {
     }
     
     pub fn update(&mut self) {
+        self.scene_manager.update_active();
+        self.scene_manager.render_active();
+        
         self.window.update();
     }
 }
@@ -81,4 +87,32 @@ impl Window {
         let action = self.window.get_mouse_button(button);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
+}
+
+struct SceneManager {
+    active_scene: Box<dyn Scene>
+}
+
+impl SceneManager {
+    fn new(initial_scene: Box<dyn Scene>) -> SceneManager {
+        return SceneManager { active_scene: initial_scene };
+    }
+    
+    fn _set_active(&mut self, new_active_scene: Box<dyn Scene>) {
+        self.active_scene = new_active_scene;
+    }
+    
+    fn update_active(&mut self) {
+        self.active_scene.update();
+    }
+    
+    fn render_active(&mut self) {
+        self.active_scene.render();
+    }
+}
+
+pub trait Scene {
+    fn update(&mut self);
+    
+    fn render(&mut self);
 }
