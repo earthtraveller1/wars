@@ -1,11 +1,9 @@
-use wars::Window;
+use wars::Game;
 
 fn main() {
-    let mut window = Window::new(1280, 720, "Wars");
+    let mut game = Game::new();
     
-    window.show();
-    
-    while window.is_open() {
-        window.update();
+    while game.is_running() {
+        game.update()
     }
 }
