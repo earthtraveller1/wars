@@ -12,7 +12,7 @@ impl Game {
     }
     
     pub fn is_running(&self) -> bool {
-        self.window.is_open()
+        return self.window.is_open();
     }
     
     pub fn update(&mut self) {
