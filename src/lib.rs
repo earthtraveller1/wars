@@ -1,4 +1,5 @@
-pub mod scenes;
+mod scenes;
+mod graphics;
 
 use std::sync::mpsc::Receiver;
 use glfw::Context;
@@ -51,6 +52,8 @@ impl Window {
         
         window.make_current();
         window.set_key_polling(true);
+        
+        gl::load_with(|procname| glfw.get_proc_address_raw(procname));
         
         glfw.with_primary_monitor(|_, m| {
             let video_mode = m.unwrap()
