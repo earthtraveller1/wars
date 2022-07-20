@@ -2,6 +2,28 @@ use std::sync::mpsc::Receiver;
 
 use glfw::Context;
 
+pub struct Game {
+    window: Window,
+}
+
+impl Game {
+    pub fn new() -> Game {
+        let mut window = Window::new(1280, 720, "Wars");
+        
+        window.show();
+        
+        return Game { window };
+    }
+    
+    pub fn is_running(&self) -> bool {
+        return self.window.is_open();
+    }
+    
+    pub fn update(&mut self) {
+        self.window.update();
+    }
+}
+
 struct Window {
     glfw: glfw::Glfw,
     window: glfw::Window,
@@ -58,27 +80,5 @@ impl Window {
     fn _is_mouse_button_down(&self, button: glfw::MouseButton) -> bool {
         let action = self.window.get_mouse_button(button);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
-    }
-}
-
-pub struct Game {
-    window: Window,
-}
-
-impl Game {
-    pub fn new() -> Game {
-        let mut window = Window::new(1280, 720, "Wars");
-        
-        window.show();
-        
-        return Game { window };
-    }
-    
-    pub fn is_running(&self) -> bool {
-        return self.window.is_open();
-    }
-    
-    pub fn update(&mut self) {
-        self.window.update();
     }
 }
