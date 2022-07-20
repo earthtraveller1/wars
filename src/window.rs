@@ -49,4 +49,14 @@ impl Window {
         self.window.swap_buffers();
         self.glfw.poll_events();
     }
+    
+    pub fn is_key_down(&self, key: glfw::Key) -> bool {
+        let action = self.window.get_key(key);
+        return action == glfw::Action::Press || action == glfw::Action::Repeat;
+    }
+    
+    pub fn is_mouse_button_down(&self, button: glfw::MouseButton) -> bool {
+        let action = self.window.get_mouse_button(button);
+        return action == glfw::Action::Press || action == glfw::Action::Repeat;
+    }
 }
