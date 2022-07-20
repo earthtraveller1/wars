@@ -1,4 +1,4 @@
-use crate::core::Scene;
+use crate::Scene;
 
 pub struct DummyScene {}
 

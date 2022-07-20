@@ -1,4 +1,4 @@
-use wars::core::Game;
+use wars::Game;
 
 fn main() {
     let mut game = Game::new();
