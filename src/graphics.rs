@@ -1,4 +1,5 @@
 use stb::image::*;
+use crate::math;
 
 // I will only add the types that I will be using
 enum OpenGLType {
@@ -112,7 +113,7 @@ impl Buffer {
             buffer_type,
         };
     }
-    
+
     /// Creates a new empty buffer
     fn new_empty(size: isize, buffer_type: BufferType, buffer_usage: BufferUsage) -> Buffer {
         let mut handle = 0;
@@ -155,7 +156,7 @@ impl Buffer {
         }
     }
 
-    fn set_sub_data<T>(&self, offset: isize, data: Vec<T>) {
+    fn set_sub_data<T>(&self, offset: isize, data: &Vec<T>) {
         self.bind();
 
         unsafe {
@@ -307,7 +308,7 @@ struct Texture {
 }
 
 impl Texture {
-    fn new(image_path: &str) -> Texture{
+    fn new(image_path: &str) -> Texture {
         let mut handle: u32 = 0;
 
         unsafe {
@@ -362,38 +363,218 @@ impl Texture {
                 image_data.into_vec().as_ptr() as *const std::ffi::c_void,
             );
             gl::GenerateMipmap(gl::TEXTURE_2D);
-            
+
             gl::BindTexture(gl::TEXTURE_2D, 0);
         }
-        
+
         return Texture { handle };
     }
-    
+
     fn bind(&self) {
         unsafe {
             gl::BindTexture(gl::TEXTURE_2D, self.handle);
         }
     }
-    
+
     fn unbind() {
         unsafe {
             gl::BindTexture(gl::TEXTURE_2D, 0);
         }
     }
-    
+
     fn set_active_texture(texture_unit: u32) {
-        unsafe {
-            gl::ActiveTexture(gl::TEXTURE0 + texture_unit)
-        }
+        unsafe { gl::ActiveTexture(gl::TEXTURE0 + texture_unit) }
     }
 }
 
 impl Drop for Texture {
     fn drop(&mut self) {
         Texture::unbind();
-        
+
         unsafe {
             gl::DeleteTextures(1, &self.handle);
+        }
+    }
+}
+#[repr(C)]
+struct Vertex2D {
+    position: math::Vector2<f32>,
+    uv: math::Vector2<f32>,
+    color: math::Vector4<f32>,
+    texture: i16,
+}
+
+pub struct Renderer2D {
+    vertex_array: VertexArray,
+    vertex_buffer: Buffer,
+    index_buffer: Buffer,
+
+    vertices: Vec<Vertex2D>,
+    quads_to_draw: u32,
+    max_quads: u32,
+
+    shader_program: ShaderProgram,
+}
+
+impl Renderer2D {
+    pub fn new(
+        max_quads: usize,
+        vertex_shader_path: &str,
+        fragment_shader_path: &str,
+    ) -> Renderer2D {
+        let shader_program = ShaderProgram::new(vertex_shader_path, fragment_shader_path);
+
+        let vertex_array = VertexArray::new();
+        vertex_array.bind();
+
+        let vertices = Vec::with_capacity(max_quads * 4);
+
+        let vertex_buffer = Buffer::new_empty(
+            (max_quads * std::mem::size_of::<Vertex2D>() * 4)
+                .try_into()
+                .unwrap(),
+            BufferType::Vertex,
+            BufferUsage::Dynamic,
+        );
+        vertex_buffer.bind();
+
+        let mut indices = Vec::with_capacity(max_quads * 6);
+
+        for i in 0..max_quads {
+            indices.push(i + 0);
+            indices.push(i + 1);
+            indices.push(i + 2);
+            indices.push(i + 0);
+            indices.push(i + 3);
+            indices.push(i + 2);
+        }
+
+        let index_buffer = Buffer::new(indices, BufferType::Index, BufferUsage::Static);
+        index_buffer.bind();
+
+        vertex_array.create_vertex_attribute(
+            0,
+            2,
+            OpenGLType::Float,
+            std::mem::size_of::<Vertex2D>().try_into().unwrap(),
+            0,
+        );
+
+        vertex_array.create_vertex_attribute(
+            1,
+            2,
+            OpenGLType::Float,
+            std::mem::size_of::<Vertex2D>().try_into().unwrap(),
+            2 * std::mem::size_of::<f32>(),
+        );
+
+        vertex_array.create_vertex_attribute(
+            2,
+            4,
+            OpenGLType::Float,
+            std::mem::size_of::<Vertex2D>().try_into().unwrap(),
+            4 * std::mem::size_of::<f32>(),
+        );
+
+        vertex_array.create_vertex_attribute(
+            3,
+            1,
+            OpenGLType::Short,
+            std::mem::size_of::<Vertex2D>().try_into().unwrap(),
+            8 * std::mem::size_of::<f32>(),
+        );
+
+        return Renderer2D {
+            vertex_array,
+            vertex_buffer,
+            index_buffer,
+            vertices,
+            quads_to_draw: 0,
+            max_quads: max_quads.try_into().unwrap(),
+            shader_program,
+        };
+    }
+
+    pub fn begin(&mut self) {
+        self.quads_to_draw = 0;
+        self.vertices.clear();
+    }
+
+    pub fn draw_colored_quad(
+        &mut self,
+        position: math::Vector2<f32>,
+        size: math::Vector2<f32>,
+        color: math::Vector4<f32>,
+    ) {
+        self.quads_to_draw += 1;
+
+        // If the client made more draw calls than what was allocated, then do
+        // nothing.
+        if self.quads_to_draw > self.max_quads {
+            self.quads_to_draw -= 1;
+            return;
+        }
+
+        use math::Vector2;
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x + size.x,
+                y: position.y,
+            },
+            uv: Vector2::<f32> { x: 1.0, y: 0.0 },
+            color: color.clone(),
+            texture: -1,
+        };
+        self.vertices.push(vertex);
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x + size.x,
+                y: position.y + size.y,
+            },
+            uv: Vector2::<f32> { x: 1.0, y: 1.0 },
+            color: color.clone(),
+            texture: -1,
+        };
+        self.vertices.push(vertex);
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x,
+                y: position.y + size.y,
+            },
+            uv: Vector2::<f32> { x: 0.0, y: 1.0 },
+            color: color.clone(),
+            texture: -1,
+        };
+        self.vertices.push(vertex);
+
+        let vertex = Vertex2D {
+            position,
+            uv: Vector2::<f32> { x: 0.0, y: 0.0 },
+            color: color,
+            texture: -1,
+        };
+        self.vertices.push(vertex);
+    }
+
+    pub fn end(&self) {
+        self.vertex_array.bind();
+        self.vertex_buffer.set_sub_data(0, &self.vertices);
+        self.index_buffer.bind();
+        
+        let quad_count: i32 = self.quads_to_draw.try_into().unwrap();
+        
+        self.shader_program.use_program();
+        
+        unsafe {
+            gl::DrawElements(
+                gl::TRIANGLES,
+                quad_count * 6,
+                gl::UNSIGNED_INT,
+                std::ptr::null(),
+            );
         }
     }
 }
