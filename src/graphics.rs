@@ -196,14 +196,12 @@ fn create_shader(source_path: &str, shader_type: u32) -> u32 {
         }
     };
 
-    let source = std::ffi::CStr::from_bytes_with_nul(source.as_bytes())
-        .unwrap()
-        .as_ptr();
     let shader;
 
     unsafe {
         shader = gl::CreateShader(shader_type);
-        gl::ShaderSource(shader, 1, &source, std::ptr::null());
+        let source = std::ffi::CString::new(source.as_bytes()).unwrap();
+        gl::ShaderSource(shader, 1, &source.as_ptr(), std::ptr::null());
         gl::CompileShader(shader);
     }
 
@@ -214,19 +212,20 @@ fn create_shader(source_path: &str, shader_type: u32) -> u32 {
     }
 
     if success != gl::TRUE.into() {
-        let error_log_layout = std::alloc::Layout::array::<i8>(512).unwrap();
-
+        let mut error_log: Vec<u8> = Vec::with_capacity(512);
         unsafe {
-            let error_log: *mut i8 = std::alloc::alloc(error_log_layout) as *mut i8;
-            gl::GetShaderInfoLog(shader, 512, std::ptr::null::<i32>() as *mut i32, error_log);
+            gl::GetShaderInfoLog(
+                shader, 
+                512, 
+                std::ptr::null::<i32>() as *mut i32, 
+                error_log.as_mut_ptr() as *mut i8
+            );
 
             eprintln!(
                 "[ERROR]: Failed to compile shader {}:\n{}\n\n",
                 source_path,
-                String::from_raw_parts(error_log as *mut u8, 512, 512)
+                String::from_utf8(error_log).unwrap()
             );
-
-            std::alloc::dealloc(error_log as *mut u8, error_log_layout);
         }
     }
 
