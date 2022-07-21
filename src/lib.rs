@@ -14,7 +14,7 @@ impl Game {
     pub fn new() -> Game {
         let mut window = Window::new(1280, 720, "Wars");
         
-        let scene_manager = SceneManager::new(Box::new(scenes::DummyScene {}));
+        let scene_manager = SceneManager::new(Box::new(scenes::DummyScene::new()));
         
         window.show();
         
