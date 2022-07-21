@@ -44,9 +44,10 @@ impl Window {
         let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS)
             .expect("Failed to initialize GLFW!");
             
-        glfw.window_hint(glfw::WindowHint::ContextVersion(3, 3));
+        glfw.window_hint(glfw::WindowHint::ContextVersion(4, 3));
         glfw.window_hint(glfw::WindowHint::OpenGlProfile(glfw::OpenGlProfileHint::Core));
         glfw.window_hint(glfw::WindowHint::Visible(false));
+        glfw.window_hint(glfw::WindowHint::Resizable(false));
         
         let (mut window, events) = glfw.create_window(width, height, title, glfw::WindowMode::Windowed)
             .expect("Failed to create the Window!");
