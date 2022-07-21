@@ -1,5 +1,6 @@
-mod scenes;
 mod graphics;
+mod math;
+mod scenes;
 
 use std::sync::mpsc::Receiver;
 use glfw::Context;
