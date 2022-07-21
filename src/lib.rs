@@ -29,6 +29,8 @@ impl Game {
     }
 
     pub fn update(&mut self) {
+        unsafe { gl::Clear(gl::COLOR_BUFFER_BIT) };
+        
         self.scene_manager.update_active();
         self.scene_manager.render_active();
 
