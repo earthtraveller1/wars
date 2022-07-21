@@ -6,7 +6,7 @@ layout (location = 3) in int a_texture;
 
 out vec2 uv;
 out vec4 color;
-out int texture_unit;
+flat out int texture_unit;
 
 void main() {
     gl_Position = vec4(a_position, 0.0, 1.0);
