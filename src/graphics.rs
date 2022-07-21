@@ -437,15 +437,15 @@ impl Renderer2D {
         );
         vertex_buffer.bind();
 
-        let mut indices = Vec::with_capacity(max_quads * 6);
+        let mut indices: Vec<u32> = Vec::with_capacity(max_quads * 6);
 
         for i in 0..max_quads {
-            indices.push(i + 0);
-            indices.push(i + 1);
-            indices.push(i + 2);
-            indices.push(i + 0);
-            indices.push(i + 3);
-            indices.push(i + 2);
+            indices.push((i * 4 + 0).try_into().unwrap());
+            indices.push((i * 4 + 1).try_into().unwrap());
+            indices.push((i * 4 + 2).try_into().unwrap());
+            indices.push((i * 4 + 0).try_into().unwrap());
+            indices.push((i * 4 + 3).try_into().unwrap());
+            indices.push((i * 4 + 2).try_into().unwrap());
         }
 
         let index_buffer = Buffer::new(indices, BufferType::Index, BufferUsage::Static);
@@ -518,8 +518,8 @@ impl Renderer2D {
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x + size.x,
-                y: position.y,
+                x: position.x + size.x / 2.0,
+                y: position.y + size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 1.0, y: 0.0 },
             color: color.clone(),
@@ -529,8 +529,8 @@ impl Renderer2D {
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x + size.x,
-                y: position.y + size.y,
+                x: position.x + size.x / 2.0,
+                y: position.y - size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 1.0, y: 1.0 },
             color: color.clone(),
@@ -540,8 +540,8 @@ impl Renderer2D {
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x,
-                y: position.y + size.y,
+                x: position.x - size.x / 2.0,
+                y: position.y - size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 0.0, y: 1.0 },
             color: color.clone(),
@@ -550,7 +550,10 @@ impl Renderer2D {
         self.vertices.push(vertex);
 
         let vertex = Vertex2D {
-            position,
+            position: Vector2::<f32> {
+                x: position.x - size.x / 2.0,
+                y: position.y + size.y / 2.0,
+            },
             uv: Vector2::<f32> { x: 0.0, y: 0.0 },
             color: color,
             texture: -1,
