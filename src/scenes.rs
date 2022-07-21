@@ -25,7 +25,7 @@ impl Scene for DummyScene {
         self.renderer.begin();
 
         self.renderer.draw_colored_quad(
-            Vector2 { x: 0.0, y: 0.5 },
+            Vector2 { x: 0.0, y: 0.0 },
             Vector2 { x: 0.5, y: 0.5 },
             Vector4 {
                 x: 1.0,
