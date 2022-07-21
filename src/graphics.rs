@@ -1,5 +1,5 @@
-use stb::image::*;
 use crate::math;
+use stb::image::*;
 
 // I will only add the types that I will be using
 enum OpenGLType {
@@ -215,10 +215,10 @@ fn create_shader(source_path: &str, shader_type: u32) -> u32 {
         let mut error_log: Vec<u8> = Vec::with_capacity(512);
         unsafe {
             gl::GetShaderInfoLog(
-                shader, 
-                512, 
-                std::ptr::null::<i32>() as *mut i32, 
-                error_log.as_mut_ptr() as *mut i8
+                shader,
+                512,
+                std::ptr::null::<i32>() as *mut i32,
+                error_log.as_mut_ptr() as *mut i8,
             );
 
             eprintln!(
@@ -408,6 +408,8 @@ pub struct Renderer2D {
     vertex_buffer: Buffer,
     index_buffer: Buffer,
 
+    textures: [Option<Texture>; 32],
+
     vertices: Vec<Vertex2D>,
     quads_to_draw: u32,
     max_quads: u32,
@@ -482,16 +484,57 @@ impl Renderer2D {
             std::mem::size_of::<Vertex2D>().try_into().unwrap(),
             8 * std::mem::size_of::<f32>(),
         );
+        
+        // Too lazy to implement the copy trait for Texture
+        let textures = [
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+            Option::<Texture>::None,
+        ];
 
         return Renderer2D {
             vertex_array,
             vertex_buffer,
             index_buffer,
+            textures,
             vertices,
             quads_to_draw: 0,
             max_quads: max_quads.try_into().unwrap(),
             shader_program,
         };
+    }
+    
+    pub fn load_texture(&mut self, image_file_path: &str, slot: usize) {
+        self.textures[slot] = Some(Texture::new(image_file_path));
     }
 
     pub fn begin(&mut self) {
@@ -565,11 +608,18 @@ impl Renderer2D {
         self.vertex_array.bind();
         self.vertex_buffer.set_sub_data(0, &self.vertices);
         self.index_buffer.bind();
-        
+
         let quad_count: i32 = self.quads_to_draw.try_into().unwrap();
         
+        for i in 0..32 {
+            if let Some(texture) = &self.textures[i] {
+                Texture::set_active_texture(i.try_into().unwrap());
+                texture.bind();
+            }
+        }
+
         self.shader_program.use_program();
-        
+
         unsafe {
             gl::DrawElements(
                 gl::TRIANGLES,
