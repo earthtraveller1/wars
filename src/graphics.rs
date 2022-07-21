@@ -212,19 +212,20 @@ fn create_shader(source_path: &str, shader_type: u32) -> u32 {
     }
 
     if success != gl::TRUE.into() {
-        let mut error_log: Vec<u8> = Vec::with_capacity(512);
         unsafe {
+            let mut error_log_length = 0;
+            gl::GetShaderiv(shader, gl::INFO_LOG_LENGTH, &mut error_log_length);
+            let mut error_log = Vec::with_capacity(error_log_length as usize);
+            error_log.set_len((error_log_length as usize) - 1);
             gl::GetShaderInfoLog(
                 shader,
-                512,
-                std::ptr::null::<i32>() as *mut i32,
-                error_log.as_mut_ptr() as *mut i8,
+                error_log_length,
+                &mut error_log_length,
+                error_log.as_mut_ptr() as *mut gl::types::GLchar,
             );
-
             eprintln!(
-                "[ERROR]: Failed to compile shader {}:\n{}\n\n",
-                source_path,
-                String::from_utf8(error_log).unwrap()
+                "[ERROR]: Failed to link a shader program:\n{}\n\n",
+                std::str::from_utf8(&error_log).unwrap()
             );
         }
     }
@@ -261,23 +262,21 @@ impl ShaderProgram {
         }
 
         if success != gl::TRUE.into() {
-            let error_log_layout = std::alloc::Layout::array::<i8>(512).unwrap();
-
             unsafe {
-                let error_log = std::alloc::alloc(error_log_layout);
+                let mut error_log_length = 0;
+                gl::GetProgramiv(handle, gl::INFO_LOG_LENGTH, &mut error_log_length);
+                let mut error_log = Vec::with_capacity(error_log_length as usize);
+                error_log.set_len((error_log_length as usize) - 1);
                 gl::GetProgramInfoLog(
                     handle,
-                    512,
-                    std::ptr::null::<i32>() as *mut i32,
-                    error_log as *mut i8,
+                    error_log_length,
+                    &mut error_log_length,
+                    error_log.as_mut_ptr() as *mut gl::types::GLchar,
                 );
-
                 eprintln!(
                     "[ERROR]: Failed to link a shader program:\n{}\n\n",
-                    String::from_raw_parts(error_log, 512, 512)
+                    std::str::from_utf8(&error_log).unwrap()
                 );
-
-                std::alloc::dealloc(error_log, error_log_layout);
             }
         }
 
@@ -287,6 +286,16 @@ impl ShaderProgram {
     fn use_program(&self) {
         unsafe {
             gl::UseProgram(self.handle);
+        }
+    }
+
+    fn set_uniform_1i(&self, name: &str, value: i32) {
+        unsafe {
+            let location = gl::GetUniformLocation(
+                self.handle,
+                std::ffi::CStr::from_ptr(name.as_ptr() as *const i8).as_ptr(),
+            );
+            gl::Uniform1i(location, value);
         }
     }
 
@@ -424,6 +433,11 @@ impl Renderer2D {
         fragment_shader_path: &str,
     ) -> Renderer2D {
         let shader_program = ShaderProgram::new(vertex_shader_path, fragment_shader_path);
+        shader_program.use_program();
+
+        for i in 0..32 {
+            shader_program.set_uniform_1i(format!("texture_samplers[{}]", i).as_str(), i);
+        }
 
         let vertex_array = VertexArray::new();
         vertex_array.bind();
@@ -484,7 +498,7 @@ impl Renderer2D {
             std::mem::size_of::<Vertex2D>().try_into().unwrap(),
             8 * std::mem::size_of::<f32>(),
         );
-        
+
         // Too lazy to implement the copy trait for Texture
         let textures = [
             Option::<Texture>::None,
@@ -532,7 +546,7 @@ impl Renderer2D {
             shader_program,
         };
     }
-    
+
     pub fn load_texture(&mut self, image_file_path: &str, slot: usize) {
         self.textures[slot] = Some(Texture::new(image_file_path));
     }
@@ -604,13 +618,95 @@ impl Renderer2D {
         self.vertices.push(vertex);
     }
 
+    pub fn draw_textured_quad(
+        &mut self,
+        position: math::Vector2<f32>,
+        size: math::Vector2<f32>,
+        texture_id: i16,
+    ) {
+        self.quads_to_draw += 1;
+
+        // If the client made more draw calls than what was allocated, then do
+        // nothing.
+        if self.quads_to_draw > self.max_quads {
+            self.quads_to_draw -= 1;
+            return;
+        }
+
+        use math::{Vector2, Vector4};
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x + size.x / 2.0,
+                y: position.y + size.y / 2.0,
+            },
+            uv: Vector2::<f32> { x: 1.0, y: 0.0 },
+            color: Vector4::<f32> {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0,
+            },
+            texture: texture_id,
+        };
+        self.vertices.push(vertex);
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x + size.x / 2.0,
+                y: position.y - size.y / 2.0,
+            },
+            uv: Vector2::<f32> { x: 1.0, y: 1.0 },
+            color: Vector4::<f32> {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0,
+            },
+            texture: texture_id,
+        };
+        self.vertices.push(vertex);
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x - size.x / 2.0,
+                y: position.y - size.y / 2.0,
+            },
+            uv: Vector2::<f32> { x: 0.0, y: 1.0 },
+            color: Vector4::<f32> {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0,
+            },
+            texture: texture_id,
+        };
+        self.vertices.push(vertex);
+
+        let vertex = Vertex2D {
+            position: Vector2::<f32> {
+                x: position.x - size.x / 2.0,
+                y: position.y + size.y / 2.0,
+            },
+            uv: Vector2::<f32> { x: 0.0, y: 0.0 },
+            color: Vector4::<f32> {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0,
+            },
+            texture: texture_id,
+        };
+        self.vertices.push(vertex);
+    }
+
     pub fn end(&self) {
         self.vertex_array.bind();
         self.vertex_buffer.set_sub_data(0, &self.vertices);
         self.index_buffer.bind();
 
         let quad_count: i32 = self.quads_to_draw.try_into().unwrap();
-        
+
         for i in 0..32 {
             if let Some(texture) = &self.textures[i] {
                 Texture::set_active_texture(i.try_into().unwrap());
