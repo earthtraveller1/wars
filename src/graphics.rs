@@ -112,6 +112,36 @@ impl Buffer {
             buffer_type,
         };
     }
+    
+    /// Creates a new empty buffer
+    fn new_empty(size: isize, buffer_type: BufferType, buffer_usage: BufferUsage) -> Buffer {
+        let mut handle = 0;
+        let buffer_type = match buffer_type {
+            BufferType::Vertex => gl::ARRAY_BUFFER,
+            BufferType::Index => gl::ELEMENT_ARRAY_BUFFER,
+        };
+
+        unsafe {
+            gl::GenBuffers(1, &mut handle);
+            gl::BindBuffer(buffer_type, handle);
+            gl::BufferData(
+                buffer_type,
+                size,
+                std::ptr::null(),
+                match buffer_usage {
+                    BufferUsage::Static => gl::STATIC_DRAW,
+                    BufferUsage::Dynamic => gl::DYNAMIC_DRAW,
+                },
+            );
+
+            gl::BindBuffer(buffer_type, 0);
+        }
+
+        return Buffer {
+            handle,
+            buffer_type,
+        };
+    }
 
     fn bind(&self) {
         unsafe {
