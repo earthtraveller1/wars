@@ -12,7 +12,7 @@ impl DummyScene {
             "assets/shaders/2d_renderer_basic.fs",
         );
 
-        renderer.load_texture("assets/textures/can_pooper.png", 0);
+        renderer.load_texture("assets/textures/props/can_pooper.png", 0);
 
         return DummyScene { renderer };
     }
