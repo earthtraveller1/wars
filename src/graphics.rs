@@ -299,7 +299,7 @@ impl ShaderProgram {
         }
     }
 
-    fn set_unifrom_matrix_4f(&self, name: &str, value: math::Matrix4<f32>) {
+    fn set_unifrom_matrix_4f(&self, name: &str, value: &math::Matrix4<f32>) {
         unsafe {
             let location = gl::GetUniformLocation(
                 self.handle,
