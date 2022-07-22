@@ -13,6 +13,7 @@ impl DummyScene {
         );
 
         renderer.load_texture("assets/textures/props/can_pooper.png", 0);
+        renderer.load_texture("assets/textures/props/rai_rai_raku_raku.png", 1);
 
         return DummyScene { renderer };
     }
@@ -27,7 +28,9 @@ impl Scene for DummyScene {
         self.renderer.begin();
 
         self.renderer
-            .draw_textured_quad(Vector2 { x: 0.0, y: 0.0 }, Vector2 { x: 0.5, y: 0.5 }, 0);
+            .draw_textured_quad(Vector2 { x: 0.0, y: 0.0 }, Vector2 { x: 0.5, y: 0.5 }, 0.0);
+        self.renderer
+            .draw_textured_quad(Vector2 { x: 0.5, y: 0.5 }, Vector2 { x: 0.5, y: 0.5 }, 1.0);
 
         self.renderer.end();
     }

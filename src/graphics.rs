@@ -419,7 +419,7 @@ struct Vertex2D {
     position: math::Vector2<f32>,
     uv: math::Vector2<f32>,
     color: math::Vector4<f32>,
-    texture: i16,
+    texture: f32,
 }
 
 pub struct Renderer2D {
@@ -509,7 +509,7 @@ impl Renderer2D {
         vertex_array.create_vertex_attribute(
             3,
             1,
-            OpenGLType::Short,
+            OpenGLType::Float,
             std::mem::size_of::<Vertex2D>().try_into().unwrap(),
             8 * std::mem::size_of::<f32>(),
         );
@@ -595,7 +595,7 @@ impl Renderer2D {
             },
             uv: Vector2::<f32> { x: 1.0, y: 0.0 },
             color: color.clone(),
-            texture: -1,
+            texture: -1.0,
         };
         self.vertices.push(vertex);
 
@@ -606,7 +606,7 @@ impl Renderer2D {
             },
             uv: Vector2::<f32> { x: 1.0, y: 1.0 },
             color: color.clone(),
-            texture: -1,
+            texture: -1.0,
         };
         self.vertices.push(vertex);
 
@@ -617,7 +617,7 @@ impl Renderer2D {
             },
             uv: Vector2::<f32> { x: 0.0, y: 1.0 },
             color: color.clone(),
-            texture: -1,
+            texture: -1.0,
         };
         self.vertices.push(vertex);
 
@@ -628,7 +628,7 @@ impl Renderer2D {
             },
             uv: Vector2::<f32> { x: 0.0, y: 0.0 },
             color: color,
-            texture: -1,
+            texture: -1.0,
         };
         self.vertices.push(vertex);
     }
@@ -637,7 +637,7 @@ impl Renderer2D {
         &mut self,
         position: math::Vector2<f32>,
         size: math::Vector2<f32>,
-        texture_id: i16,
+        texture_id: f32,
     ) {
         self.quads_to_draw += 1;
 
