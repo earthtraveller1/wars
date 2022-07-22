@@ -4,7 +4,7 @@ use stb::image::*;
 // I will only add the types that I will be using
 enum OpenGLType {
     Float,
-    Short,
+    _Short,
 }
 
 struct VertexArray {
@@ -28,7 +28,7 @@ impl VertexArray {
         }
     }
 
-    fn unbind() {
+    fn _unbind() {
         unsafe {
             gl::BindVertexArray(0);
         }
@@ -49,7 +49,7 @@ impl VertexArray {
                 size.try_into().unwrap(),
                 match attribute_type {
                     OpenGLType::Float => gl::FLOAT,
-                    OpenGLType::Short => gl::SHORT,
+                    OpenGLType::_Short => gl::SHORT,
                 },
                 gl::FALSE,
                 stride,
@@ -571,7 +571,7 @@ impl Renderer2D {
         self.vertices.clear();
     }
 
-    pub fn draw_colored_quad(
+    pub fn _draw_colored_quad(
         &mut self,
         position: math::Vector2<f32>,
         size: math::Vector2<f32>,
