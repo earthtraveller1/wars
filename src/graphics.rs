@@ -242,7 +242,7 @@ impl ShaderProgram {
         let vertex = create_shader(vertex_source_path, gl::VERTEX_SHADER);
         let fragment = create_shader(fragment_source_path, gl::FRAGMENT_SHADER);
 
-        let mut handle = 0;
+        let handle;
 
         unsafe {
             handle = gl::CreateProgram();
@@ -448,6 +448,11 @@ impl Renderer2D {
         for i in 0..32 {
             shader_program.set_uniform_1i(format!("texture_samplers[{}]", i).as_str(), i);
         }
+
+        shader_program.set_unifrom_matrix_4f(
+            "projection",
+            &math::orthographic(-8.0, 8.0, 4.5, -4.5, 1.0, 0.0),
+        );
 
         let vertex_array = VertexArray::new();
         vertex_array.bind();
