@@ -305,7 +305,7 @@ impl ShaderProgram {
                 self.handle,
                 std::ffi::CStr::from_ptr(name.as_ptr() as *const i8).as_ptr(),
             );
-            gl::UniformMatrix4fv(location, 1, gl::FALSE, value.as_ptr());
+            gl::UniformMatrix4fv(location, 1, gl::TRUE, value.as_ptr());
         }
     }
 
