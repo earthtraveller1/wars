@@ -1,6 +1,11 @@
-use std::{rc::Rc, cell::RefCell};
+use std::{cell::RefCell, rc::Rc};
 
-use crate::{graphics::Renderer2D, math::{Vector2, Vector4}, Scene, Window, ui::ButtonChecker};
+use crate::{
+    graphics::Renderer2D,
+    math::{Vector2, Vector4},
+    ui::ButtonChecker,
+    Scene, Window,
+};
 
 pub struct DummyScene {
     renderer: Renderer2D,
@@ -47,7 +52,7 @@ impl Scene for DummyScene {
 pub struct MenuScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
-    button_handler: ButtonChecker
+    button_handler: ButtonChecker,
 }
 
 impl MenuScene {
@@ -62,7 +67,11 @@ impl MenuScene {
         renderer.load_texture("assets/textures/ui/play_button.png", 1);
         renderer.load_texture("assets/textures/ui/other_button.png", 2);
 
-        return MenuScene { renderer: renderer, window, button_handler: ButtonChecker::new(1280.0, 720.0) };
+        return MenuScene {
+            renderer: renderer,
+            window,
+            button_handler: ButtonChecker::new(),
+        };
     }
 }
 
@@ -77,39 +86,47 @@ impl Scene for MenuScene {
 
         self.renderer.draw_quad(
             &Vector2 { x: 0.0, y: 0.0 },
-            &Vector2 { x: 16.0, y: 9.0 },
+            &Vector2 {
+                x: 1280.0,
+                y: 720.0,
+            },
             &Vector4 {
                 x: 1.0,
                 y: 1.0,
                 z: 1.0,
-                w: 1.0
+                w: 1.0,
             },
             0.0,
         );
         
-        let button_color = if self.button_handler.is_button_hovered(-5.4, -0.25, 3.0, 1.5) {
-            Vector4 { x: 0.7, y: 0.7, z: 0.7, w: 1.0 }
-        } else {
-            Vector4 { x: 1.0, y: 1.0, z: 1.0, w: 1.0 }
-        };
-        
         self.renderer.draw_quad(
-            &Vector2 { x: -5.4, y: -0.25 }, 
-            &Vector2 { x: 3.0, y: 1.5 },
-            &button_color,
-            1.0
-        );
-        
-        self.renderer.draw_quad(
-            &Vector2 { x: -3.9, y: -2.25 }, 
-            &Vector2 { x: 6.0, y: 1.5 },
+            &Vector2 { x: 80.0, y: 275.0 },
+            &Vector2 {
+                x: 200.0,
+                y: 100.0,
+            },
             &Vector4 {
                 x: 1.0,
                 y: 1.0,
                 z: 1.0,
-                w: 1.0
+                w: 1.0,
             },
-            2.0
+            1.0,
+        );
+        
+        self.renderer.draw_quad(
+            &Vector2 { x: 80.0, y: 400.0 },
+            &Vector2 {
+                x: 400.0,
+                y: 100.0,
+            },
+            &Vector4 {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0,
+            },
+            2.0,
         );
 
         self.renderer.end();
