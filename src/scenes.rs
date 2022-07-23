@@ -28,9 +28,9 @@ impl Scene for DummyScene {
         self.renderer.begin();
 
         self.renderer
-            .draw_textured_quad(Vector2 { x: 0.0, y: 0.0 }, Vector2 { x: 0.5, y: 0.5 }, 0.0);
+            .draw_textured_quad(&Vector2 { x: -2.0, y: -2.0 }, &Vector2 { x: 4.0, y: 4.0 }, 0.0);
         self.renderer
-            .draw_textured_quad(Vector2 { x: 0.5, y: 0.5 }, Vector2 { x: 0.5, y: 0.5 }, 1.0);
+            .draw_textured_quad(&Vector2 { x: 2.0, y: 2.0 }, &Vector2 { x: 4.0, y: 4.0 }, 1.0);
 
         self.renderer.end();
     }
