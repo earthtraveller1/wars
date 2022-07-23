@@ -128,6 +128,10 @@ impl Window {
         let action = self.window.get_mouse_button(button);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
+    
+    fn get_mouse_position(&self) -> (f64, f64) {
+        self.window.get_cursor_pos()
+    }
 }
 
 struct SceneManager {
