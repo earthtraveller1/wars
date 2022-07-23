@@ -21,6 +21,12 @@ pub struct Vector4<T: Copy> {
     pub w: T,
 }
 
+impl<T: Copy> Vector4<T> {
+    fn from_scalar(s: T) -> Vector4<T> {
+        Vector4 { x: s, y: s, z: s, w: s }
+    }
+}
+
 impl<T: Copy> Clone for Vector4<T> {
     fn clone(&self) -> Self {
         return Vector4 { x: self.x, y: self.y, z: self.z, w: self.w };
