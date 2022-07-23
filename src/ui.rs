@@ -1,4 +1,4 @@
-pub struct ButtonManager {
+pub struct ButtonChecker {
     window_width: f64,
     window_height: f64,
 
@@ -6,9 +6,9 @@ pub struct ButtonManager {
     mouse_y: f64,
 }
 
-impl ButtonManager {
-    pub fn new(window_width: f64, window_height: f64) -> ButtonManager {
-        ButtonManager {
+impl ButtonChecker {
+    pub fn new(window_width: f64, window_height: f64) -> ButtonChecker {
+        ButtonChecker {
             window_width,
             window_height,
 
