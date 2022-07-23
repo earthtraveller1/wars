@@ -448,10 +448,12 @@ impl Renderer2D {
         for i in 0..32 {
             shader_program.set_uniform_1i(format!("texture_samplers[{}]", i).as_str(), i);
         }
-
+        
+        let projection = math::orthographic(-8.0, 8.0, 4.5, -4.5, 1.0, 0.0);
+        
         shader_program.set_unifrom_matrix_4f(
             "projection",
-            &math::orthographic(-8.0, 8.0, 4.5, -4.5, 1.0, 0.0),
+            &projection,
         );
 
         let vertex_array = VertexArray::new();
@@ -635,8 +637,8 @@ impl Renderer2D {
 
     pub fn draw_textured_quad(
         &mut self,
-        position: math::Vector2<f32>,
-        size: math::Vector2<f32>,
+        position: &math::Vector2<f32>,
+        size: &math::Vector2<f32>,
         texture_id: f32,
     ) {
         self.quads_to_draw += 1;
