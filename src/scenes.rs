@@ -98,34 +98,36 @@ impl Scene for MenuScene {
             },
             0.0,
         );
-        
+
+        let button_color = if self
+            .button_handler
+            .is_button_hovered(80.0, 275.0, 200.0, 100.0)
+        {
+            Vector4::from_scalar(0.7)
+        } else {
+            Vector4::from_scalar(1.0)
+        };
+
         self.renderer.draw_quad(
             &Vector2 { x: 80.0, y: 275.0 },
-            &Vector2 {
-                x: 200.0,
-                y: 100.0,
-            },
-            &Vector4 {
-                x: 1.0,
-                y: 1.0,
-                z: 1.0,
-                w: 1.0,
-            },
+            &Vector2 { x: 200.0, y: 100.0 },
+            &button_color,
             1.0,
         );
         
+        let button_color = if self
+            .button_handler
+            .is_button_hovered(80.0, 400.0, 400.0, 100.0)
+        {
+            Vector4::from_scalar(0.7)
+        } else {
+            Vector4::from_scalar(1.0)
+        };
+
         self.renderer.draw_quad(
             &Vector2 { x: 80.0, y: 400.0 },
-            &Vector2 {
-                x: 400.0,
-                y: 100.0,
-            },
-            &Vector4 {
-                x: 1.0,
-                y: 1.0,
-                z: 1.0,
-                w: 1.0,
-            },
+            &Vector2 { x: 400.0, y: 100.0 },
+            &button_color,
             2.0,
         );
 
