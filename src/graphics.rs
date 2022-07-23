@@ -449,7 +449,7 @@ impl Renderer2D {
             shader_program.set_uniform_1i(format!("texture_samplers[{}]", i).as_str(), i);
         }
 
-        let projection = math::orthographic(-8.0, 8.0, 4.5, -4.5, 1.0, 0.0);
+        let projection = math::orthographic(0.0, 1280.0, 0.0, 720.0, 1.0, 0.0);
 
         shader_program.set_unifrom_matrix_4f("projection", &projection);
 
@@ -586,12 +586,12 @@ impl Renderer2D {
             return;
         }
 
-        use math::{Vector2};
+        use math::Vector2;
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x + size.x / 2.0,
-                y: position.y + size.y / 2.0,
+                x: position.x + size.x,
+                y: position.y,
             },
             uv: Vector2::<f32> { x: 1.0, y: 0.0 },
             color: color.clone(),
@@ -601,8 +601,8 @@ impl Renderer2D {
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x + size.x / 2.0,
-                y: position.y - size.y / 2.0,
+                x: position.x + size.x,
+                y: position.y + size.y,
             },
             uv: Vector2::<f32> { x: 1.0, y: 1.0 },
             color: color.clone(),
@@ -612,8 +612,8 @@ impl Renderer2D {
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x - size.x / 2.0,
-                y: position.y - size.y / 2.0,
+                x: position.x,
+                y: position.y + size.y,
             },
             uv: Vector2::<f32> { x: 0.0, y: 1.0 },
             color: color.clone(),
@@ -623,8 +623,8 @@ impl Renderer2D {
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
-                x: position.x - size.x / 2.0,
-                y: position.y + size.y / 2.0,
+                x: position.x,
+                y: position.y,
             },
             uv: Vector2::<f32> { x: 0.0, y: 0.0 },
             color: color.clone(),
