@@ -448,13 +448,10 @@ impl Renderer2D {
         for i in 0..32 {
             shader_program.set_uniform_1i(format!("texture_samplers[{}]", i).as_str(), i);
         }
-        
+
         let projection = math::orthographic(-8.0, 8.0, 4.5, -4.5, 1.0, 0.0);
-        
-        shader_program.set_unifrom_matrix_4f(
-            "projection",
-            &projection,
-        );
+
+        shader_program.set_unifrom_matrix_4f("projection", &projection);
 
         let vertex_array = VertexArray::new();
         vertex_array.bind();
@@ -573,72 +570,11 @@ impl Renderer2D {
         self.vertices.clear();
     }
 
-    pub fn _draw_colored_quad(
-        &mut self,
-        position: math::Vector2<f32>,
-        size: math::Vector2<f32>,
-        color: math::Vector4<f32>,
-    ) {
-        self.quads_to_draw += 1;
-
-        // If the client made more draw calls than what was allocated, then do
-        // nothing.
-        if self.quads_to_draw > self.max_quads {
-            self.quads_to_draw -= 1;
-            return;
-        }
-
-        use math::Vector2;
-
-        let vertex = Vertex2D {
-            position: Vector2::<f32> {
-                x: position.x + size.x / 2.0,
-                y: position.y + size.y / 2.0,
-            },
-            uv: Vector2::<f32> { x: 1.0, y: 0.0 },
-            color: color.clone(),
-            texture: -1.0,
-        };
-        self.vertices.push(vertex);
-
-        let vertex = Vertex2D {
-            position: Vector2::<f32> {
-                x: position.x + size.x / 2.0,
-                y: position.y - size.y / 2.0,
-            },
-            uv: Vector2::<f32> { x: 1.0, y: 1.0 },
-            color: color.clone(),
-            texture: -1.0,
-        };
-        self.vertices.push(vertex);
-
-        let vertex = Vertex2D {
-            position: Vector2::<f32> {
-                x: position.x - size.x / 2.0,
-                y: position.y - size.y / 2.0,
-            },
-            uv: Vector2::<f32> { x: 0.0, y: 1.0 },
-            color: color.clone(),
-            texture: -1.0,
-        };
-        self.vertices.push(vertex);
-
-        let vertex = Vertex2D {
-            position: Vector2::<f32> {
-                x: position.x - size.x / 2.0,
-                y: position.y + size.y / 2.0,
-            },
-            uv: Vector2::<f32> { x: 0.0, y: 0.0 },
-            color: color,
-            texture: -1.0,
-        };
-        self.vertices.push(vertex);
-    }
-
-    pub fn draw_textured_quad(
+    pub fn draw_quad(
         &mut self,
         position: &math::Vector2<f32>,
         size: &math::Vector2<f32>,
+        color: &math::Vector4<f32>,
         texture_id: f32,
     ) {
         self.quads_to_draw += 1;
@@ -650,7 +586,7 @@ impl Renderer2D {
             return;
         }
 
-        use math::{Vector2, Vector4};
+        use math::{Vector2};
 
         let vertex = Vertex2D {
             position: Vector2::<f32> {
@@ -658,12 +594,7 @@ impl Renderer2D {
                 y: position.y + size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 1.0, y: 0.0 },
-            color: Vector4::<f32> {
-                x: 1.0,
-                y: 1.0,
-                z: 1.0,
-                w: 1.0,
-            },
+            color: color.clone(),
             texture: texture_id,
         };
         self.vertices.push(vertex);
@@ -674,12 +605,7 @@ impl Renderer2D {
                 y: position.y - size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 1.0, y: 1.0 },
-            color: Vector4::<f32> {
-                x: 1.0,
-                y: 1.0,
-                z: 1.0,
-                w: 1.0,
-            },
+            color: color.clone(),
             texture: texture_id,
         };
         self.vertices.push(vertex);
@@ -690,12 +616,7 @@ impl Renderer2D {
                 y: position.y - size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 0.0, y: 1.0 },
-            color: Vector4::<f32> {
-                x: 1.0,
-                y: 1.0,
-                z: 1.0,
-                w: 1.0,
-            },
+            color: color.clone(),
             texture: texture_id,
         };
         self.vertices.push(vertex);
@@ -706,12 +627,7 @@ impl Renderer2D {
                 y: position.y + size.y / 2.0,
             },
             uv: Vector2::<f32> { x: 0.0, y: 0.0 },
-            color: Vector4::<f32> {
-                x: 1.0,
-                y: 1.0,
-                z: 1.0,
-                w: 1.0,
-            },
+            color: color.clone(),
             texture: texture_id,
         };
         self.vertices.push(vertex);
