@@ -4,20 +4,22 @@ mod scenes;
 mod ui;
 
 use glfw::Context;
+use std::cell::RefCell;
 use std::sync::mpsc::Receiver;
+use std::rc::Rc;
 
 pub struct Game {
-    window: Window,
+    window: Rc<RefCell<Window>>,
     scene_manager: SceneManager,
 }
 
 impl Game {
     pub fn new() -> Game {
-        let mut window = Window::new(1280, 720, "Wars");
+        let window = Rc::new(RefCell::new(Window::new(1280, 720, "Wars")));
 
-        let scene_manager = SceneManager::new(Box::new(scenes::MenuScene::new()));
+        let scene_manager = SceneManager::new(Box::new(scenes::MenuScene::new(window.clone())));
 
-        window.show();
+        window.borrow_mut().show();
 
         return Game {
             window,
@@ -26,7 +28,7 @@ impl Game {
     }
 
     pub fn is_running(&self) -> bool {
-        return self.window.is_open();
+        return self.window.borrow().is_open();
     }
 
     pub fn update(&mut self) {
@@ -35,11 +37,11 @@ impl Game {
         self.scene_manager.update_active();
         self.scene_manager.render_active();
 
-        self.window.update();
+        self.window.borrow_mut().update();
     }
 }
 
-struct Window {
+pub struct Window {
     glfw: glfw::Glfw,
     window: glfw::Window,
     _events: Receiver<(f64, glfw::WindowEvent)>,
@@ -119,17 +121,17 @@ impl Window {
         self.glfw.poll_events();
     }
 
-    fn _is_key_down(&self, key: glfw::Key) -> bool {
+    pub fn _is_key_down(&self, key: glfw::Key) -> bool {
         let action = self.window.get_key(key);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
 
-    fn _is_mouse_button_down(&self, button: glfw::MouseButton) -> bool {
+    pub fn _is_mouse_button_down(&self, button: glfw::MouseButton) -> bool {
         let action = self.window.get_mouse_button(button);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
     
-    fn get_mouse_position(&self) -> (f64, f64) {
+    pub fn get_mouse_position(&self) -> (f64, f64) {
         self.window.get_cursor_pos()
     }
 }
