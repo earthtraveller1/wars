@@ -22,7 +22,7 @@ pub struct Vector4<T: Copy> {
 }
 
 impl<T: Copy> Vector4<T> {
-    fn from_scalar(s: T) -> Vector4<T> {
+    pub fn from_scalar(s: T) -> Vector4<T> {
         Vector4 { x: s, y: s, z: s, w: s }
     }
 }
