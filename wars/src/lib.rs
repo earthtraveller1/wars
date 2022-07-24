@@ -3,11 +3,11 @@ mod math;
 mod scenes;
 mod ui;
 
+use glad_gl::gl;
 use glfw::Context;
 use std::cell::RefCell;
-use std::sync::mpsc::Receiver;
 use std::rc::Rc;
-use glad_gl::gl;
+use std::sync::mpsc::Receiver;
 
 pub struct Game {
     window: Rc<RefCell<Window>>,
@@ -34,7 +34,7 @@ impl Game {
 
     pub fn update(&mut self) {
         unsafe { gl::Clear(gl::COLOR_BUFFER_BIT) };
-        
+
         self.scene_manager.update_active();
         self.scene_manager.render_active();
 
@@ -57,10 +57,10 @@ extern "system" fn opengl_debug_callback(
     message: *const i8,
     _: *mut std::ffi::c_void,
 ) {
-    let message = unsafe {
-        std::ffi::CStr::from_ptr(message)
-    }.to_bytes().to_vec();
-    
+    let message = unsafe { std::ffi::CStr::from_ptr(message) }
+        .to_bytes()
+        .to_vec();
+
     println!("[OPENGL]: {}", String::from_utf8(message).unwrap());
 }
 
@@ -131,7 +131,7 @@ impl Window {
         let action = self.window.get_mouse_button(button);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
-    
+
     pub fn get_mouse_position(&self) -> (f64, f64) {
         self.window.get_cursor_pos()
     }
