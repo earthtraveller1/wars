@@ -4,8 +4,9 @@ use crate::{
     graphics::Renderer2D,
     math::{Vector2, Vector4},
     ui::ButtonChecker,
-    Scene, Window, SceneManager,
+    Scene, SceneManager, Window,
 };
+use rand::{distributions::Uniform, Rng};
 
 pub struct DummyScene {
     renderer: Renderer2D,
@@ -53,7 +54,7 @@ pub struct MenuScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
     button_handler: ButtonChecker,
-    scene_manager: *mut SceneManager
+    scene_manager: *mut SceneManager,
 }
 
 impl MenuScene {
@@ -72,7 +73,7 @@ impl MenuScene {
             renderer: renderer,
             window,
             button_handler: ButtonChecker::new(),
-            scene_manager
+            scene_manager,
         };
     }
 }
@@ -81,9 +82,16 @@ impl Scene for MenuScene {
     fn update(&mut self) {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
-        
-        if self.window.borrow()._is_mouse_button_down(glfw::MouseButtonLeft) {
-            if self.button_handler.is_button_hovered(80.0, 275.0, 200.0, 100.0) {
+
+        if self
+            .window
+            .borrow()
+            ._is_mouse_button_down(glfw::MouseButtonLeft)
+        {
+            if self
+                .button_handler
+                .is_button_hovered(80.0, 275.0, 200.0, 100.0)
+            {
                 unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new())) };
             }
         }
@@ -143,11 +151,51 @@ impl Scene for MenuScene {
     }
 }
 
-struct GameScene {}
+struct Enemy {
+    x_position: f32
+}
+
+struct GameScene {
+    renderer: Renderer2D,
+    player_texture: f32,
+    enemy_texture: f32,
+    enemies: Vec<Enemy>
+}
 
 impl GameScene {
     fn new() -> GameScene {
-        GameScene {}
+        let mut renderer = Renderer2D::new(
+            5,
+            "assets/shaders/2d_renderer_basic.vs",
+            "assets/shaders/2d_renderer_basic.fs",
+        );
+        
+        renderer.load_texture("assets/textures/backgrounds/game_background.png", 0);
+        renderer.load_texture("assets/textures/props/can_pooper.png", 1);
+        renderer.load_texture("assets/textures/props/rai_rai_raku_raku.png", 2);
+        
+        let mut random_generator = rand::thread_rng();
+        let distribution: Uniform<i32> = Uniform::from(1..3);
+        let player_texture = random_generator.sample(distribution);
+        
+        println!("{}", player_texture);
+        
+        let (player_texture, enemy_texture) = if player_texture == 1 {
+            (1.0, 2.0)
+        } else {
+            (2.0, 1.0)
+        };
+
+        GameScene {
+            renderer,
+            player_texture,
+            enemy_texture,
+            enemies: vec![
+                Enemy { x_position: 1000.0 },
+                Enemy { x_position: 800.0 },
+                Enemy { x_position: 600.0 }
+            ]
+        }
     }
 }
 
@@ -155,8 +203,66 @@ impl Scene for GameScene {
     fn update(&mut self) {
         
     }
-    
+
     fn render(&mut self) {
+        self.renderer.begin();
         
+        self.renderer.draw_quad(
+            &Vector2 {
+                x: 0.0,
+                y: 0.0
+            }, 
+            &Vector2 {
+                x: 1280.0,
+                y: 720.0
+            }, 
+            &Vector4 {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0
+            },
+            0.0
+        );
+        
+        self.renderer.draw_quad(
+            &Vector2 {
+                x: 200.0,
+                y: 370.0
+            }, 
+            &Vector2 {
+                x: 150.0,
+                y: 150.0
+            }, 
+            &Vector4 {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0
+            },
+            self.player_texture
+        );
+        
+        self.enemies.iter().for_each(|enemy| {
+            self.renderer.draw_quad(
+                &Vector2 {
+                    x: enemy.x_position,
+                    y: 370.0
+                }, 
+                &Vector2 {
+                    x: 150.0,
+                    y: 150.0
+                }, 
+                &Vector4 {
+                    x: 1.0,
+                    y: 1.0,
+                    z: 1.0,
+                    w: 1.0
+                },
+                self.enemy_texture
+            );
+        });
+        
+        self.renderer.end();
     }
 }
