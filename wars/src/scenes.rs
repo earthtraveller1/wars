@@ -28,7 +28,7 @@ impl DummyScene {
 }
 
 impl Scene for DummyScene {
-    fn update(&mut self) {
+    fn update(&mut self, _: f64) {
         //println!("bozo!");
     }
 
@@ -79,20 +79,20 @@ impl MenuScene {
 }
 
 impl Scene for MenuScene {
-    fn update(&mut self) {
+    fn update(&mut self, _: f64) {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
 
         if self
             .window
             .borrow()
-            ._is_mouse_button_down(glfw::MouseButtonLeft)
+            .is_mouse_button_down(glfw::MouseButtonLeft)
         {
             if self
                 .button_handler
                 .is_button_hovered(80.0, 275.0, 200.0, 100.0)
             {
-                unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new())) };
+                unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new(self.window.clone()))) };
             }
         }
     }
@@ -157,13 +157,17 @@ struct Enemy {
 
 struct GameScene {
     renderer: Renderer2D,
+    window: Rc<RefCell<Window>>,
+    
     player_texture: f32,
+    player_position: f32,
+    
     enemy_texture: f32,
-    enemies: Vec<Enemy>
+    enemies: Vec<Enemy>,
 }
 
 impl GameScene {
-    fn new() -> GameScene {
+    fn new(window: Rc<RefCell<Window>>) -> GameScene {
         let mut renderer = Renderer2D::new(
             5,
             "assets/shaders/2d_renderer_basic.vs",
@@ -194,14 +198,23 @@ impl GameScene {
                 Enemy { x_position: 1000.0 },
                 Enemy { x_position: 800.0 },
                 Enemy { x_position: 600.0 }
-            ]
+            ],
+            window,
+            player_position: 200.0
         }
     }
 }
 
 impl Scene for GameScene {
-    fn update(&mut self) {
+    fn update(&mut self, delta_time: f64) {
+        const PLAYER_SPEED: f32 = 200.0;
         
+        if self.window.borrow().is_key_down(glfw::Key::Left) {
+            self.player_position -= PLAYER_SPEED * (delta_time as f32);
+        }
+        if self.window.borrow().is_key_down(glfw::Key::Right) {
+            self.player_position += PLAYER_SPEED * (delta_time as f32);
+        }
     }
 
     fn render(&mut self) {
@@ -227,7 +240,7 @@ impl Scene for GameScene {
         
         self.renderer.draw_quad(
             &Vector2 {
-                x: 200.0,
+                x: self.player_position,
                 y: 370.0
             }, 
             &Vector2 {
