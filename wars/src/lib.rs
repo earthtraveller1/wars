@@ -7,6 +7,7 @@ use glfw::Context;
 use std::cell::RefCell;
 use std::sync::mpsc::Receiver;
 use std::rc::Rc;
+use glad_gl::gl;
 
 pub struct Game {
     window: Rc<RefCell<Window>>,
@@ -83,13 +84,13 @@ impl Window {
         window.make_current();
         window.set_key_polling(true);
 
-        gl::load_with(|procname| glfw.get_proc_address_raw(procname));
+        gl::load(|procname| glfw.get_proc_address_raw(procname));
 
         unsafe {
             gl::Enable(gl::DEBUG_OUTPUT);
             gl::Enable(gl::DEBUG_OUTPUT_SYNCHRONOUS);
 
-            gl::DebugMessageCallback(Some(opengl_debug_callback), std::ptr::null());
+            gl::DebugMessageCallback(opengl_debug_callback, std::ptr::null());
         }
 
         glfw.with_primary_monitor(|_, m| {

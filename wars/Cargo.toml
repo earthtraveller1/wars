@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 glfw = "0.45.0"
-gl = "0.14.0"
+glad-gl = { path = "../glad-gl" }
 stb = "0.3.2"

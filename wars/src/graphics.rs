@@ -1,5 +1,6 @@
 use crate::math;
 use stb::image::*;
+use glad_gl::gl;
 
 // I will only add the types that I will be using
 enum OpenGLType {
