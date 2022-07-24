@@ -12,6 +12,7 @@ use std::sync::mpsc::Receiver;
 pub struct Game {
     window: Rc<RefCell<Window>>,
     scene_manager: SceneManager,
+    last_time: f64
 }
 
 impl Game {
@@ -23,6 +24,7 @@ impl Game {
         return Game {
             window,
             scene_manager,
+            last_time: 0.0
         };
     }
 
@@ -44,9 +46,13 @@ impl Game {
     }
 
     pub fn update(&mut self) {
+        let this_time = self.window.borrow().get_time();
+        let delta_time = this_time - self.last_time;
+        self.last_time = this_time;
+        
         unsafe { gl::Clear(gl::COLOR_BUFFER_BIT) };
 
-        self.scene_manager.update_active();
+        self.scene_manager.update_active(delta_time);
         self.scene_manager.render_active();
 
         self.window.borrow_mut().update();
@@ -102,6 +108,9 @@ impl Window {
             gl::Enable(gl::DEBUG_OUTPUT_SYNCHRONOUS);
 
             gl::DebugMessageCallback(opengl_debug_callback, std::ptr::null());
+            
+            gl::Enable(gl::BLEND);
+            gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
         }
 
         glfw.with_primary_monitor(|_, m| {
@@ -132,13 +141,17 @@ impl Window {
         self.window.swap_buffers();
         self.glfw.poll_events();
     }
+    
+    fn get_time(&self) -> f64 {
+        self.glfw.get_time()
+    }
 
-    pub fn _is_key_down(&self, key: glfw::Key) -> bool {
+    pub fn is_key_down(&self, key: glfw::Key) -> bool {
         let action = self.window.get_key(key);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
 
-    pub fn _is_mouse_button_down(&self, button: glfw::MouseButton) -> bool {
+    pub fn is_mouse_button_down(&self, button: glfw::MouseButton) -> bool {
         let action = self.window.get_mouse_button(button);
         return action == glfw::Action::Press || action == glfw::Action::Repeat;
     }
@@ -163,8 +176,8 @@ impl SceneManager {
         self.active_scene = new_active_scene;
     }
 
-    fn update_active(&mut self) {
-        self.active_scene.update();
+    fn update_active(&mut self, delta_time: f64) {
+        self.active_scene.update(delta_time);
     }
 
     fn render_active(&mut self) {
@@ -173,7 +186,7 @@ impl SceneManager {
 }
 
 pub trait Scene {
-    fn update(&mut self);
+    fn update(&mut self, delta_time: f64);
 
     fn render(&mut self);
 }
