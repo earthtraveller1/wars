@@ -1,11 +1,5 @@
-[package]
-name = "wars"
-version = "0.1.0"
-edition = "2021"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-glfw = "0.45.0"
-gl = "0.14.0"
-stb = "0.3.2"
+members = [
+    "wars"
+]
