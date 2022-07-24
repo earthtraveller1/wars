@@ -291,10 +291,13 @@ impl ShaderProgram {
     }
 
     fn set_uniform_1i(&self, name: &str, value: i32) {
+        let mut name = name.as_bytes().to_vec();
+        name.push(0);
+        
         unsafe {
             let location = gl::GetUniformLocation(
                 self.handle,
-                std::ffi::CStr::from_ptr(name.as_ptr() as *const i8).as_ptr(),
+                name.as_ptr() as *const i8,
             );
             gl::Uniform1i(location, value);
         }
