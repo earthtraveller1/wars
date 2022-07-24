@@ -92,7 +92,10 @@ impl Scene for MenuScene {
                 .button_handler
                 .is_button_hovered(80.0, 275.0, 200.0, 100.0)
             {
-                unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new(self.window.clone()))) };
+                unsafe {
+                    (*(self.scene_manager))
+                        .set_active(Box::new(GameScene::new(self.window.clone())))
+                };
             }
         }
     }
@@ -152,16 +155,16 @@ impl Scene for MenuScene {
 }
 
 struct Enemy {
-    x_position: f32
+    x_position: f32,
 }
 
 struct GameScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
-    
+
     player_texture: f32,
     player_position: f32,
-    
+
     enemy_texture: f32,
     enemies: Vec<Enemy>,
 }
@@ -173,17 +176,17 @@ impl GameScene {
             "assets/shaders/2d_renderer_basic.vs",
             "assets/shaders/2d_renderer_basic.fs",
         );
-        
+
         renderer.load_texture("assets/textures/backgrounds/game_background.png", 0);
         renderer.load_texture("assets/textures/props/can_pooper.png", 1);
         renderer.load_texture("assets/textures/props/rai_rai_raku_raku.png", 2);
-        
+
         let mut random_generator = rand::thread_rng();
         let distribution: Uniform<i32> = Uniform::from(1..3);
         let player_texture = random_generator.sample(distribution);
-        
+
         println!("{}", player_texture);
-        
+
         let (player_texture, enemy_texture) = if player_texture == 1 {
             (1.0, 2.0)
         } else {
@@ -197,10 +200,10 @@ impl GameScene {
             enemies: vec![
                 Enemy { x_position: 1000.0 },
                 Enemy { x_position: 800.0 },
-                Enemy { x_position: 600.0 }
+                Enemy { x_position: 600.0 },
             ],
             window,
-            player_position: 200.0
+            player_position: 200.0,
         }
     }
 }
@@ -208,7 +211,7 @@ impl GameScene {
 impl Scene for GameScene {
     fn update(&mut self, delta_time: f64) {
         const PLAYER_SPEED: f32 = 200.0;
-        
+
         if self.window.borrow().is_key_down(glfw::Key::Left) {
             self.player_position -= PLAYER_SPEED * (delta_time as f32);
         }
@@ -219,63 +222,115 @@ impl Scene for GameScene {
 
     fn render(&mut self) {
         self.renderer.begin();
-        
+
         self.renderer.draw_quad(
-            &Vector2 {
-                x: 0.0,
-                y: 0.0
-            }, 
+            &Vector2 { x: 0.0, y: 0.0 },
             &Vector2 {
                 x: 1280.0,
-                y: 720.0
-            }, 
+                y: 720.0,
+            },
             &Vector4 {
                 x: 1.0,
                 y: 1.0,
                 z: 1.0,
-                w: 1.0
+                w: 1.0,
             },
-            0.0
+            0.0,
         );
-        
+
         self.renderer.draw_quad(
             &Vector2 {
                 x: self.player_position,
-                y: 370.0
-            }, 
-            &Vector2 {
-                x: 150.0,
-                y: 150.0
-            }, 
+                y: 370.0,
+            },
+            &Vector2 { x: 150.0, y: 150.0 },
             &Vector4 {
                 x: 1.0,
                 y: 1.0,
                 z: 1.0,
-                w: 1.0
+                w: 1.0,
             },
-            self.player_texture
+            self.player_texture,
         );
-        
+
         self.enemies.iter().for_each(|enemy| {
             self.renderer.draw_quad(
                 &Vector2 {
                     x: enemy.x_position,
-                    y: 370.0
-                }, 
-                &Vector2 {
-                    x: 150.0,
-                    y: 150.0
-                }, 
+                    y: 370.0,
+                },
+                &Vector2 { x: 150.0, y: 150.0 },
                 &Vector4 {
                     x: 1.0,
                     y: 1.0,
                     z: 1.0,
-                    w: 1.0
+                    w: 1.0,
                 },
-                self.enemy_texture
+                self.enemy_texture,
             );
         });
-        
+
+        self.renderer.end();
+    }
+}
+
+struct HardModeMenuScene {
+    renderer: Renderer2D,
+    scene_manager: *mut SceneManager,
+    window: Rc<RefCell<Window>>,
+    button_handler: ButtonChecker,
+}
+
+impl HardModeMenuScene {
+    fn new(scene_manager: *mut SceneManager, window: Rc<RefCell<Window>>) -> HardModeMenuScene {
+        let mut renderer = Renderer2D::new(
+            3,
+            "assets/shaders/2d_renderer_basic.vs",
+            "assets/shaders/2d_renderer_basic.fs",
+        );
+
+        renderer.load_texture(
+            "assets/textures/backgrounds/hard_mode_menu_background.png",
+            0,
+        );
+        renderer.load_texture("assets/textures/ui/yes_button.png", 1);
+        renderer.load_texture("assets/textures/ui/no_button.png", 2);
+
+        let button_handler = ButtonChecker::new();
+
+        return HardModeMenuScene {
+            renderer,
+            scene_manager,
+            window,
+            button_handler,
+        };
+    }
+}
+
+impl Scene for HardModeMenuScene {
+    fn update(&mut self, delta_time: f64) {
+        let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
+        self.button_handler.update_mouse_position(mouse_x, mouse_y);
+    }
+
+    fn render(&mut self) {
+        self.renderer.begin();
+
+        self.renderer.draw_quad(
+            &Vector2 { x: 0.0, y: 0.0 },
+            &Vector2 {
+                x: 1280.0,
+                y: 720.0,
+            },
+            &Vector4 {
+                x: 1.0,
+                y: 1.0,
+                z: 1.0,
+                w: 1.0,
+            },
+            0.0,
+        );
+
         self.renderer.end();
     }
 }
