@@ -96,6 +96,14 @@ impl Scene for MenuScene {
                     (*(self.scene_manager))
                         .set_active(Box::new(GameScene::new(self.window.clone())))
                 };
+            } else if self
+                .button_handler
+                .is_button_hovered(80.0, 400.0, 400.0, 100.0)
+            {
+                unsafe {
+                    (*(self.scene_manager))
+                        .set_active(Box::new(HardModeMenuScene::new(self.scene_manager, self.window.clone())))
+                };
             }
         }
     }
