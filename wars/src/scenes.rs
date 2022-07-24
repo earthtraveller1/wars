@@ -12,7 +12,7 @@ pub struct DummyScene {
 }
 
 impl DummyScene {
-    pub fn _new() -> DummyScene {
+    pub fn new() -> DummyScene {
         let mut renderer = Renderer2D::new(
             2,
             "assets/shaders/2d_renderer_basic.vs",
@@ -114,7 +114,7 @@ impl Scene for MenuScene {
             &button_color,
             1.0,
         );
-        
+
         let button_color = if self
             .button_handler
             .is_button_hovered(80.0, 400.0, 400.0, 100.0)

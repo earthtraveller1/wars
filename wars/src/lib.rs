@@ -18,14 +18,19 @@ impl Game {
     pub fn new() -> Game {
         let window = Rc::new(RefCell::new(Window::new(1280, 720, "Wars")));
 
-        let scene_manager = SceneManager::new(Box::new(scenes::MenuScene::new(window.clone())));
-
-        window.borrow_mut().show();
+        let scene_manager = SceneManager::new(Box::new(scenes::DummyScene::new()));
 
         return Game {
             window,
             scene_manager,
         };
+    }
+
+    pub fn init(&mut self) {
+        self.scene_manager
+            ._set_active(Box::new(scenes::MenuScene::new(self.window.clone())));
+
+        self.window.borrow_mut().show();
     }
 
     pub fn is_running(&self) -> bool {
