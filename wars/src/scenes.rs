@@ -4,7 +4,7 @@ use crate::{
     graphics::Renderer2D,
     math::{Vector2, Vector4},
     ui::ButtonChecker,
-    Scene, Window,
+    Scene, Window, SceneManager,
 };
 
 pub struct DummyScene {
@@ -53,10 +53,11 @@ pub struct MenuScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
     button_handler: ButtonChecker,
+    scene_manager: *mut SceneManager
 }
 
 impl MenuScene {
-    pub fn new(window: Rc<RefCell<Window>>) -> MenuScene {
+    pub fn new(window: Rc<RefCell<Window>>, scene_manager: *mut SceneManager) -> MenuScene {
         let mut renderer = Renderer2D::new(
             3,
             "assets/shaders/2d_renderer_basic.vs",
@@ -71,6 +72,7 @@ impl MenuScene {
             renderer: renderer,
             window,
             button_handler: ButtonChecker::new(),
+            scene_manager
         };
     }
 }
@@ -79,6 +81,12 @@ impl Scene for MenuScene {
     fn update(&mut self) {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
+        
+        if self.window.borrow()._is_mouse_button_down(glfw::MouseButtonLeft) {
+            if self.button_handler.is_button_hovered(80.0, 275.0, 200.0, 100.0) {
+                unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new())) };
+            }
+        }
     }
 
     fn render(&mut self) {
@@ -132,5 +140,23 @@ impl Scene for MenuScene {
         );
 
         self.renderer.end();
+    }
+}
+
+struct GameScene {}
+
+impl GameScene {
+    fn new() -> GameScene {
+        GameScene {}
+    }
+}
+
+impl Scene for GameScene {
+    fn update(&mut self) {
+        
+    }
+    
+    fn render(&mut self) {
+        
     }
 }

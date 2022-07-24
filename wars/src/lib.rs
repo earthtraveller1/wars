@@ -27,8 +27,14 @@ impl Game {
     }
 
     pub fn init(&mut self) {
+        let scene_manager_ptr: *mut SceneManager;
+        
+        {
+            scene_manager_ptr = &mut self.scene_manager;
+        }
+        
         self.scene_manager
-            ._set_active(Box::new(scenes::MenuScene::new(self.window.clone())));
+            .set_active(Box::new(scenes::MenuScene::new(self.window.clone(), scene_manager_ptr)));
 
         self.window.borrow_mut().show();
     }
@@ -142,7 +148,7 @@ impl Window {
     }
 }
 
-struct SceneManager {
+pub struct SceneManager {
     active_scene: Box<dyn Scene>,
 }
 
@@ -153,7 +159,7 @@ impl SceneManager {
         };
     }
 
-    fn _set_active(&mut self, new_active_scene: Box<dyn Scene>) {
+    pub fn set_active(&mut self, new_active_scene: Box<dyn Scene>) {
         self.active_scene = new_active_scene;
     }
 
