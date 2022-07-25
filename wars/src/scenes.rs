@@ -321,6 +321,14 @@ impl Scene for HardModeMenuScene {
     fn update(&mut self, _delta_time: f64) {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
+        
+        if self.window.borrow().is_mouse_button_down(glfw::MouseButtonLeft) {
+            if self.button_handler.is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0) {
+                unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new(self.window.clone()))) };
+            } else if self.button_handler.is_button_hovered((1280.0 - 200.0) / 2.0, 450.0, 200.0, 100.0) {
+                unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+            }
+        }
     }
 
     fn render(&mut self) {
