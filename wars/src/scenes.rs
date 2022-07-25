@@ -245,6 +245,23 @@ impl Scene for GameScene {
             
             if (self.enemies[2].x_position - self.player_position).abs() < 150.0 {
                 unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+                return;
+            }
+        } else {
+            if let Some(nearest_enemy) = self.enemies.last() {
+                if (nearest_enemy.x_position - self.player_position).abs() < 150.0 {
+                    self.enemies.pop();
+                    
+                    if self.enemies.is_empty() {
+                        unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+                        return;
+                    }
+                }
+            } else {
+                if self.enemies.is_empty() {
+                    unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+                    return;
+                }
             }
         }
     }
