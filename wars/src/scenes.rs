@@ -177,8 +177,8 @@ struct GameScene {
 
     enemy_texture: f32,
     enemies: Vec<Enemy>,
-    
-    is_hard_mode: bool
+
+    is_hard_mode: bool,
 }
 
 impl GameScene {
@@ -216,7 +216,7 @@ impl GameScene {
             ],
             window,
             player_position: 200.0,
-            is_hard_mode
+            is_hard_mode,
         }
     }
 }
@@ -231,7 +231,7 @@ impl Scene for GameScene {
         if self.window.borrow().is_key_down(glfw::Key::Right) {
             self.player_position += PLAYER_SPEED * (delta_time as f32);
         }
-        
+
         if self.is_hard_mode {
             self.enemies.iter_mut().for_each(|enemy| {
                 enemy.x_position -= (50.0f64 * delta_time) as f32;
@@ -330,12 +330,32 @@ impl Scene for HardModeMenuScene {
     fn update(&mut self, _delta_time: f64) {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
-        
-        if self.window.borrow().is_mouse_button_down(glfw::MouseButtonLeft) {
-            if self.button_handler.is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0) {
-                unsafe { (*(self.scene_manager)).set_active(Box::new(GameScene::new(self.window.clone(), true))) };
-            } else if self.button_handler.is_button_hovered((1280.0 - 200.0) / 2.0, 450.0, 200.0, 100.0) {
-                unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+
+        if self
+            .window
+            .borrow()
+            .is_mouse_button_down(glfw::MouseButtonLeft)
+        {
+            if self
+                .button_handler
+                .is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0)
+            {
+                unsafe {
+                    (*(self.scene_manager))
+                        .set_active(Box::new(GameScene::new(self.window.clone(), true)))
+                };
+            } else if self.button_handler.is_button_hovered(
+                (1280.0 - 200.0) / 2.0,
+                450.0,
+                200.0,
+                100.0,
+            ) {
+                unsafe {
+                    (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
+                        self.window.clone(),
+                        self.scene_manager,
+                    )))
+                };
             }
         }
     }
@@ -359,28 +379,56 @@ impl Scene for HardModeMenuScene {
         );
 
         self.renderer.draw_quad(
-            &Vector2 { x: (1280.0 - 200.0) / 2.0, y: 330.0 },
+            &Vector2 {
+                x: (1280.0 - 200.0) / 2.0,
+                y: 330.0,
+            },
             &Vector2 { x: 200.0, y: 100.0 },
-            &(
-                if self.button_handler.is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0) {
-                    Vector4 { x: 0.7, y: 0.7, z: 0.7, w: 0.7 }
-                } else {
-                    Vector4 { x: 1.0, y: 1.0, z: 1.0, w: 1.0 }
+            &(if self
+                .button_handler
+                .is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0)
+            {
+                Vector4 {
+                    x: 0.7,
+                    y: 0.7,
+                    z: 0.7,
+                    w: 0.7,
                 }
-            ),
+            } else {
+                Vector4 {
+                    x: 1.0,
+                    y: 1.0,
+                    z: 1.0,
+                    w: 1.0,
+                }
+            }),
             1.0,
         );
-        
+
         self.renderer.draw_quad(
-            &Vector2 { x: (1280.0 - 200.0) / 2.0, y: 450.0 },
+            &Vector2 {
+                x: (1280.0 - 200.0) / 2.0,
+                y: 450.0,
+            },
             &Vector2 { x: 200.0, y: 100.0 },
-            &(
-                if self.button_handler.is_button_hovered((1280.0 - 200.0) / 2.0, 450.0, 200.0, 100.0) {
-                    Vector4 { x: 0.7, y: 0.7, z: 0.7, w: 0.7 }
-                } else {
-                    Vector4 { x: 1.0, y: 1.0, z: 1.0, w: 1.0 }
+            &(if self
+                .button_handler
+                .is_button_hovered((1280.0 - 200.0) / 2.0, 450.0, 200.0, 100.0)
+            {
+                Vector4 {
+                    x: 0.7,
+                    y: 0.7,
+                    z: 0.7,
+                    w: 0.7,
                 }
-            ),
+            } else {
+                Vector4 {
+                    x: 1.0,
+                    y: 1.0,
+                    z: 1.0,
+                    w: 1.0,
+                }
+            }),
             2.0,
         );
 
