@@ -233,6 +233,10 @@ impl Scene for GameScene {
         if self.window.borrow().is_key_down(glfw::Key::Right) {
             self.player_position += PLAYER_SPEED * (delta_time as f32);
         }
+        if self.window.borrow().is_key_down(glfw::Key::Escape) {
+            unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+            return;
+        }
 
         if self.is_hard_mode {
             self.enemies.iter_mut().for_each(|enemy| {
