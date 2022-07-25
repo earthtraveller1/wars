@@ -94,7 +94,7 @@ impl Scene for MenuScene {
             {
                 unsafe {
                     (*(self.scene_manager))
-                        .set_active(Box::new(GameScene::new(self.window.clone(), false)))
+                        .set_active(Box::new(GameScene::new(self.scene_manager, self.window.clone(), false)))
                 };
             } else if self
                 .button_handler
@@ -171,6 +171,7 @@ struct Enemy {
 struct GameScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
+    scene_manager: *mut SceneManager,
 
     player_texture: f32,
     player_position: f32,
@@ -182,7 +183,7 @@ struct GameScene {
 }
 
 impl GameScene {
-    fn new(window: Rc<RefCell<Window>>, is_hard_mode: bool) -> GameScene {
+    fn new(scene_manager: *mut SceneManager, window: Rc<RefCell<Window>>, is_hard_mode: bool) -> GameScene {
         let mut renderer = Renderer2D::new(
             5,
             "assets/shaders/2d_renderer_basic.vs",
@@ -217,6 +218,7 @@ impl GameScene {
             window,
             player_position: 200.0,
             is_hard_mode,
+            scene_manager
         }
     }
 }
@@ -236,6 +238,10 @@ impl Scene for GameScene {
             self.enemies.iter_mut().for_each(|enemy| {
                 enemy.x_position -= (50.0f64 * delta_time) as f32;
             });
+            
+            if (self.enemies[2].x_position - self.player_position).abs() < 150.0 {
+                unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+            }
         }
     }
 
@@ -342,7 +348,7 @@ impl Scene for HardModeMenuScene {
             {
                 unsafe {
                     (*(self.scene_manager))
-                        .set_active(Box::new(GameScene::new(self.window.clone(), true)))
+                        .set_active(Box::new(GameScene::new(self.scene_manager, self.window.clone(), true)))
                 };
             } else if self.button_handler.is_button_hovered(
                 (1280.0 - 200.0) / 2.0,
