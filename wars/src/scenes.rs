@@ -4,7 +4,7 @@ use crate::{
     graphics::Renderer2D,
     math::{Vector2, Vector4},
     ui::ButtonChecker,
-    Scene, SceneManager, Window,
+    Scene, Window,
 };
 use rand::{distributions::Uniform, Rng};
 
@@ -28,8 +28,9 @@ impl DummyScene {
 }
 
 impl Scene for DummyScene {
-    fn update(&mut self, _: f64) {
+    fn update(&mut self, _: f64) -> Option<Box<dyn Scene>> {
         //println!("bozo!");
+        None
     }
 
     fn render(&mut self) {
@@ -54,11 +55,10 @@ pub struct MenuScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
     button_handler: ButtonChecker,
-    scene_manager: *mut SceneManager,
 }
 
 impl MenuScene {
-    pub fn new(window: Rc<RefCell<Window>>, scene_manager: *mut SceneManager) -> MenuScene {
+    pub fn new(window: Rc<RefCell<Window>>) -> MenuScene {
         let mut renderer = Renderer2D::new(
             3,
             "assets/shaders/2d_renderer_basic.vs",
@@ -73,13 +73,12 @@ impl MenuScene {
             renderer: renderer,
             window,
             button_handler: ButtonChecker::new(),
-            scene_manager,
         };
     }
 }
 
 impl Scene for MenuScene {
-    fn update(&mut self, _: f64) {
+    fn update(&mut self, _: f64) -> Option<Box<dyn Scene>> {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
 
@@ -92,24 +91,17 @@ impl Scene for MenuScene {
                 .button_handler
                 .is_button_hovered(80.0, 275.0, 200.0, 100.0)
             {
-                unsafe {
-                    (*(self.scene_manager)).set_active(Box::new(GameScene::new(
-                        self.scene_manager,
-                        self.window.clone(),
-                        false,
-                    )))
-                };
+                return Some(Box::new(GameScene::new(self.window.clone(), false)));
             } else if self
                 .button_handler
                 .is_button_hovered(80.0, 400.0, 400.0, 100.0)
             {
-                unsafe {
-                    (*(self.scene_manager)).set_active(Box::new(HardModeMenuScene::new(
-                        self.scene_manager,
-                        self.window.clone(),
-                    )))
-                };
+                return Some(Box::new(HardModeMenuScene::new(self.window.clone())));
+            } else {
+                return None;
             }
+        } else {
+            return None;
         }
     }
 
@@ -174,7 +166,6 @@ struct Enemy {
 struct GameScene {
     renderer: Renderer2D,
     window: Rc<RefCell<Window>>,
-    scene_manager: *mut SceneManager,
 
     player_texture: f32,
     player_position: f32,
@@ -186,11 +177,7 @@ struct GameScene {
 }
 
 impl GameScene {
-    fn new(
-        scene_manager: *mut SceneManager,
-        window: Rc<RefCell<Window>>,
-        is_hard_mode: bool,
-    ) -> GameScene {
+    fn new(window: Rc<RefCell<Window>>, is_hard_mode: bool) -> GameScene {
         let mut renderer = Renderer2D::new(
             5,
             "assets/shaders/2d_renderer_basic.vs",
@@ -225,13 +212,12 @@ impl GameScene {
             window,
             player_position: 200.0,
             is_hard_mode,
-            scene_manager,
         }
     }
 }
 
 impl Scene for GameScene {
-    fn update(&mut self, delta_time: f64) {
+    fn update(&mut self, delta_time: f64) -> Option<Box<dyn Scene>> {
         const PLAYER_SPEED: f32 = 200.0;
 
         if self.window.borrow().is_key_down(glfw::Key::Left) {
@@ -241,13 +227,7 @@ impl Scene for GameScene {
             self.player_position += PLAYER_SPEED * (delta_time as f32);
         }
         if self.window.borrow().is_key_down(glfw::Key::Escape) {
-            unsafe {
-                (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
-                    self.window.clone(),
-                    self.scene_manager,
-                )))
-            };
-            return;
+            return Some(Box::new(MenuScene::new(self.window.clone())));
         }
 
         if self.is_hard_mode {
@@ -256,13 +236,7 @@ impl Scene for GameScene {
             });
 
             if (self.enemies[2].x_position - self.player_position).abs() < 150.0 {
-                unsafe {
-                    (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
-                        self.window.clone(),
-                        self.scene_manager,
-                    )))
-                };
-                return;
+                return Some(Box::new(MenuScene::new(self.window.clone())));
             }
         } else {
             if let Some(nearest_enemy) = self.enemies.last() {
@@ -270,27 +244,17 @@ impl Scene for GameScene {
                     self.enemies.pop();
 
                     if self.enemies.is_empty() {
-                        unsafe {
-                            (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
-                                self.window.clone(),
-                                self.scene_manager,
-                            )))
-                        };
-                        return;
+                        return Some(Box::new(MenuScene::new(self.window.clone())));
                     }
                 }
             } else {
                 if self.enemies.is_empty() {
-                    unsafe {
-                        (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
-                            self.window.clone(),
-                            self.scene_manager,
-                        )))
-                    };
-                    return;
+                    return Some(Box::new(MenuScene::new(self.window.clone())));
                 }
             }
         }
+
+        None
     }
 
     fn render(&mut self) {
@@ -349,13 +313,13 @@ impl Scene for GameScene {
 
 struct HardModeMenuScene {
     renderer: Renderer2D,
-    scene_manager: *mut SceneManager,
+
     window: Rc<RefCell<Window>>,
     button_handler: ButtonChecker,
 }
 
 impl HardModeMenuScene {
-    fn new(scene_manager: *mut SceneManager, window: Rc<RefCell<Window>>) -> HardModeMenuScene {
+    fn new(window: Rc<RefCell<Window>>) -> HardModeMenuScene {
         let mut renderer = Renderer2D::new(
             3,
             "assets/shaders/2d_renderer_basic.vs",
@@ -373,7 +337,6 @@ impl HardModeMenuScene {
 
         return HardModeMenuScene {
             renderer,
-            scene_manager,
             window,
             button_handler,
         };
@@ -381,7 +344,7 @@ impl HardModeMenuScene {
 }
 
 impl Scene for HardModeMenuScene {
-    fn update(&mut self, _delta_time: f64) {
+    fn update(&mut self, _delta_time: f64) -> Option<Box<dyn Scene>> {
         let (mouse_x, mouse_y) = self.window.borrow().get_mouse_position();
         self.button_handler.update_mouse_position(mouse_x, mouse_y);
 
@@ -394,27 +357,18 @@ impl Scene for HardModeMenuScene {
                 .button_handler
                 .is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0)
             {
-                unsafe {
-                    (*(self.scene_manager)).set_active(Box::new(GameScene::new(
-                        self.scene_manager,
-                        self.window.clone(),
-                        true,
-                    )))
-                };
+                return Some(Box::new(GameScene::new(self.window.clone(), true)));
             } else if self.button_handler.is_button_hovered(
                 (1280.0 - 200.0) / 2.0,
                 450.0,
                 200.0,
                 100.0,
             ) {
-                unsafe {
-                    (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
-                        self.window.clone(),
-                        self.scene_manager,
-                    )))
-                };
+                return Some(Box::new(MenuScene::new(self.window.clone())));
             }
         }
+
+        return None;
     }
 
     fn render(&mut self) {

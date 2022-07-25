@@ -29,17 +29,8 @@ impl Game {
     }
 
     pub fn init(&mut self) {
-        let scene_manager_ptr: *mut SceneManager;
-
-        {
-            scene_manager_ptr = &mut self.scene_manager;
-        }
-
         self.scene_manager
-            .set_active(Box::new(scenes::MenuScene::new(
-                self.window.clone(),
-                scene_manager_ptr,
-            )));
+            .set_active(Box::new(scenes::MenuScene::new(self.window.clone())));
 
         self.window.borrow_mut().show();
     }
@@ -57,6 +48,8 @@ impl Game {
 
         self.scene_manager.update_active(delta_time);
         self.scene_manager.render_active();
+
+        self.scene_manager.handle_next_scene();
 
         self.window.borrow_mut().update();
     }
@@ -166,30 +159,38 @@ impl Window {
 
 pub struct SceneManager {
     active_scene: Box<dyn Scene>,
+    next_scene: Option<Box<dyn Scene>>,
 }
 
 impl SceneManager {
     fn new(initial_scene: Box<dyn Scene>) -> SceneManager {
         return SceneManager {
             active_scene: initial_scene,
+            next_scene: None,
         };
     }
 
-    pub fn set_active(&mut self, new_active_scene: Box<dyn Scene>) {
+    fn set_active(&mut self, new_active_scene: Box<dyn Scene>) {
         self.active_scene = new_active_scene;
     }
 
     fn update_active(&mut self, delta_time: f64) {
-        self.active_scene.update(delta_time);
+        self.next_scene = self.active_scene.update(delta_time);
     }
 
     fn render_active(&mut self) {
         self.active_scene.render();
     }
+
+    fn handle_next_scene(&mut self) {
+        if let Some(next_scene) = self.next_scene.take() {
+            self.active_scene = next_scene;
+        }
+    }
 }
 
 pub trait Scene {
-    fn update(&mut self, delta_time: f64);
+    fn update(&mut self, delta_time: f64) -> Option<Box<dyn Scene>>;
 
     fn render(&mut self);
 }
