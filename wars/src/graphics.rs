@@ -1,6 +1,6 @@
 use crate::math;
-use stb::image::*;
 use glad_gl::gl;
+use stb::image::*;
 
 // I will only add the types that I will be using
 enum OpenGLType {
@@ -293,12 +293,9 @@ impl ShaderProgram {
     fn set_uniform_1i(&self, name: &str, value: i32) {
         let mut name = name.as_bytes().to_vec();
         name.push(0);
-        
+
         unsafe {
-            let location = gl::GetUniformLocation(
-                self.handle,
-                name.as_ptr() as *const i8,
-            );
+            let location = gl::GetUniformLocation(self.handle, name.as_ptr() as *const i8);
             gl::Uniform1i(location, value);
         }
     }
@@ -306,12 +303,9 @@ impl ShaderProgram {
     fn set_unifrom_matrix_4f(&self, name: &str, value: &math::Matrix4<f32>) {
         let mut name = name.as_bytes().to_vec();
         name.push(0);
-        
+
         unsafe {
-            let location = gl::GetUniformLocation(
-                self.handle,
-                name.as_ptr() as *const i8,
-            );
+            let location = gl::GetUniformLocation(self.handle, name.as_ptr() as *const i8);
             gl::UniformMatrix4fv(location, 1, gl::TRUE, value.as_ptr());
         }
     }

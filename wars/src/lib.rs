@@ -12,7 +12,7 @@ use std::sync::mpsc::Receiver;
 pub struct Game {
     window: Rc<RefCell<Window>>,
     scene_manager: SceneManager,
-    last_time: f64
+    last_time: f64,
 }
 
 impl Game {
@@ -24,19 +24,22 @@ impl Game {
         return Game {
             window,
             scene_manager,
-            last_time: 0.0
+            last_time: 0.0,
         };
     }
 
     pub fn init(&mut self) {
         let scene_manager_ptr: *mut SceneManager;
-        
+
         {
             scene_manager_ptr = &mut self.scene_manager;
         }
-        
+
         self.scene_manager
-            .set_active(Box::new(scenes::MenuScene::new(self.window.clone(), scene_manager_ptr)));
+            .set_active(Box::new(scenes::MenuScene::new(
+                self.window.clone(),
+                scene_manager_ptr,
+            )));
 
         self.window.borrow_mut().show();
     }
@@ -49,7 +52,7 @@ impl Game {
         let this_time = self.window.borrow().get_time();
         let delta_time = this_time - self.last_time;
         self.last_time = this_time;
-        
+
         unsafe { gl::Clear(gl::COLOR_BUFFER_BIT) };
 
         self.scene_manager.update_active(delta_time);
@@ -108,7 +111,7 @@ impl Window {
             gl::Enable(gl::DEBUG_OUTPUT_SYNCHRONOUS);
 
             gl::DebugMessageCallback(opengl_debug_callback, std::ptr::null());
-            
+
             gl::Enable(gl::BLEND);
             gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
         }
@@ -141,7 +144,7 @@ impl Window {
         self.window.swap_buffers();
         self.glfw.poll_events();
     }
-    
+
     fn get_time(&self) -> f64 {
         self.glfw.get_time()
     }

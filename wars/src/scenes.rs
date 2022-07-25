@@ -93,8 +93,11 @@ impl Scene for MenuScene {
                 .is_button_hovered(80.0, 275.0, 200.0, 100.0)
             {
                 unsafe {
-                    (*(self.scene_manager))
-                        .set_active(Box::new(GameScene::new(self.scene_manager, self.window.clone(), false)))
+                    (*(self.scene_manager)).set_active(Box::new(GameScene::new(
+                        self.scene_manager,
+                        self.window.clone(),
+                        false,
+                    )))
                 };
             } else if self
                 .button_handler
@@ -183,7 +186,11 @@ struct GameScene {
 }
 
 impl GameScene {
-    fn new(scene_manager: *mut SceneManager, window: Rc<RefCell<Window>>, is_hard_mode: bool) -> GameScene {
+    fn new(
+        scene_manager: *mut SceneManager,
+        window: Rc<RefCell<Window>>,
+        is_hard_mode: bool,
+    ) -> GameScene {
         let mut renderer = Renderer2D::new(
             5,
             "assets/shaders/2d_renderer_basic.vs",
@@ -218,7 +225,7 @@ impl GameScene {
             window,
             player_position: 200.0,
             is_hard_mode,
-            scene_manager
+            scene_manager,
         }
     }
 }
@@ -234,7 +241,12 @@ impl Scene for GameScene {
             self.player_position += PLAYER_SPEED * (delta_time as f32);
         }
         if self.window.borrow().is_key_down(glfw::Key::Escape) {
-            unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+            unsafe {
+                (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
+                    self.window.clone(),
+                    self.scene_manager,
+                )))
+            };
             return;
         }
 
@@ -242,24 +254,39 @@ impl Scene for GameScene {
             self.enemies.iter_mut().for_each(|enemy| {
                 enemy.x_position -= (50.0f64 * delta_time) as f32;
             });
-            
+
             if (self.enemies[2].x_position - self.player_position).abs() < 150.0 {
-                unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+                unsafe {
+                    (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
+                        self.window.clone(),
+                        self.scene_manager,
+                    )))
+                };
                 return;
             }
         } else {
             if let Some(nearest_enemy) = self.enemies.last() {
                 if (nearest_enemy.x_position - self.player_position).abs() < 150.0 {
                     self.enemies.pop();
-                    
+
                     if self.enemies.is_empty() {
-                        unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+                        unsafe {
+                            (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
+                                self.window.clone(),
+                                self.scene_manager,
+                            )))
+                        };
                         return;
                     }
                 }
             } else {
                 if self.enemies.is_empty() {
-                    unsafe { (*(self.scene_manager)).set_active(Box::new(MenuScene::new(self.window.clone(), self.scene_manager))) };
+                    unsafe {
+                        (*(self.scene_manager)).set_active(Box::new(MenuScene::new(
+                            self.window.clone(),
+                            self.scene_manager,
+                        )))
+                    };
                     return;
                 }
             }
@@ -368,8 +395,11 @@ impl Scene for HardModeMenuScene {
                 .is_button_hovered((1280.0 - 200.0) / 2.0, 330.0, 200.0, 100.0)
             {
                 unsafe {
-                    (*(self.scene_manager))
-                        .set_active(Box::new(GameScene::new(self.scene_manager, self.window.clone(), true)))
+                    (*(self.scene_manager)).set_active(Box::new(GameScene::new(
+                        self.scene_manager,
+                        self.window.clone(),
+                        true,
+                    )))
                 };
             } else if self.button_handler.is_button_hovered(
                 (1280.0 - 200.0) / 2.0,
