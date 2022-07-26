@@ -2,6 +2,7 @@ mod graphics;
 mod math;
 mod scenes;
 mod ui;
+mod physics;
 
 use glad_gl::gl;
 use glfw::Context;
