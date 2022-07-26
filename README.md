@@ -34,7 +34,7 @@ Since this is the main page README I don't have time nor space to go over every 
 - `graphics.rs` contains the rendering backend for the game. It is probably the longest file in the entire codebase and contains a lot of unsafe codeblocks, which is enough to make some people uncomfortable.
 - `scenes.rs` is where most of the game's behaviour and layout resides. Basically, in Wars, the different screens, menus, and levels are organized into what is known as *scenes*. The `scenes.rs` file contains all the scenes in the game, plus their behaviours. This is usually the file that people (like [carpetmaker3162](https://github.com/carpetmaker3162)) edits to alter the gameplay.
 - To switch from one scene to another, simply return a `Some` of a `Box` of the scene that you would like to switch to.
-- `physics.rs` is supposed to contain physics-related stuff but right now it only contains a collision-detection system (which is also happens to be not tested at all). The entire module is currently unused and the only reason it's there is for modders to use.
+- `physics.rs` is supposed to contain physics-related stuff but right now it only contains a collision-detection system (which is also happens to be not tested at all). The entire module is currently unused and the only reason it's there is for modders (like [carpetmaker3162](https://github.com/carpetmaker3162)) to use.
 
 ## Conclusion
 
