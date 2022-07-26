@@ -4,6 +4,15 @@
 
 A simple 2D game made with raw (-ish) OpenGL and Rust. I honestly don't know why I even made this in the first place, but if you would like to mess around with this game by changing the source code, feel free to do so.
 
+## Table of Contents
+
+- [Wars](#wars)
+  - [Table of Contents](#table-of-contents)
+  - [Gameplay](#gameplay)
+  - [Installing](#installing)
+  - [Code Structure](#code-structure)
+  - [Conclusion](#conclusion)
+
 ## Gameplay
 
 Basically, use the left and right arrows to move and touch the enemies to kill them. Win by killing all the enemies. There is no "You die" or "You win" screen; if either of those were to happen you'll be taken back to the menu screen.
