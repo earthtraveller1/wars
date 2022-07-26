@@ -118,6 +118,8 @@ impl Window {
 
             window.set_pos(new_x.try_into().unwrap(), new_y.try_into().unwrap());
         });
+        
+        glfw.set_swap_interval(glfw::SwapInterval::Sync(1));
 
         return Window {
             glfw,
