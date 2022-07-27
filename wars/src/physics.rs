@@ -1,3 +1,7 @@
+use crate::graphics::Renderer2D;
+use crate::math::Vector2;
+use crate::math::Vector4;
+
 /// Describes the collision between two objects. Each member indicates whether
 /// the two objects in question intersects with each other at that specific di-
 /// rection. For example, if `left` is true, it means that the target objects  
@@ -53,11 +57,85 @@ impl AABCollider {
         if (another_collider.top < self.top) && (self.top < another_collider.bottom) {
             result.top = true;
         }
-        
+
         if (self.top < another_collider.top) && (another_collider.top < self.bottom) {
             result.bottom = true;
         }
 
         result
+    }
+
+    pub fn visualize(&self, renderer: &mut Renderer2D, line_thickness: f64) {
+        renderer.draw_quad(
+            &Vector2 {
+                x: (self.left - line_thickness) as f32,
+                y: self.top as f32,
+            },
+            &Vector2 {
+                x: line_thickness as f32,
+                y: ((self.bottom - self.top) + line_thickness) as f32
+            },
+            &Vector4 {
+                x: 0.01,
+                y: 0.01,
+                z: 0.01,
+                w: 1.0
+            },
+            -1.0,
+        );
+        
+        renderer.draw_quad(
+            &Vector2 {
+                x: (self.left - line_thickness) as f32,
+                y: (self.top - line_thickness) as f32,
+            },
+            &Vector2 {
+                x: ((self.right - self.left) + line_thickness) as f32,
+                y: line_thickness as f32
+            },
+            &Vector4 {
+                x: 0.01,
+                y: 0.01,
+                z: 0.01,
+                w: 1.0
+            },
+            -1.0,
+        );
+        
+        renderer.draw_quad(
+            &Vector2 {
+                x: self.right as f32,
+                y: (self.top - line_thickness) as f32,
+            },
+            &Vector2 {
+                x: line_thickness as f32,
+                y: ((self.bottom - self.top) + line_thickness) as f32
+            },
+            &Vector4 {
+                x: 0.01,
+                y: 0.01,
+                z: 0.01,
+                w: 1.0
+            },
+            -1.0,
+        );
+        
+        renderer.draw_quad(
+            &Vector2 {
+                x: self.left as f32,
+                y: self.bottom as f32,
+            },
+            &Vector2 {
+                x: ((self.right - self.left) + line_thickness) as f32,
+                y: line_thickness as f32
+            },
+            &Vector4 {
+                x: 0.01,
+                y: 0.01,
+                z: 0.01,
+                w: 1.0
+            },
+            -1.0,
+        );
     }
 }
