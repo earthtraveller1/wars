@@ -17,12 +17,12 @@ pub struct AABCollider {
 }
 
 impl AABCollider {
-    pub fn new(left: f64, right: f64, top: f64, bottom: f64) -> AABCollider {
+    pub fn new(x: f64, y: f64, width: f64, height: f64) -> AABCollider {
         AABCollider {
-            left,
-            right,
-            top,
-            bottom,
+            left: x,
+            right: x + width,
+            top: y,
+            bottom: y + height,
         }
     }
 
